@@ -43,6 +43,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ILooper.cs" />
+    <Compile Include="Input\IKeyboard.cs" />
+    <Compile Include="Input\IKeyboardListener.cs" />
+    <Compile Include="Input\Key.cs" />
+    <Compile Include="Input\MouseButton.cs" />
+    <Compile Include="Input\IMouse.cs" />
+    <Compile Include="Input\IMouseListener.cs" />
+    <Compile Include="Input\ITouchListener.cs" />
+    <Compile Include="Input\ITouchPointer.cs" />
+    <Compile Include="Input\ITouchScreen.cs" />
+    <Compile Include="IO\IFileSystem.cs" />
+    <Compile Include="Math\Rect.cs" />
+    <Compile Include="Math\Circle.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Input\" />
+    <Folder Include="IO\" />
+    <Folder Include="Math\" />
+  </ItemGroup>
 </Project>
