@@ -75,6 +75,9 @@
     <Compile Include="Math\Transformation.cs" />
     <Compile Include="Math\SweptEllipsoidCollisionPacket.cs" />
     <Compile Include="Math\IntersectionTester.cs" />
+    <Compile Include="Platform.cs" />
+    <Compile Include="IPlatformServices.cs" />
+    <Compile Include="ILogger.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
