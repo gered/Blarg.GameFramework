@@ -56,6 +56,25 @@
     <Compile Include="IO\IFileSystem.cs" />
     <Compile Include="Math\Rect.cs" />
     <Compile Include="Math\Circle.cs" />
+    <Compile Include="Math\BoundingBox.cs" />
+    <Compile Include="Math\Vector3.cs" />
+    <Compile Include="Math\Point3.cs" />
+    <Compile Include="Math\BoundingSphere.cs" />
+    <Compile Include="Math\Vector2.cs" />
+    <Compile Include="Math\Point2.cs" />
+    <Compile Include="Math\Vector4.cs" />
+    <Compile Include="Math\RectF.cs" />
+    <Compile Include="Math\Quaternion.cs" />
+    <Compile Include="Math\Matrix4x4.cs" />
+    <Compile Include="Math\Matrix3x3.cs" />
+    <Compile Include="Math\Plane.cs" />
+    <Compile Include="Math\MathConstants.cs" />
+    <Compile Include="Math\LineSegment.cs" />
+    <Compile Include="Math\Ray.cs" />
+    <Compile Include="Math\MathHelpers.cs" />
+    <Compile Include="Math\Transformation.cs" />
+    <Compile Include="Math\SweptEllipsoidCollisionPacket.cs" />
+    <Compile Include="Math\IntersectionTester.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
