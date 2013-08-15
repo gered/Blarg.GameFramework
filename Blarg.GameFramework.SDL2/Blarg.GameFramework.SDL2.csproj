@@ -47,6 +47,7 @@
     <Compile Include="Input\SDLKeyboard.cs" />
     <Compile Include="Input\SDLMouse.cs" />
     <Compile Include="IO\SDLFileSystem.cs" />
+    <Compile Include="SDLLogger.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
