@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Input\SDLKeyboard.cs" />
+    <Compile Include="Input\SDLMouse.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -51,5 +53,8 @@
       <Project>{1ADE56B4-D505-411B-9168-B770A1079EE5}</Project>
       <Name>Blarg.GameFramework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Input\" />
   </ItemGroup>
 </Project>
