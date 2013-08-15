@@ -78,11 +78,14 @@
     <Compile Include="Platform.cs" />
     <Compile Include="IPlatformServices.cs" />
     <Compile Include="ILogger.cs" />
+    <Compile Include="Graphics\Color.cs" />
+    <Compile Include="Graphics\Image.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Input\" />
     <Folder Include="IO\" />
     <Folder Include="Math\" />
+    <Folder Include="Graphics\" />
   </ItemGroup>
 </Project>
