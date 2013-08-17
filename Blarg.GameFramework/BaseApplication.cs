@@ -6,9 +6,9 @@ using Blarg.GameFramework.IO;
 
 namespace Blarg.GameFramework
 {
-	public abstract class BaseLooper : ILooper
+	public abstract class BaseApplication : IApplication
 	{
-		public const string LOG_TAG = "BASELOOPER";
+		public const string LOG_TAG = "BASEAPP";
 
 		protected IGameApp GameApp { get; set; }
 

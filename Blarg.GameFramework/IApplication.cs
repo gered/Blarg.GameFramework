@@ -5,7 +5,7 @@ using Blarg.GameFramework.IO;
 
 namespace Blarg.GameFramework
 {
-	public interface ILooper : IDisposable
+	public interface IApplication : IDisposable
 	{
 		PlatformOS OperatingSystem { get; }
 		PlatformType Type { get; }

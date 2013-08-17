@@ -9,9 +9,9 @@ using Blarg.GameFramework.IO;
 
 namespace Blarg.GameFramework
 {
-	public class SDLLooper : BaseLooper
+	public class SDLApplication : BaseApplication
 	{
-		const string LOG_TAG = "SDLLOOPER";
+		const string LOG_TAG = "SDLApplication";
 
 		#region Fields 
 
@@ -87,7 +87,7 @@ namespace Blarg.GameFramework
 
 		#endregion
 
-		public SDLLooper()
+		public SDLApplication()
 		{
 			_logger = new SDLLogger();
 			_windowInfo = new SDLWindow();
@@ -628,7 +628,7 @@ namespace Blarg.GameFramework
 			Logger.Info(LOG_TAG, "SDL shutdown.");
 		}
 
-		~SDLLooper()
+		~SDLApplication()
 		{
 			ReleaseSDL();
 		}

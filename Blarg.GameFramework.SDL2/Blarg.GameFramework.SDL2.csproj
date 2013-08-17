@@ -48,11 +48,11 @@
     <Compile Include="Input\SDLMouse.cs" />
     <Compile Include="IO\SDLFileSystem.cs" />
     <Compile Include="SDLLogger.cs" />
-    <Compile Include="SDLLooper.cs" />
     <Compile Include="SDLWindow.cs" />
     <Compile Include="SDLConfiguration.cs" />
     <Compile Include="CurrentOS.cs" />
     <Compile Include="Input\SDLKeyMapper.cs" />
+    <Compile Include="SDLApplication.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

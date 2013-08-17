@@ -56,7 +56,7 @@ namespace Game
 		public void OnUpdate(float delta)
 		{
 			if (Platform.Keyboard.IsPressed(Blarg.GameFramework.Input.Key.Escape))
-				Platform.Looper.Quit();
+				Platform.Application.Quit();
 		}
 
 		public void Dispose()

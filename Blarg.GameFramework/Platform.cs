@@ -26,7 +26,7 @@ namespace Blarg.GameFramework
 		public static PlatformOS OperatingSystem { get; private set; }
 		public static PlatformType Type { get; private set; }
 
-		public static ILooper Looper { get; private set; }
+		public static IApplication Application { get; private set; }
 		public static ILogger Logger { get; private set; }
 		public static IFileSystem FileSystem { get; private set; }
 		public static IKeyboard Keyboard { get; private set; }
@@ -34,20 +34,20 @@ namespace Blarg.GameFramework
 		public static ITouchScreen TouchScreen { get; private set; }
 		public static GL20 GL { get; private set; }
 
-		public static void Set(ILooper looper)
+		public static void Set(IApplication application)
 		{
-			if (Looper != null)
+			if (Application != null)
 				throw new InvalidOperationException();
 
-			Looper = looper;
-			OperatingSystem = Looper.OperatingSystem;
-			Type = Looper.Type;
-			Logger = Looper.Logger;
-			FileSystem = Looper.FileSystem;
-			Keyboard = Looper.Keyboard;
-			Mouse = Looper.Mouse;
-			TouchScreen = Looper.TouchScreen;
-			GL = Looper.GL;
+			Application = application;
+			OperatingSystem = Application.OperatingSystem;
+			Type = Application.Type;
+			Logger = Application.Logger;
+			FileSystem = Application.FileSystem;
+			Keyboard = Application.Keyboard;
+			Mouse = Application.Mouse;
+			TouchScreen = Application.TouchScreen;
+			GL = Application.GL;
 		}
 	}
 }
