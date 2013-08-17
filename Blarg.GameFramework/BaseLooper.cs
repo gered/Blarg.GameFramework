@@ -15,7 +15,7 @@ namespace Blarg.GameFramework
 		public abstract PlatformOS OperatingSystem { get; }
 		public abstract PlatformType Type { get; }
 
-		public abstract IPlatformLogger Logger { get; }
+		public abstract ILogger Logger { get; }
 		public abstract IFileSystem FileSystem { get; }
 		public abstract IKeyboard Keyboard { get; }
 		public abstract IMouse Mouse { get; }

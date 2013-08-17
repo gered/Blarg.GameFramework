@@ -44,7 +44,7 @@ namespace Blarg.GameFramework
 			get { return PlatformType.Desktop; }
 		}
 
-		public override IPlatformLogger Logger
+		public override ILogger Logger
 		{
 			get { return _logger; }
 		}

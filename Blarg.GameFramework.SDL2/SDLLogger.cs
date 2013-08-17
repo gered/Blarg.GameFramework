@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Blarg.GameFramework
 {
-	public class SDLLogger : IPlatformLogger
+	public class SDLLogger : ILogger
 	{
 		StringBuilder _sb;
 

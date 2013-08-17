@@ -27,7 +27,7 @@ namespace Blarg.GameFramework
 		public static PlatformType Type { get; private set; }
 
 		public static ILooper Looper { get; private set; }
-		public static IPlatformLogger Logger { get; private set; }
+		public static ILogger Logger { get; private set; }
 		public static IFileSystem FileSystem { get; private set; }
 		public static IKeyboard Keyboard { get; private set; }
 		public static IMouse Mouse { get; private set; }

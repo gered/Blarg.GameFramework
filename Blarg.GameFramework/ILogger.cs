@@ -2,7 +2,7 @@ using System;
 
 namespace Blarg.GameFramework
 {
-	public interface IPlatformLogger
+	public interface ILogger
 	{
 		void Info(string category, string format, params object[] args);
 		void Warn(string category, string format, params object[] args);

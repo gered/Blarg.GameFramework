@@ -10,7 +10,7 @@ namespace Blarg.GameFramework
 		PlatformOS OperatingSystem { get; }
 		PlatformType Type { get; }
 
-		IPlatformLogger Logger { get; }
+		ILogger Logger { get; }
 		IFileSystem FileSystem { get; }
 		IKeyboard Keyboard { get; }
 		IMouse Mouse { get; }
