@@ -3,13 +3,12 @@ using Blarg.GameFramework.Graphics;
 
 namespace Blarg.GameFramework
 {
-	public interface IGameApp
+	public interface IGameApp : IDisposable
 	{
 		void OnAppGainFocus();
 		void OnAppLostFocus();
 		void OnAppPause();
 		void OnAppResume();
-		bool OnInit();
 		void OnLoad();
 		void OnUnload();
 		void OnLostContext();

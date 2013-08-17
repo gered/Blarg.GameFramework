@@ -4,7 +4,14 @@ namespace Blarg.GameFramework
 {
 	public interface ILooper : IDisposable
 	{
-		void Run(IGameApp gameApp);
+		int FPS { get; }
+		float FrameTime { get; }
+		int RendersPerSecond { get; }
+		int UpdatesPerSecond { get; }
+		int RenderTime { get; }
+		int UpdateTime { get; }
+
+		void Run(IGameApp gameApp, IPlatformConfiguration config);
 	}
 }
 

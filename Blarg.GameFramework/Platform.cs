@@ -17,9 +17,21 @@ namespace Blarg.GameFramework
 		Desktop
 	}
 
-	public static partial class Platform
+	public static class Platform
 	{
-		public static IPlatformServices Services { get; private set; }
+		static IPlatformServices _services;
+
+		public static IPlatformServices Services
+		{
+			get { return _services; }
+			set
+			{
+				if (_services != null)
+					throw new InvalidOperationException();
+				else
+					_services = value;
+			}
+		}
 	}
 }
 

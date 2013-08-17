@@ -49,6 +49,10 @@
     <Compile Include="IO\SDLFileSystem.cs" />
     <Compile Include="SDLLogger.cs" />
     <Compile Include="SDLLooper.cs" />
+    <Compile Include="SDLWindow.cs" />
+    <Compile Include="SDLConfiguration.cs" />
+    <Compile Include="SDLPlatformServices.cs" />
+    <Compile Include="CurrentOS.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -82,6 +82,9 @@
     <Compile Include="Graphics\Image.cs" />
     <Compile Include="Graphics\ScreenOrientation.cs" />
     <Compile Include="IGameApp.cs" />
+    <Compile Include="BaseLooper.cs" />
+    <Compile Include="IPlatformWindow.cs" />
+    <Compile Include="IPlatformConfiguration.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
