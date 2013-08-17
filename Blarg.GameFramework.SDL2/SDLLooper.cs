@@ -69,6 +69,11 @@ namespace Blarg.GameFramework
 			get { return null; }
 		}
 
+		public override IPlatformWindow Window
+		{
+			get { return _windowInfo; }
+		}
+
 		public override GL20 GL
 		{
 			get { return _gl; }

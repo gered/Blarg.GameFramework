@@ -15,6 +15,7 @@ namespace Blarg.GameFramework
 		IKeyboard Keyboard { get; }
 		IMouse Mouse { get; }
 		ITouchScreen TouchScreen { get; }
+		IPlatformWindow Window { get; }
 		GL20 GL { get; }
 
 		int FPS { get; }
