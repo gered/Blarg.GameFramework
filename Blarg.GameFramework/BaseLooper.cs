@@ -100,6 +100,8 @@ namespace Blarg.GameFramework
 
 		public virtual void Dispose()
 		{
+			Logger.Info(LOG_TAG, "Disposing.");
+			GameApp.Dispose();
 		}
 	}
 }

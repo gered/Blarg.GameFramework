@@ -635,6 +635,8 @@ namespace Blarg.GameFramework
 
 		public override void Dispose()
 		{
+			base.Dispose();
+			Logger.Info(LOG_TAG, "Disposing.");
 			ReleaseSDL();
 			GC.SuppressFinalize(this);
 		}
