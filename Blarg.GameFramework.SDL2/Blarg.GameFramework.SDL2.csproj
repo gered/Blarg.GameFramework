@@ -53,6 +53,7 @@
     <Compile Include="SDLConfiguration.cs" />
     <Compile Include="SDLPlatformServices.cs" />
     <Compile Include="CurrentOS.cs" />
+    <Compile Include="Input\SDLKeyMapper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

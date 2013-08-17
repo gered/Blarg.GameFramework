@@ -19,7 +19,7 @@ namespace Blarg.GameFramework.Input
 
 		public bool OnKeyEvent(SDL.SDL_KeyboardEvent e)
 		{
-			int keyCode = (int)e.keysym.sym;
+			int keyCode = (int)SDLKeyMapper.ToKey(e.keysym.scancode);
 
 			if (e.state == SDL.SDL_PRESSED)
 			{
