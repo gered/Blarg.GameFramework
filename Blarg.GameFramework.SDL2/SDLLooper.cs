@@ -13,6 +13,8 @@ namespace Blarg.GameFramework
 	{
 		const string LOG_TAG = "SDLLOOPER";
 
+		#region Fields 
+
 		bool _isSDLinited;
 		IntPtr _window;
 		IntPtr _glContext;
@@ -33,6 +35,10 @@ namespace Blarg.GameFramework
 		float _fixedUpdateInterval;
 		float _fixedRenderInterval;
 		int _maxFrameSkip = 10;
+
+		#endregion
+
+		#region Properties
 
 		public override PlatformOS OperatingSystem
 		{
@@ -78,6 +84,8 @@ namespace Blarg.GameFramework
 		{
 			get { return _gl; }
 		}
+
+		#endregion
 
 		public SDLLooper()
 		{
@@ -153,73 +161,6 @@ namespace Blarg.GameFramework
 			GameApp = null;
 
 			ReleaseSDL();
-		}
-
-		private bool InitSDL()
-		{
-			Logger.Info(LOG_TAG, "SDL initialization starting.");
-
-			SDL.SDL_version sdlVersion;
-			SDL.SDL_VERSION(out sdlVersion);
-			Logger.Info(LOG_TAG, "SDL Runtime Version: {0}.{1}.{2}", sdlVersion.major, sdlVersion.minor, sdlVersion.patch);
-			Logger.Info(LOG_TAG, "SDL Linked Version: {0}.{1}.{2}", SDL.SDL_MAJOR_VERSION, SDL.SDL_MINOR_VERSION, SDL.SDL_PATCHLEVEL);
-
-			if (SDL.SDL_Init(SDL.SDL_INIT_VIDEO | SDL.SDL_INIT_AUDIO | SDL.SDL_INIT_GAMECONTROLLER | SDL.SDL_INIT_JOYSTICK | SDL.SDL_INIT_TIMER) == -1)
-			{
-				Logger.Error(LOG_TAG, "SDL_Init() failed: {0}", SDL.SDL_GetError());
-				return false;
-			}
-			_isSDLinited = true;
-
-			_keyboard = new SDLKeyboard();
-			Logger.Info(LOG_TAG, "Keyboard input device ready.");
-
-			_mouse = new SDLMouse();
-			Logger.Info(LOG_TAG, "Mouse input device ready.");
-
-			int numJoysticks = SDL.SDL_NumJoysticks();
-
-			Logger.Info(LOG_TAG, "{0} joystick input devices found.", numJoysticks);
-			for (int i = 0; i < numJoysticks; ++i)
-			{
-				Logger.Info(LOG_TAG, "Joystick #{0}. {1}:", (i + 1), SDL.SDL_JoystickNameForIndex(i));
-				IntPtr joystick = SDL.SDL_JoystickOpen(i);
-				if (joystick != IntPtr.Zero)
-				{
-					Logger.Info(LOG_TAG, "\tAxes: {0}", SDL.SDL_JoystickNumAxes(joystick));
-					Logger.Info(LOG_TAG, "\tBalls: {0}", SDL.SDL_JoystickNumBalls(joystick));
-					Logger.Info(LOG_TAG, "\tHats: {0}", SDL.SDL_JoystickNumHats(joystick));
-					Logger.Info(LOG_TAG, "\tButtons: {0}", SDL.SDL_JoystickNumButtons(joystick));
-					SDL.SDL_JoystickClose(joystick);
-				}
-				else
-					Logger.Warn(LOG_TAG, "\tMore information could not be obtained.");
-			}
-
-			_filesystem = new SDLFileSystem();
-			Logger.Info(LOG_TAG, "Filesystem access initialized.");
-
-			int numVideoDrivers = SDL.SDL_GetNumVideoDrivers();
-			Logger.Info(LOG_TAG, "Video drivers present: {0}.", numVideoDrivers);
-			for (int i = 0; i < numVideoDrivers; ++i)
-				Logger.Info(LOG_TAG, "\t{0}: {1}", (i + 1), SDL.SDL_GetVideoDriver(i));
-			Logger.Info(LOG_TAG, "Currently using video driver: {0}", SDL.SDL_GetCurrentVideoDriver());
-
-			int numAudioDrivers = SDL.SDL_GetNumAudioDrivers();
-			Logger.Info(LOG_TAG, "Audio drivers present: {0}", numAudioDrivers);
-			for (int i = 0; i < numAudioDrivers; ++i)
-				Logger.Info(LOG_TAG, "\t{0}: {1}", (i + 1), SDL.SDL_GetAudioDriver(i));
-			Logger.Info(LOG_TAG, "Currently using audio driver: {0}", SDL.SDL_GetCurrentAudioDriver());
-
-			Logger.Info(LOG_TAG, "SDL initialization finished.");
-			return true;
-		}
-
-		private void SetUpdateFrequency(int targetFrequency)
-		{
-			_targetUpdatesPerSecond = targetFrequency;
-			_ticksPerUpdate = 1000 / _targetUpdatesPerSecond;
-			_fixedUpdateInterval = _ticksPerUpdate / 1000.0f;
 		}
 
 		private void MainLoop()
@@ -316,6 +257,77 @@ namespace Blarg.GameFramework
 				}
 			}
 		}
+
+		private void SetUpdateFrequency(int targetFrequency)
+		{
+			_targetUpdatesPerSecond = targetFrequency;
+			_ticksPerUpdate = 1000 / _targetUpdatesPerSecond;
+			_fixedUpdateInterval = _ticksPerUpdate / 1000.0f;
+		}
+
+		#region Initialization
+
+		private bool InitSDL()
+		{
+			Logger.Info(LOG_TAG, "SDL initialization starting.");
+
+			SDL.SDL_version sdlVersion;
+			SDL.SDL_VERSION(out sdlVersion);
+			Logger.Info(LOG_TAG, "SDL Runtime Version: {0}.{1}.{2}", sdlVersion.major, sdlVersion.minor, sdlVersion.patch);
+			Logger.Info(LOG_TAG, "SDL Linked Version: {0}.{1}.{2}", SDL.SDL_MAJOR_VERSION, SDL.SDL_MINOR_VERSION, SDL.SDL_PATCHLEVEL);
+
+			if (SDL.SDL_Init(SDL.SDL_INIT_VIDEO | SDL.SDL_INIT_AUDIO | SDL.SDL_INIT_GAMECONTROLLER | SDL.SDL_INIT_JOYSTICK | SDL.SDL_INIT_TIMER) == -1)
+			{
+				Logger.Error(LOG_TAG, "SDL_Init() failed: {0}", SDL.SDL_GetError());
+				return false;
+			}
+			_isSDLinited = true;
+
+			_keyboard = new SDLKeyboard();
+			Logger.Info(LOG_TAG, "Keyboard input device ready.");
+
+			_mouse = new SDLMouse();
+			Logger.Info(LOG_TAG, "Mouse input device ready.");
+
+			int numJoysticks = SDL.SDL_NumJoysticks();
+
+			Logger.Info(LOG_TAG, "{0} joystick input devices found.", numJoysticks);
+			for (int i = 0; i < numJoysticks; ++i)
+			{
+				Logger.Info(LOG_TAG, "Joystick #{0}. {1}:", (i + 1), SDL.SDL_JoystickNameForIndex(i));
+				IntPtr joystick = SDL.SDL_JoystickOpen(i);
+				if (joystick != IntPtr.Zero)
+				{
+					Logger.Info(LOG_TAG, "\tAxes: {0}", SDL.SDL_JoystickNumAxes(joystick));
+					Logger.Info(LOG_TAG, "\tBalls: {0}", SDL.SDL_JoystickNumBalls(joystick));
+					Logger.Info(LOG_TAG, "\tHats: {0}", SDL.SDL_JoystickNumHats(joystick));
+					Logger.Info(LOG_TAG, "\tButtons: {0}", SDL.SDL_JoystickNumButtons(joystick));
+					SDL.SDL_JoystickClose(joystick);
+				}
+				else
+					Logger.Warn(LOG_TAG, "\tMore information could not be obtained.");
+			}
+
+			_filesystem = new SDLFileSystem();
+			Logger.Info(LOG_TAG, "Filesystem access initialized.");
+
+			int numVideoDrivers = SDL.SDL_GetNumVideoDrivers();
+			Logger.Info(LOG_TAG, "Video drivers present: {0}.", numVideoDrivers);
+			for (int i = 0; i < numVideoDrivers; ++i)
+				Logger.Info(LOG_TAG, "\t{0}: {1}", (i + 1), SDL.SDL_GetVideoDriver(i));
+			Logger.Info(LOG_TAG, "Currently using video driver: {0}", SDL.SDL_GetCurrentVideoDriver());
+
+			int numAudioDrivers = SDL.SDL_GetNumAudioDrivers();
+			Logger.Info(LOG_TAG, "Audio drivers present: {0}", numAudioDrivers);
+			for (int i = 0; i < numAudioDrivers; ++i)
+				Logger.Info(LOG_TAG, "\t{0}: {1}", (i + 1), SDL.SDL_GetAudioDriver(i));
+			Logger.Info(LOG_TAG, "Currently using audio driver: {0}", SDL.SDL_GetCurrentAudioDriver());
+
+			Logger.Info(LOG_TAG, "SDL initialization finished.");
+			return true;
+		}
+
+		#endregion
 
 		#region Window Management
 
