@@ -1,6 +1,8 @@
 using System;
 using System.Diagnostics;
 using SDL2;
+using PortableGL;
+using PortableGL.SDL;
 using Blarg.GameFramework.Graphics;
 using Blarg.GameFramework.Input;
 using Blarg.GameFramework.IO;
@@ -14,21 +16,17 @@ namespace Blarg.GameFramework
 		bool _isSDLinited;
 		IntPtr _window;
 		IntPtr _glContext;
+		SDLLogger _logger;
 		SDLKeyboard _keyboard;
 		SDLMouse _mouse;
 		SDLFileSystem _filesystem;
+		SDLGL20 _gl;
 		SDLWindow _windowInfo;
+		PlatformOS _os;
 
 		bool _isWindowActive;
 		bool _isPaused;
 		bool _isQuitting;
-
-		int _fps;
-		float _frameTime;
-		int _rendersPerSecond;
-		int _updatesPerSecond;
-		int _renderTime;
-		int _updateTime;
 
 		int _targetUpdatesPerSecond;
 		int _ticksPerUpdate;
@@ -36,40 +34,59 @@ namespace Blarg.GameFramework
 		float _fixedRenderInterval;
 		int _maxFrameSkip = 10;
 
-		public override int FPS
+		public override PlatformOS OperatingSystem
 		{
-			get { return _fps; }
+			get { return _os; }
 		}
 
-		public override float FrameTime
+		public override PlatformType Type
 		{
-			get { return _frameTime; }
+			get { return PlatformType.Desktop; }
 		}
 
-		public override int RendersPerSecond
+		public override IPlatformLogger Logger
 		{
-			get { return _rendersPerSecond; }
+			get { return _logger; }
 		}
 
-		public override int UpdatesPerSecond
+		public override IFileSystem FileSystem
 		{
-			get { return _updatesPerSecond; }
+			get { return _filesystem; }
 		}
 
-		public override int RenderTime
+		public override IKeyboard Keyboard
 		{
-			get { return _renderTime; }
+			get { return _keyboard; }
 		}
 
-		public override int UpdateTime
+		public override IMouse Mouse
 		{
-			get { return _updateTime; }
+			get { return _mouse; }
+		}
+
+		public override ITouchScreen TouchScreen
+		{
+			get { return null; }
+		}
+
+		public override GL20 GL
+		{
+			get { return _gl; }
 		}
 
 		public SDLLooper()
 		{
-			Platform.Services = new SDLPlatformServices();
+			_logger = new SDLLogger();
 			_windowInfo = new SDLWindow();
+
+			if (CurrentOS.IsWindows)
+				_os = PlatformOS.Windows;
+			else if (CurrentOS.IsLinux)
+				_os = PlatformOS.Linux;
+			else if (CurrentOS.IsMac)
+				_os = PlatformOS.MacOS;
+			else
+				throw new Exception("Unable to determine OS.");
 
 			SetUpdateFrequency(60);
 		}
@@ -85,47 +102,44 @@ namespace Blarg.GameFramework
 			if (!(config is SDLConfiguration))
 				throw new ArgumentException("Must pass a SDLConfiguration object.", "config");
 
-			Platform.Services.Logger.Info(LOOPER_TAG, "Running...");
+			Logger.Info(LOOPER_TAG, "Running...");
 
 			SDLConfiguration sdlConfig = (SDLConfiguration)config;
 
-			Platform.Services.Logger.Info(LOOPER_TAG, "Received SDL configuration:");
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tTitle: {0}", sdlConfig.Title);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tWidth: {0}", sdlConfig.Width);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tHeight: {0}", sdlConfig.Height);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tFullscreen: {0}", sdlConfig.Fullscreen);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tResizeable: {0}", sdlConfig.Resizeable);
-			Platform.Services.Logger.Info(LOOPER_TAG, "GL Doublebuffer: {0}", sdlConfig.glDoubleBuffer);
-			Platform.Services.Logger.Info(LOOPER_TAG, "GL Depth Buffer Size: {0}", sdlConfig.glDepthBufferSize);
-			Platform.Services.Logger.Info(LOOPER_TAG, "GL Red Size: {0}", sdlConfig.glRedSize);
-			Platform.Services.Logger.Info(LOOPER_TAG, "GL Green Size: {0}", sdlConfig.glGreenSize);
-			Platform.Services.Logger.Info(LOOPER_TAG, "GL Blue Size: {0}", sdlConfig.glBlueSize);
-			Platform.Services.Logger.Info(LOOPER_TAG, "GL Alpha Size: {0}", sdlConfig.glAlphaSize);
+			Logger.Info(LOOPER_TAG, "Received SDL configuration:");
+			Logger.Info(LOOPER_TAG, "\tTitle: {0}", sdlConfig.Title);
+			Logger.Info(LOOPER_TAG, "\tWidth: {0}", sdlConfig.Width);
+			Logger.Info(LOOPER_TAG, "\tHeight: {0}", sdlConfig.Height);
+			Logger.Info(LOOPER_TAG, "\tFullscreen: {0}", sdlConfig.Fullscreen);
+			Logger.Info(LOOPER_TAG, "\tResizeable: {0}", sdlConfig.Resizeable);
+			Logger.Info(LOOPER_TAG, "GL Doublebuffer: {0}", sdlConfig.glDoubleBuffer);
+			Logger.Info(LOOPER_TAG, "GL Depth Buffer Size: {0}", sdlConfig.glDepthBufferSize);
+			Logger.Info(LOOPER_TAG, "GL Red Size: {0}", sdlConfig.glRedSize);
+			Logger.Info(LOOPER_TAG, "GL Green Size: {0}", sdlConfig.glGreenSize);
+			Logger.Info(LOOPER_TAG, "GL Blue Size: {0}", sdlConfig.glBlueSize);
+			Logger.Info(LOOPER_TAG, "GL Alpha Size: {0}", sdlConfig.glAlphaSize);
 
 			if (!InitSDL())
 			{
-				Platform.Services.Logger.Error(LOOPER_TAG, "SDL initialization failed. Aborting.");
+				Logger.Error(LOOPER_TAG, "SDL initialization failed. Aborting.");
 				return;
 			}
 
 			if (!InitSDLWindow(sdlConfig))
 			{
-				Platform.Services.Logger.Error(LOOPER_TAG, "SDL window creation failed. Aborting.");
+				Logger.Error(LOOPER_TAG, "SDL window creation failed. Aborting.");
 				return;
 			}
 
-			(Platform.Services as SDLPlatformServices).Keyboard = _keyboard;
-			(Platform.Services as SDLPlatformServices).Mouse = _mouse;
-			(Platform.Services as SDLPlatformServices).FileSystem = _filesystem;
-			(Platform.Services as SDLPlatformServices).GL = new PortableGL.SDL.SDLGL20();
+			Platform.Set(this);
 
 			OnNewContext();
 			OnResize(ScreenOrientation.Rotation0, _windowInfo.ClientRectangle);
 			OnLoad();
 
-			Platform.Services.Logger.Info(LOOPER_TAG, "Main loop starting.");
+			Logger.Info(LOOPER_TAG, "Main loop starting.");
 			MainLoop();
-			Platform.Services.Logger.Info(LOOPER_TAG, "Main loop finished.");
+			Logger.Info(LOOPER_TAG, "Main loop finished.");
 
 			OnUnload();
 			OnLostContext();
@@ -138,61 +152,61 @@ namespace Blarg.GameFramework
 
 		private bool InitSDL()
 		{
-			Platform.Services.Logger.Info(LOOPER_TAG, "SDL initialization starting.");
+			Logger.Info(LOOPER_TAG, "SDL initialization starting.");
 
 			SDL.SDL_version sdlVersion;
 			SDL.SDL_VERSION(out sdlVersion);
-			Platform.Services.Logger.Info(LOOPER_TAG, "SDL Runtime Version: {0}.{1}.{2}", sdlVersion.major, sdlVersion.minor, sdlVersion.patch);
-			Platform.Services.Logger.Info(LOOPER_TAG, "SDL Linked Version: {0}.{1}.{2}", SDL.SDL_MAJOR_VERSION, SDL.SDL_MINOR_VERSION, SDL.SDL_PATCHLEVEL);
+			Logger.Info(LOOPER_TAG, "SDL Runtime Version: {0}.{1}.{2}", sdlVersion.major, sdlVersion.minor, sdlVersion.patch);
+			Logger.Info(LOOPER_TAG, "SDL Linked Version: {0}.{1}.{2}", SDL.SDL_MAJOR_VERSION, SDL.SDL_MINOR_VERSION, SDL.SDL_PATCHLEVEL);
 
 			if (SDL.SDL_Init(SDL.SDL_INIT_VIDEO | SDL.SDL_INIT_AUDIO | SDL.SDL_INIT_GAMECONTROLLER | SDL.SDL_INIT_JOYSTICK | SDL.SDL_INIT_TIMER) == -1)
 			{
-				Platform.Services.Logger.Error(LOOPER_TAG, "SDL_Init() failed: {0}", SDL.SDL_GetError());
+				Logger.Error(LOOPER_TAG, "SDL_Init() failed: {0}", SDL.SDL_GetError());
 				return false;
 			}
 			_isSDLinited = true;
 
 			_keyboard = new SDLKeyboard();
-			Platform.Services.Logger.Info(LOOPER_TAG, "Keyboard input device ready.");
+			Logger.Info(LOOPER_TAG, "Keyboard input device ready.");
 
 			_mouse = new SDLMouse();
-			Platform.Services.Logger.Info(LOOPER_TAG, "Mouse input device ready.");
+			Logger.Info(LOOPER_TAG, "Mouse input device ready.");
 
 			int numJoysticks = SDL.SDL_NumJoysticks();
 
-			Platform.Services.Logger.Info(LOOPER_TAG, "{0} joystick input devices found.", numJoysticks);
+			Logger.Info(LOOPER_TAG, "{0} joystick input devices found.", numJoysticks);
 			for (int i = 0; i < numJoysticks; ++i)
 			{
-				Platform.Services.Logger.Info(LOOPER_TAG, "Joystick #{0}. {1}:", (i + 1), SDL.SDL_JoystickNameForIndex(i));
+				Logger.Info(LOOPER_TAG, "Joystick #{0}. {1}:", (i + 1), SDL.SDL_JoystickNameForIndex(i));
 				IntPtr joystick = SDL.SDL_JoystickOpen(i);
 				if (joystick != IntPtr.Zero)
 				{
-					Platform.Services.Logger.Info(LOOPER_TAG, "\tAxes: {0}", SDL.SDL_JoystickNumAxes(joystick));
-					Platform.Services.Logger.Info(LOOPER_TAG, "\tBalls: {0}", SDL.SDL_JoystickNumBalls(joystick));
-					Platform.Services.Logger.Info(LOOPER_TAG, "\tHats: {0}", SDL.SDL_JoystickNumHats(joystick));
-					Platform.Services.Logger.Info(LOOPER_TAG, "\tButtons: {0}", SDL.SDL_JoystickNumButtons(joystick));
+					Logger.Info(LOOPER_TAG, "\tAxes: {0}", SDL.SDL_JoystickNumAxes(joystick));
+					Logger.Info(LOOPER_TAG, "\tBalls: {0}", SDL.SDL_JoystickNumBalls(joystick));
+					Logger.Info(LOOPER_TAG, "\tHats: {0}", SDL.SDL_JoystickNumHats(joystick));
+					Logger.Info(LOOPER_TAG, "\tButtons: {0}", SDL.SDL_JoystickNumButtons(joystick));
 					SDL.SDL_JoystickClose(joystick);
 				}
 				else
-					Platform.Services.Logger.Warn(LOOPER_TAG, "\tMore information could not be obtained.");
+					Logger.Warn(LOOPER_TAG, "\tMore information could not be obtained.");
 			}
 
 			_filesystem = new SDLFileSystem();
-			Platform.Services.Logger.Info(LOOPER_TAG, "Filesystem access initialized.");
+			Logger.Info(LOOPER_TAG, "Filesystem access initialized.");
 
 			int numVideoDrivers = SDL.SDL_GetNumVideoDrivers();
-			Platform.Services.Logger.Info(LOOPER_TAG, "Video drivers present: {0}.", numVideoDrivers);
+			Logger.Info(LOOPER_TAG, "Video drivers present: {0}.", numVideoDrivers);
 			for (int i = 0; i < numVideoDrivers; ++i)
-				Platform.Services.Logger.Info(LOOPER_TAG, "\t{0}: {1}", (i + 1), SDL.SDL_GetVideoDriver(i));
-			Platform.Services.Logger.Info(LOOPER_TAG, "Currently using video driver: {0}", SDL.SDL_GetCurrentVideoDriver());
+				Logger.Info(LOOPER_TAG, "\t{0}: {1}", (i + 1), SDL.SDL_GetVideoDriver(i));
+			Logger.Info(LOOPER_TAG, "Currently using video driver: {0}", SDL.SDL_GetCurrentVideoDriver());
 
 			int numAudioDrivers = SDL.SDL_GetNumAudioDrivers();
-			Platform.Services.Logger.Info(LOOPER_TAG, "Audio drivers present: {0}", numAudioDrivers);
+			Logger.Info(LOOPER_TAG, "Audio drivers present: {0}", numAudioDrivers);
 			for (int i = 0; i < numAudioDrivers; ++i)
-				Platform.Services.Logger.Info(LOOPER_TAG, "\t{0}: {1}", (i + 1), SDL.SDL_GetAudioDriver(i));
-			Platform.Services.Logger.Info(LOOPER_TAG, "Currently using audio driver: {0}", SDL.SDL_GetCurrentAudioDriver());
+				Logger.Info(LOOPER_TAG, "\t{0}: {1}", (i + 1), SDL.SDL_GetAudioDriver(i));
+			Logger.Info(LOOPER_TAG, "Currently using audio driver: {0}", SDL.SDL_GetCurrentAudioDriver());
 
-			Platform.Services.Logger.Info(LOOPER_TAG, "SDL initialization finished.");
+			Logger.Info(LOOPER_TAG, "SDL initialization finished.");
 			return true;
 		}
 
@@ -213,8 +227,6 @@ namespace Blarg.GameFramework
 			int numLoops = 0;
 			int timeElapsed = 0;
 			bool isDirty = false;
-
-			bool isRunningSlowly = false;
 
 			int updateTime = 0;
 			int renderTime = 0;
@@ -241,13 +253,13 @@ namespace Blarg.GameFramework
 					// every second recalculate the FPS
 					if (timeElapsed >= 1000)
 					{
-						_fps = numLoops;
-						_frameTime = 1000.0f / _fps;
+						FPS = numLoops;
+						FrameTime = 1000.0f / FPS;
 
-						_rendersPerSecond = numRenders;
-						_updatesPerSecond = numUpdates;
-						_renderTime = renderTime;
-						_updateTime = updateTime;
+						RendersPerSecond = numRenders;
+						UpdatesPerSecond = numUpdates;
+						RenderTime = renderTime;
+						UpdateTime = updateTime;
 
 						numUpdates = 0;
 						numRenders = 0;
@@ -258,15 +270,15 @@ namespace Blarg.GameFramework
 
 					// we're "running slowly" if we're more then one update behind
 					if (currentTime > nextUpdateAt + _ticksPerUpdate)
-						isRunningSlowly = true;
+						IsRunningSlowly = true;
 					else
-						isRunningSlowly = false;
+						IsRunningSlowly = false;
 
 					numUpdatesThisFrame = 0;
 					while (Environment.TickCount >= nextUpdateAt && numUpdatesThisFrame < _maxFrameSkip)
 					{
 						if (numUpdatesThisFrame > 0)
-							isRunningSlowly = true;
+							IsRunningSlowly = true;
 
 						int before = Environment.TickCount;
 						DoEvents();
@@ -304,7 +316,7 @@ namespace Blarg.GameFramework
 
 		private bool InitSDLWindow(SDLConfiguration config)
 		{
-			Platform.Services.Logger.Info(LOOPER_TAG, "SDL Window initialization starting.");
+			Logger.Info(LOOPER_TAG, "SDL Window initialization starting.");
 
 			int flags = (int)SDL.SDL_WindowFlags.SDL_WINDOW_OPENGL | (int)SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN;
 			if (config.Fullscreen)
@@ -318,42 +330,42 @@ namespace Blarg.GameFramework
 			if (!CreateOpenGLContext(config))
 				return false;
 
-			Platform.Services.Logger.Info(LOOPER_TAG, "SDL Window initialization finished.");
+			Logger.Info(LOOPER_TAG, "SDL Window initialization finished.");
 			return true;
 		}
 
 		private bool CreateWindow(string title, int width, int height, int flags)
 		{
-			Platform.Services.Logger.Info(LOOPER_TAG, "Attempting to set up new window with dimensions {0}x{1}.", width, height);
+			Logger.Info(LOOPER_TAG, "Attempting to set up new window with dimensions {0}x{1}.", width, height);
 			if (_window != IntPtr.Zero)
 				throw new InvalidOperationException("Cannot create new window before destorying existing one.");
 
 			_window = SDL.SDL_CreateWindow(title, SDL.SDL_WINDOWPOS_UNDEFINED, SDL.SDL_WINDOWPOS_UNDEFINED, width, height, (SDL.SDL_WindowFlags)flags);
 			if (_window == IntPtr.Zero)
 			{
-				Platform.Services.Logger.Error(LOOPER_TAG, "Window creation failed: {0}", SDL.SDL_GetError());
+				Logger.Error(LOOPER_TAG, "Window creation failed: {0}", SDL.SDL_GetError());
 				return false;
 			}
 
 			SetWindowInfo();
 
-			Platform.Services.Logger.Info(LOOPER_TAG, "Window creation succeeded.");
+			Logger.Info(LOOPER_TAG, "Window creation succeeded.");
 			return true;
 		}
 
 		private bool DestroyWindow()
 		{
-			Platform.Services.Logger.Info(LOOPER_TAG, "Destroying window.");
+			Logger.Info(LOOPER_TAG, "Destroying window.");
 			if (_window == IntPtr.Zero)
 			{
-				Platform.Services.Logger.Warn(LOOPER_TAG, "No window currently exists, not doing anything.");
+				Logger.Warn(LOOPER_TAG, "No window currently exists, not doing anything.");
 				return true;
 			}
 
 			SDL.SDL_DestroyWindow(_window);
 			_window = IntPtr.Zero;
 
-			Platform.Services.Logger.Info(LOOPER_TAG, "Window destroyed.");
+			Logger.Info(LOOPER_TAG, "Window destroyed.");
 			return true;
 		}
 
@@ -374,7 +386,7 @@ namespace Blarg.GameFramework
 			_windowInfo.ClientHeight = clientHeight;
 			_windowInfo.ClientRectangle = new Rect(0, 0, clientWidth, clientHeight);
 
-			Platform.Services.Logger.Info(LOOPER_TAG, "Window content area set to {0}", _windowInfo.ClientRectangle);
+			Logger.Info(LOOPER_TAG, "Window content area set to {0}", _windowInfo.ClientRectangle);
 		}
 
 		#endregion
@@ -383,7 +395,7 @@ namespace Blarg.GameFramework
 
 		private bool CreateOpenGLContext(SDLConfiguration config)
 		{
-			Platform.Services.Logger.Info(LOOPER_TAG, "Attempting to create OpenGL context.");
+			Logger.Info(LOOPER_TAG, "Attempting to create OpenGL context.");
 			if (_glContext != IntPtr.Zero)
 				throw new InvalidOperationException("Cannoy create new OpenGL context before destroying existing one.");
 			if (_window == IntPtr.Zero)
@@ -400,15 +412,17 @@ namespace Blarg.GameFramework
 			_glContext = SDL.SDL_GL_CreateContext(_window);
 			if (_glContext == IntPtr.Zero)
 			{
-				Platform.Services.Logger.Error(LOOPER_TAG, "OpenGL context creation failed: {0}", SDL.SDL_GetError());
+				Logger.Error(LOOPER_TAG, "OpenGL context creation failed: {0}", SDL.SDL_GetError());
 				return false;
 			}
 
-			Platform.Services.Logger.Info(LOOPER_TAG, "OpenGL context creation succeeded.");
+			Logger.Info(LOOPER_TAG, "OpenGL context creation succeeded.");
 
-			Platform.Services.Logger.Info(LOOPER_TAG, "Setting OpenTK's OpenGL context and loading OpenGL extensions.");
+			Logger.Info(LOOPER_TAG, "Setting OpenTK's OpenGL context and loading OpenGL extensions.");
 			OpenTK.Graphics.GraphicsContext.CurrentContext = _glContext;
 			OpenTK.Graphics.OpenGL.GL.LoadAll();
+
+			_gl = new SDLGL20();
 
 			int redSize;
 			int greenSize;
@@ -448,41 +462,41 @@ namespace Blarg.GameFramework
 			SDL.SDL_GL_GetAttribute(SDL.SDL_GLattr.SDL_GL_CONTEXT_MAJOR_VERSION, out contextMajorVersion);
 			SDL.SDL_GL_GetAttribute(SDL.SDL_GLattr.SDL_GL_CONTEXT_MINOR_VERSION, out contextMinorVersion);
 
-			Platform.Services.Logger.Info(LOOPER_TAG, "OpenGL context attributes:");
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tGL_RED_SIZE: {0}", redSize);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tGL_GREEN_SIZE: {0}", greenSize);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tGL_BLUE_SIZE: {0}", blueSize);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tGL_ALPHA_SIZE: {0}", alphaSize);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tGL_BUFFER_SIZE: {0}", bufferSize);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tGL_DOUBLEBUFFER: {0}", doubleBuffer);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tGL_DEPTH_SIZE: {0}", depthSize);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tGL_STENCIL_SIZE: {0}", stencilSize);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tGL_ACCUM_RED_SIZE: {0}", accumRedSize);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tGL_ACCUM_GREEN_SIZE: {0}", accumGreenSize);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tGL_ACCUM_BLUE_SIZE: {0}", accumBlueSize);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tGL_ACCUM_ALPHA_SIZE: {0}", accumAlphaSize);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tGL_STEREO: {0}", stereo);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tGL_MULTISAMPLEBUFFERS: {0}", multisampleBuffers);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tGL_MULTISAMPLESAMPLES: {0}", multisampleSamples);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tGL_ACCELERATED_VISUAL: {0}", acceleratedVisual);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tGL_CONTEXT_MAJOR_VERSION: {0}", contextMajorVersion);
-			Platform.Services.Logger.Info(LOOPER_TAG, "\tGL_CONTEXT_MINOR_VERSION: {0}", contextMinorVersion);
+			Logger.Info(LOOPER_TAG, "OpenGL context attributes:");
+			Logger.Info(LOOPER_TAG, "\tGL_RED_SIZE: {0}", redSize);
+			Logger.Info(LOOPER_TAG, "\tGL_GREEN_SIZE: {0}", greenSize);
+			Logger.Info(LOOPER_TAG, "\tGL_BLUE_SIZE: {0}", blueSize);
+			Logger.Info(LOOPER_TAG, "\tGL_ALPHA_SIZE: {0}", alphaSize);
+			Logger.Info(LOOPER_TAG, "\tGL_BUFFER_SIZE: {0}", bufferSize);
+			Logger.Info(LOOPER_TAG, "\tGL_DOUBLEBUFFER: {0}", doubleBuffer);
+			Logger.Info(LOOPER_TAG, "\tGL_DEPTH_SIZE: {0}", depthSize);
+			Logger.Info(LOOPER_TAG, "\tGL_STENCIL_SIZE: {0}", stencilSize);
+			Logger.Info(LOOPER_TAG, "\tGL_ACCUM_RED_SIZE: {0}", accumRedSize);
+			Logger.Info(LOOPER_TAG, "\tGL_ACCUM_GREEN_SIZE: {0}", accumGreenSize);
+			Logger.Info(LOOPER_TAG, "\tGL_ACCUM_BLUE_SIZE: {0}", accumBlueSize);
+			Logger.Info(LOOPER_TAG, "\tGL_ACCUM_ALPHA_SIZE: {0}", accumAlphaSize);
+			Logger.Info(LOOPER_TAG, "\tGL_STEREO: {0}", stereo);
+			Logger.Info(LOOPER_TAG, "\tGL_MULTISAMPLEBUFFERS: {0}", multisampleBuffers);
+			Logger.Info(LOOPER_TAG, "\tGL_MULTISAMPLESAMPLES: {0}", multisampleSamples);
+			Logger.Info(LOOPER_TAG, "\tGL_ACCELERATED_VISUAL: {0}", acceleratedVisual);
+			Logger.Info(LOOPER_TAG, "\tGL_CONTEXT_MAJOR_VERSION: {0}", contextMajorVersion);
+			Logger.Info(LOOPER_TAG, "\tGL_CONTEXT_MINOR_VERSION: {0}", contextMinorVersion);
 
-			Platform.Services.Logger.Info(LOOPER_TAG, "Attempting to enable V-sync.");
+			Logger.Info(LOOPER_TAG, "Attempting to enable V-sync.");
 			if (SDL.SDL_GL_SetSwapInterval(1) != 0)
-				Platform.Services.Logger.Warn(LOOPER_TAG, "Could not set swap interval: {0}", SDL.SDL_GetError());
+				Logger.Warn(LOOPER_TAG, "Could not set swap interval: {0}", SDL.SDL_GetError());
 			else
-				Platform.Services.Logger.Info(LOOPER_TAG, "Swap interval set successful.");
+				Logger.Info(LOOPER_TAG, "Swap interval set successful.");
 
 			return true;
 		}
 
 		private bool DestroyOpenGLContext()
 		{
-			Platform.Services.Logger.Info(LOOPER_TAG, "Destroying OpenGL context.");
+			Logger.Info(LOOPER_TAG, "Destroying OpenGL context.");
 			if (_glContext == IntPtr.Zero)
 			{
-				Platform.Services.Logger.Warn(LOOPER_TAG, "No OpenGL context currently exists, not doing anything.");
+				Logger.Warn(LOOPER_TAG, "No OpenGL context currently exists, not doing anything.");
 				return true;
 			}
 
@@ -490,7 +504,7 @@ namespace Blarg.GameFramework
 			OpenTK.Graphics.GraphicsContext.CurrentContext = IntPtr.Zero;
 			_glContext = IntPtr.Zero;
 
-			Platform.Services.Logger.Info(LOOPER_TAG, "OpenGL context destroyed.");
+			Logger.Info(LOOPER_TAG, "OpenGL context destroyed.");
 			return true;
 		}
 
@@ -508,35 +522,35 @@ namespace Blarg.GameFramework
 					switch (e.window.windowEvent)
 					{
 						case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_MINIMIZED:
-							Platform.Services.Logger.Info(LOOPER_TAG, "Window focus lost.");
-							Platform.Services.Logger.Info(LOOPER_TAG, "Window marked inactive.");
+							Logger.Info(LOOPER_TAG, "Window focus lost.");
+							Logger.Info(LOOPER_TAG, "Window marked inactive.");
 							break;
 
 							case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_RESTORED:
-							Platform.Services.Logger.Info(LOOPER_TAG, "Window focus gained.");
-							Platform.Services.Logger.Info(LOOPER_TAG, "Window marked active.");
+							Logger.Info(LOOPER_TAG, "Window focus gained.");
+							Logger.Info(LOOPER_TAG, "Window marked active.");
 							break;
 
 							case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_ENTER:
-							Platform.Services.Logger.Info(LOOPER_TAG, "Gained mouse focus.");
+							Logger.Info(LOOPER_TAG, "Gained mouse focus.");
 							break;
 
 							case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_LEAVE:
-							Platform.Services.Logger.Info(LOOPER_TAG, "Lost mouse focus.");
+							Logger.Info(LOOPER_TAG, "Lost mouse focus.");
 							break;
 
 							case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_FOCUS_GAINED:
-							Platform.Services.Logger.Info(LOOPER_TAG, "Gained input device focus.");
+							Logger.Info(LOOPER_TAG, "Gained input device focus.");
 							OnAppGainFocus();
 							break;
 
 							case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_FOCUS_LOST:
-							Platform.Services.Logger.Info(LOOPER_TAG, "Lost input device focus.");
+							Logger.Info(LOOPER_TAG, "Lost input device focus.");
 							OnAppLostFocus();
 							break;
 
 							case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_RESIZED:
-							Platform.Services.Logger.Info(LOOPER_TAG, "Window resized to {0}x{1}.", e.window.data1, e.window.data2);
+							Logger.Info(LOOPER_TAG, "Window resized to {0}x{1}.", e.window.data1, e.window.data2);
 							Rect size = new Rect();
 							size.Right = e.window.data1;
 							size.Bottom = e.window.data2;
@@ -550,7 +564,7 @@ namespace Blarg.GameFramework
 					switch (e.type)
 					{
 						case SDL.SDL_EventType.SDL_QUIT:
-							Platform.Services.Logger.Info(LOOPER_TAG, "Event: SQL_QUIT");
+							Logger.Info(LOOPER_TAG, "Event: SQL_QUIT");
 							_isQuitting = true;
 							break;
 
@@ -581,14 +595,14 @@ namespace Blarg.GameFramework
 			if (!_isSDLinited)
 				return;
 
-			Platform.Services.Logger.Info(LOOPER_TAG, "Releasing SDL.");
+			Logger.Info(LOOPER_TAG, "Releasing SDL.");
 
 			DestroyOpenGLContext();
 			DestroyWindow();
 			SDL.SDL_Quit();
 			_isSDLinited = false;
 
-			Platform.Services.Logger.Info(LOOPER_TAG, "SDL shutdown.");
+			Logger.Info(LOOPER_TAG, "SDL shutdown.");
 		}
 
 		~SDLLooper()

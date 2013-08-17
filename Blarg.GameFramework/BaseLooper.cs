@@ -1,30 +1,32 @@
 using System;
+using PortableGL;
 using Blarg.GameFramework.Graphics;
+using Blarg.GameFramework.Input;
+using Blarg.GameFramework.IO;
 
 namespace Blarg.GameFramework
 {
 	public abstract class BaseLooper : ILooper
 	{
-		IGameApp _gameApp;
+		protected IGameApp GameApp { get; set; }
 
-		public IGameApp GameApp
-		{
-			get
-			{
-				return _gameApp;
-			}
-			protected set
-			{
-				_gameApp = value;
-			}
-		}
+		public abstract PlatformOS OperatingSystem { get; }
+		public abstract PlatformType Type { get; }
 
-		public abstract int FPS { get; }
-		public abstract float FrameTime { get; }
-		public abstract int RendersPerSecond { get; }
-		public abstract int UpdatesPerSecond { get; }
-		public abstract int RenderTime { get; }
-		public abstract int UpdateTime { get; }
+		public abstract IPlatformLogger Logger { get; }
+		public abstract IFileSystem FileSystem { get; }
+		public abstract IKeyboard Keyboard { get; }
+		public abstract IMouse Mouse { get; }
+		public abstract ITouchScreen TouchScreen { get; }
+		public abstract GL20 GL { get; }
+
+		public int FPS { get; protected set; }
+		public float FrameTime { get; protected set; }
+		public int RendersPerSecond { get; protected set; }
+		public int UpdatesPerSecond { get; protected set; }
+		public int RenderTime { get; protected set; }
+		public int UpdateTime { get; protected set; }
+		public bool IsRunningSlowly { get; protected set; }
 
 		public abstract void Run(IGameApp gameApp, IPlatformConfiguration config);
 

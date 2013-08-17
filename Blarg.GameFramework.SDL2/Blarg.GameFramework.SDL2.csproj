@@ -51,7 +51,6 @@
     <Compile Include="SDLLooper.cs" />
     <Compile Include="SDLWindow.cs" />
     <Compile Include="SDLConfiguration.cs" />
-    <Compile Include="SDLPlatformServices.cs" />
     <Compile Include="CurrentOS.cs" />
     <Compile Include="Input\SDLKeyMapper.cs" />
   </ItemGroup>

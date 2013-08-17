@@ -76,7 +76,6 @@
     <Compile Include="Math\SweptEllipsoidCollisionPacket.cs" />
     <Compile Include="Math\IntersectionTester.cs" />
     <Compile Include="Platform.cs" />
-    <Compile Include="IPlatformServices.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="Graphics\Color.cs" />
     <Compile Include="Graphics\Image.cs" />

@@ -1,4 +1,8 @@
 using System;
+using PortableGL;
+using Blarg.GameFramework.Graphics;
+using Blarg.GameFramework.Input;
+using Blarg.GameFramework.IO;
 
 namespace Blarg.GameFramework
 {
@@ -19,18 +23,31 @@ namespace Blarg.GameFramework
 
 	public static class Platform
 	{
-		static IPlatformServices _services;
+		public static PlatformOS OperatingSystem { get; private set; }
+		public static PlatformType Type { get; private set; }
 
-		public static IPlatformServices Services
+		public static ILooper Looper { get; private set; }
+		public static IPlatformLogger Logger { get; private set; }
+		public static IFileSystem FileSystem { get; private set; }
+		public static IKeyboard Keyboard { get; private set; }
+		public static IMouse Mouse { get; private set; }
+		public static ITouchScreen TouchScreen { get; private set; }
+		public static GL20 GL { get; private set; }
+
+		public static void Set(ILooper looper)
 		{
-			get { return _services; }
-			set
-			{
-				if (_services != null)
-					throw new InvalidOperationException();
-				else
-					_services = value;
-			}
+			if (Looper != null)
+				throw new InvalidOperationException();
+
+			Looper = looper;
+			OperatingSystem = Looper.OperatingSystem;
+			Type = Looper.Type;
+			Logger = Looper.Logger;
+			FileSystem = Looper.FileSystem;
+			Keyboard = Looper.Keyboard;
+			Mouse = Looper.Mouse;
+			TouchScreen = Looper.TouchScreen;
+			GL = Looper.GL;
 		}
 	}
 }
