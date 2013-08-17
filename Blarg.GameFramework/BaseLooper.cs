@@ -32,6 +32,7 @@ namespace Blarg.GameFramework
 		public bool IsRunningSlowly { get; protected set; }
 
 		public abstract void Run(IGameApp gameApp, IPlatformConfiguration config);
+		public abstract void Quit();
 
 		protected void OnAppGainFocus()
 		{

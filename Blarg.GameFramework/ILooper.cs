@@ -27,6 +27,7 @@ namespace Blarg.GameFramework
 		bool IsRunningSlowly { get; }
 
 		void Run(IGameApp gameApp, IPlatformConfiguration config);
+		void Quit();
 	}
 }
 

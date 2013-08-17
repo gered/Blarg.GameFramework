@@ -163,6 +163,12 @@ namespace Blarg.GameFramework
 			ReleaseSDL();
 		}
 
+		public override void Quit()
+		{
+			Logger.Info(LOG_TAG, "Quit signaled. Main loop will exit.");
+			_isQuitting = true;
+		}
+
 		private void MainLoop()
 		{
 			_isWindowActive = true;
