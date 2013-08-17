@@ -11,7 +11,7 @@ namespace Blarg.GameFramework
 {
 	public class SDLApplication : BaseApplication
 	{
-		const string LOG_TAG = "SDLApplication";
+		const string LOG_TAG = "SDL_APP";
 
 		#region Fields 
 
