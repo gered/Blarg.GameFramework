@@ -8,7 +8,7 @@ namespace Blarg.GameFramework
 {
 	public abstract class BaseApplication : IApplication
 	{
-		public const string LOG_TAG = "BASE_APP";
+		const string LOG_TAG = "BASE_APP";
 
 		protected IGameApp GameApp { get; set; }
 
