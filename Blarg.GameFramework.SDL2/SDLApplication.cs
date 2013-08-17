@@ -443,10 +443,7 @@ namespace Blarg.GameFramework
 			Logger.Info(LOG_TAG, "OpenGL context creation succeeded.");
 
 			Logger.Info(LOG_TAG, "Setting OpenTK's OpenGL context and loading OpenGL extensions.");
-			OpenTK.Graphics.GraphicsContext.CurrentContext = _glContext;
-			OpenTK.Graphics.OpenGL.GL.LoadAll();
-
-			_gl = new SDLGL20();
+			_gl = new SDLGL20(_glContext);
 
 			int redSize;
 			int greenSize;
