@@ -487,6 +487,7 @@ namespace Blarg.GameFramework
 			}
 
 			SDL.SDL_GL_DeleteContext(_glContext);
+			OpenTK.Graphics.GraphicsContext.CurrentContext = IntPtr.Zero;
 			_glContext = IntPtr.Zero;
 
 			Platform.Services.Logger.Info(LOOPER_TAG, "OpenGL context destroyed.");
