@@ -8,6 +8,8 @@ namespace Blarg.GameFramework
 {
 	public abstract class BaseLooper : ILooper
 	{
+		public const string LOG_TAG = "BASELOOPER";
+
 		protected IGameApp GameApp { get; set; }
 
 		public abstract PlatformOS OperatingSystem { get; }
@@ -32,41 +34,49 @@ namespace Blarg.GameFramework
 
 		protected void OnAppGainFocus()
 		{
+			Logger.Info(LOG_TAG, "OnAppGainFocus");
 			GameApp.OnAppGainFocus();
 		}
 
 		protected void OnAppLostFocus()
 		{
+			Logger.Info(LOG_TAG, "OnAppLostFocus");
 			GameApp.OnAppLostFocus();
 		}
 
 		protected void OnAppPause()
 		{
+			Logger.Info(LOG_TAG, "OnAppPause");
 			GameApp.OnAppPause();
 		}
 
 		protected void OnAppResume()
 		{
+			Logger.Info(LOG_TAG, "OnAppResume");
 			GameApp.OnAppResume();
 		}
 
 		protected void OnLoad()
 		{
+			Logger.Info(LOG_TAG, "OnLoad");
 			GameApp.OnLoad();
 		}
 
 		protected void OnUnload()
 		{
+			Logger.Info(LOG_TAG, "OnUnload");
 			GameApp.OnUnload();
 		}
 
 		protected void OnLostContext()
 		{
+			Logger.Info(LOG_TAG, "OnLostContext");
 			GameApp.OnLostContext();
 		}
 
 		protected void OnNewContext()
 		{
+			Logger.Info(LOG_TAG, "OnNewContext");
 			GameApp.OnNewContext();
 		}
 
@@ -77,6 +87,7 @@ namespace Blarg.GameFramework
 
 		protected void OnResize(ScreenOrientation orientation, Rect size)
 		{
+			Logger.Info(LOG_TAG, "OnResize");
 			GameApp.OnResize(orientation, size);
 		}
 
