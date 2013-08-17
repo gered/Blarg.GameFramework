@@ -157,6 +157,7 @@ namespace Blarg.GameFramework
 			OnUnload();
 			OnLostContext();
 
+			Logger.Info(LOG_TAG, "Cleaning up game application object.");
 			GameApp.Dispose();
 			GameApp = null;
 
