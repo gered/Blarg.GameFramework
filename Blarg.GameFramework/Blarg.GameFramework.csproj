@@ -40,6 +40,9 @@
     <Reference Include="PortableGL">
       <HintPath>..\Libs\PortableGL.dll</HintPath>
     </Reference>
+    <Reference Include="TrueTypeSharp">
+      <HintPath>..\Libs\TrueTypeSharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
