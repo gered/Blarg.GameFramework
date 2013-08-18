@@ -97,36 +97,7 @@ namespace Blarg.GameFramework.Graphics
 
 		public void MeasureString(out int width, out int height, string format, params object[] args)
 		{
-			_buffer.Clear();
-			_buffer.AppendFormat(format, args);
-
-			int textLength = _buffer.Length;
-
-			int currentMaxWidth = 0;
-			int left = 0;
-			int numLines = 1;
-
-			for (int i = 0; i < textLength; ++i)
-			{
-				char c = _buffer[i];
-				if (c == '\n')
-				{
-					// new line
-					left = 0;
-					++numLines;
-				}
-				else
-				{
-					Rect charSize = new Rect();
-					GetCharDimensions(c, out charSize);
-					left += charSize.Width;
-				}
-
-				currentMaxWidth = Math.Max(left, currentMaxWidth);
-			}
-
-			width = currentMaxWidth;
-			height = numLines * LetterHeight;
+			MeasureString(out width, out height, 1.0f, format, args);
 		}
 
 		public void MeasureString(out int width, out int height, float scale, string format, params object[] args)
@@ -145,6 +116,44 @@ namespace Blarg.GameFramework.Graphics
 			for (int i = 0; i < textLength; ++i)
 			{
 				char c = _buffer[i];
+				if (c == '\n')
+				{
+					// new line
+					left = 0.0f;
+					++numLines;
+				}
+				else
+				{
+					Rect charSize = new Rect();
+					GetCharDimensions(c, out charSize);
+					left += (float)charSize.Width * scale;
+				}
+
+				currentMaxWidth = Math.Max(left, currentMaxWidth);
+			}
+
+			width = (int)Math.Ceiling(currentMaxWidth);
+			height = (int)(numLines * scaledLetterHeight);
+		}
+
+		public void MeasureString(out int width, out int height, StringBuilder text)
+		{
+			MeasureString(out width, out height, 1.0f, text);
+		}
+
+		public void MeasureString(out int width, out int height, float scale, StringBuilder text)
+		{
+			int textLength = text.Length;
+
+			float scaledLetterHeight = (float)LetterHeight * scale;
+
+			float currentMaxWidth = 0.0f;
+			float left = 0.0f;
+			int numLines = 1;
+
+			for (int i = 0; i < textLength; ++i)
+			{
+				char c = text[i];
 				if (c == '\n')
 				{
 					// new line

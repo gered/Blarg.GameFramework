@@ -518,6 +518,61 @@ namespace Blarg.GameFramework.Graphics
 			}
 		}
 
+		public void Render(SpriteFont font, int x, int y, Color color, StringBuilder text)
+		{
+			Render(font, x, y, ref color, 1.0f, text);
+		}
+
+		public void Render(SpriteFont font, int x, int y, ref Color color, StringBuilder text)
+		{
+			Render(font, x, y, ref color, 1.0f, text);
+		}
+
+		public void Render(SpriteFont font, int x, int y, Color color, float scale, StringBuilder text)
+		{
+			Render(font, x, y, ref color, scale, text);
+		}
+
+		public void Render(SpriteFont font, int x, int y, ref Color color, float scale, StringBuilder text)
+		{
+			float scaledLetterHeight = (float)font.LetterHeight * scale;
+
+			y = (int)FixYCoord(y, scaledLetterHeight);
+
+			float drawX = (float)x;
+			float drawY = (float)y;
+
+			for (int i = 0; i < text.Length; ++i)
+			{
+				char c = text[i];
+				if (c == '\n')
+				{
+					// new line
+					drawX = (float)x;
+					drawY -= scaledLetterHeight;
+				}
+				else
+				{
+					RectF texCoords;
+					Rect dimensions;
+					font.GetCharTexCoords(c, out texCoords);
+					font.GetCharDimensions(c, out dimensions);
+
+					float scaledGlyphWidth = (float)dimensions.Width * scale;
+					float scaledGlyphHeight = (float)dimensions.Height * scale;
+
+					AddSprite(
+						font.Texture, 
+						drawX, drawY, drawX + scaledGlyphWidth, drawY + scaledGlyphHeight, 
+						texCoords.Left, texCoords.Top, texCoords.Right, texCoords.Bottom, 
+						ref color
+						);
+
+					drawX += scaledGlyphWidth;
+				}
+			}
+		}
+
 		public void Render(SpriteFont font, Vector3 worldPosition, Color color, string text)
 		{
 			Render(font, ref worldPosition, ref color, 1.0f, text);
@@ -591,6 +646,35 @@ namespace Blarg.GameFramework.Graphics
 			_buffer.AppendFormat(format, args);
 
 			Render(font, ref worldPosition, ref color, scale, _buffer.ToString());
+		}
+
+		public void Render(SpriteFont font, Vector3 worldPosition, Color color, StringBuilder text)
+		{
+			Render(font, ref worldPosition, ref color, 1.0f, text);
+		}
+
+		public void Render(SpriteFont font, ref Vector3 worldPosition, ref Color color, StringBuilder text)
+		{
+			Render(font, ref worldPosition, ref color, 1.0f, text);
+		}
+
+		public void Render(SpriteFont font, Vector3 worldPosition, Color color, float scale, StringBuilder text)
+		{
+			Render(font, ref worldPosition, ref color, scale, text);
+		}
+
+		public void Render(SpriteFont font, ref Vector3 worldPosition, ref Color color, float scale, StringBuilder text)
+		{
+			var screenCoordinates = GraphicsDevice.ViewContext.Camera.Project(ref worldPosition, ref _previousModelView, ref _previousProjection);
+
+			int textWidth;
+			int textHeight;
+			font.MeasureString(out textWidth, out textHeight, scale, text);
+
+			screenCoordinates.X -= textWidth / 2;
+			screenCoordinates.Y -= textHeight / 2;
+
+			Render(font, screenCoordinates.X, screenCoordinates.Y, ref color, scale, text);
 		}
 
 		#endregion
