@@ -107,7 +107,7 @@ namespace Blarg.GameFramework.Graphics
 
 			Platform.GL.glTexImage2D(GL20.GL_TEXTURE_2D, 0, internalFormat, Width, Height, 0, pixelFormat, pixelType, image.Pixels);
 
-			Platform.Logger.Info("Graphics", "Created texture from image. ID = {0}, bpp = {1}, size = {2}x{3}.", ID, image.BitsPerPixel, Width, Height);
+			Platform.Logger.Info(GraphicsContextResource.LOG_TAG, "Created texture from image. ID = {0}, bpp = {1}, size = {2}x{3}.", ID, image.BitsPerPixel, Width, Height);
 		}
 
 		private void CreateTexture(int width, int height, TextureFormat format, bool useExistingTextureParams = false)
@@ -142,9 +142,9 @@ namespace Blarg.GameFramework.Graphics
 			Platform.GL.glTexImage2D(GL20.GL_TEXTURE_2D, 0, internalFormat, Width, Height, 0, pixelFormat, pixelType, IntPtr.Zero);
 
 			if (Format == TextureFormat.Depth)
-				Platform.Logger.Info("Graphics", "Created uninitialized texture. ID = {0}, depth component only, size = {1}x{2}", ID, Width, Height);
+				Platform.Logger.Info(GraphicsContextResource.LOG_TAG, "Created uninitialized texture. ID = {0}, depth component only, size = {1}x{2}", ID, Width, Height);
 			else
-				Platform.Logger.Info("Graphics", "Created uninitialized texture. ID = {0}, bpp = {1}, size = {2}x{3}", ID, bpp, Width, Height);
+				Platform.Logger.Info(GraphicsContextResource.LOG_TAG, "Created uninitialized texture. ID = {0}, bpp = {1}, size = {2}x{3}", ID, bpp, Width, Height);
 		}
 
 		#endregion
@@ -273,7 +273,7 @@ namespace Blarg.GameFramework.Graphics
 
 				Platform.GL.glDeleteTextures(ID);
 
-				Platform.Logger.Info("Graphics", "Deleted Texture ID = {0}.", ID);
+				Platform.Logger.Info(GraphicsContextResource.LOG_TAG, "Deleted Texture ID = {0}.", ID);
 
 				ID = -1;
 			}

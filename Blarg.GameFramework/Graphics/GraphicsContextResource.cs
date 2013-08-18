@@ -4,6 +4,8 @@ namespace Blarg.GameFramework.Graphics
 {
 	public abstract class GraphicsContextResource : IDisposable
 	{
+		public const string LOG_TAG = "GRAPHICS_RESOURCE";
+
 		public GraphicsDevice GraphicsDevice { get; private set; }
 		public bool IsReleased { get; private set; }
 

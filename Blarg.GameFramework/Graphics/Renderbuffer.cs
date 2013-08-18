@@ -13,6 +13,7 @@ namespace Blarg.GameFramework.Graphics
 
 	public class Renderbuffer : GraphicsContextResource
 	{
+
 		public int ID { get; private set; }
 		public int Width { get; private set; }
 		public int Height { get; private set; }
@@ -73,7 +74,7 @@ namespace Blarg.GameFramework.Graphics
 			Platform.GL.glRenderbufferStorage(GL20.GL_RENDERBUFFER, glFormat, Width, Height);
 			GraphicsDevice.UnbindRenderbuffer(this);
 
-			Platform.Logger.Info("Graphics", "Created renderbuffer. ID = {0}, format = {1}, size = {2}x{3}.", ID, Format.ToString(), Width, Height);
+			Platform.Logger.Info(GraphicsContextResource.LOG_TAG, "Created renderbuffer. ID = {0}, format = {1}, size = {2}x{3}.", ID, Format.ToString(), Width, Height);
 		}
 
 		#region GraphicsContextResource
@@ -96,7 +97,7 @@ namespace Blarg.GameFramework.Graphics
 
 				Platform.GL.glDeleteRenderbuffers(ID);
 
-				Platform.Logger.Info("Graphics", "Deleted Renderbuffer ID = {0}.", ID);
+				Platform.Logger.Info(GraphicsContextResource.LOG_TAG, "Deleted Renderbuffer ID = {0}.", ID);
 
 				ID = -1;
 			}
