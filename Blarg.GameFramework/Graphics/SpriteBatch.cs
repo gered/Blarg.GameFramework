@@ -209,6 +209,11 @@ namespace Blarg.GameFramework.Graphics
 			Render(texture, x, y, ref _defaultSpriteColor);
 		}
 
+		public void Render(Texture texture, int x, int y, Color color)
+		{
+			Render(texture, x, y, ref color);
+		}
+
 		public void Render(Texture texture, int x, int y, ref Color color)
 		{
 			y = FixYCoord(y, texture.Height);
@@ -218,6 +223,11 @@ namespace Blarg.GameFramework.Graphics
 		public void Render(Texture texture, int x, int y, int width, int height)
 		{
 			Render(texture, x, y, width, height, ref _defaultSpriteColor);
+		}
+
+		public void Render(Texture texture, int x, int y, int width, int height, Color color)
+		{
+			Render(texture, x, y, width, height, ref color);
 		}
 
 		public void Render(Texture texture, int x, int y, int width, int height, ref Color color)
@@ -231,6 +241,11 @@ namespace Blarg.GameFramework.Graphics
 			Render(texture, x, y, texCoordLeft, texCoordTop, texCoordRight, texCoordBottom, ref _defaultSpriteColor);
 		}
 
+		public void Render(Texture texture, int x, int y, float texCoordLeft, float texCoordTop, float texCoordRight, float texCoordBottom, Color color)
+		{
+			Render(texture, x, y, texCoordLeft, texCoordTop, texCoordRight, texCoordBottom, ref color);
+		}
+
 		public void Render(Texture texture, int x, int y, float texCoordLeft, float texCoordTop, float texCoordRight, float texCoordBottom, ref Color color)
 		{
 			y = FixYCoord(y, texture.Height);
@@ -242,15 +257,30 @@ namespace Blarg.GameFramework.Graphics
 			Render(texture, x, y, width, height, texCoordLeft, texCoordTop, texCoordRight, texCoordBottom, ref _defaultSpriteColor);
 		}
 
+		public void Render(Texture texture, int x, int y, int width, int height, float texCoordLeft, float texCoordTop, float texCoordRight, float texCoordBottom, Color color)
+		{
+			Render(texture, x, y, width, height, texCoordLeft, texCoordTop, texCoordRight, texCoordBottom, ref color);
+		}
+
 		public void Render(Texture texture, int x, int y, int width, int height, float texCoordLeft, float texCoordTop, float texCoordRight, float texCoordBottom, ref Color color)
 		{
 			y = FixYCoord(y, height);
 			AddSprite(texture, x, y, x + width, y + height, texCoordLeft, texCoordTop, texCoordRight, texCoordBottom, ref color);
 		}
 
+		public void Render(Texture texture, Vector3 worldPosition)
+		{
+			Render(texture, ref worldPosition, ref _defaultSpriteColor);
+		}
+
 		public void Render(Texture texture, ref Vector3 worldPosition)
 		{
 			Render(texture, ref worldPosition, ref _defaultSpriteColor);
+		}
+
+		public void Render(Texture texture, Vector3 worldPosition, Color color)
+		{
+			Render(texture, ref worldPosition, ref color);
 		}
 
 		public void Render(Texture texture, ref Vector3 worldPosition, ref Color color)
@@ -263,9 +293,19 @@ namespace Blarg.GameFramework.Graphics
 			Render(texture, screenCoordinates.X, screenCoordinates.Y, ref color);
 		}
 
+		public void Render(Texture texture, Vector3 worldPosition, int width, int height)
+		{
+			Render(texture, ref worldPosition, width, height, ref _defaultSpriteColor);
+		}
+
 		public void Render(Texture texture, ref Vector3 worldPosition, int width, int height)
 		{
 			Render(texture, ref worldPosition, width, height, ref _defaultSpriteColor);
+		}
+
+		public void Render(Texture texture, Vector3 worldPosition, int width, int height, Color color)
+		{
+			Render(texture, ref worldPosition, width, height, ref color);
 		}
 
 		public void Render(Texture texture, ref Vector3 worldPosition, int width, int height, ref Color color)
@@ -278,9 +318,19 @@ namespace Blarg.GameFramework.Graphics
 			Render(texture, screenCoordinates.X, screenCoordinates.Y, width, height, ref color);
 		}
 
+		public void Render(Texture texture, Vector3 worldPosition, float texCoordLeft, float texCoordTop, float texCoordRight, float texCoordBottom)
+		{
+			Render(texture, ref worldPosition, texCoordLeft, texCoordTop, texCoordRight, texCoordBottom, ref _defaultSpriteColor);
+		}
+
 		public void Render(Texture texture, ref Vector3 worldPosition, float texCoordLeft, float texCoordTop, float texCoordRight, float texCoordBottom)
 		{
 			Render(texture, ref worldPosition, texCoordLeft, texCoordTop, texCoordRight, texCoordBottom, ref _defaultSpriteColor);
+		}
+
+		public void Render(Texture texture, Vector3 worldPosition, float texCoordLeft, float texCoordTop, float texCoordRight, float texCoordBottom, Color color)
+		{
+			Render(texture, ref worldPosition, texCoordLeft, texCoordTop, texCoordRight, texCoordBottom, ref color);
 		}
 
 		public void Render(Texture texture, ref Vector3 worldPosition, float texCoordLeft, float texCoordTop, float texCoordRight, float texCoordBottom, ref Color color)
@@ -293,9 +343,19 @@ namespace Blarg.GameFramework.Graphics
 			Render(texture, screenCoordinates.X, screenCoordinates.Y, texCoordLeft, texCoordTop, texCoordRight, texCoordBottom, ref color);
 		}
 
+		public void Render(Texture texture, Vector3 worldPosition, int width, int height, float texCoordLeft, float texCoordTop, float texCoordRight, float texCoordBottom)
+		{
+			Render(texture, ref worldPosition, width, height, texCoordLeft, texCoordTop, texCoordRight, texCoordBottom, ref _defaultSpriteColor);
+		}
+
 		public void Render(Texture texture, ref Vector3 worldPosition, int width, int height, float texCoordLeft, float texCoordTop, float texCoordRight, float texCoordBottom)
 		{
 			Render(texture, ref worldPosition, width, height, texCoordLeft, texCoordTop, texCoordRight, texCoordBottom, ref _defaultSpriteColor);
+		}
+
+		public void Render(Texture texture, Vector3 worldPosition, int width, int height, float texCoordLeft, float texCoordTop, float texCoordRight, float texCoordBottom, Color color)
+		{
+			Render(texture, ref worldPosition, width, height, texCoordLeft, texCoordTop, texCoordRight, texCoordBottom, ref color);
 		}
 
 		public void Render(Texture texture, ref Vector3 worldPosition, int width, int height, float texCoordLeft, float texCoordTop, float texCoordRight, float texCoordBottom, ref Color color)
@@ -311,6 +371,11 @@ namespace Blarg.GameFramework.Graphics
 		public void Render(TextureAtlas atlas, int index, int x, int y)
 		{
 			Render(atlas, index, x, y, ref _defaultSpriteColor);
+		}
+
+		public void Render(TextureAtlas atlas, int index, int x, int y, Color color)
+		{
+			Render(atlas, index, x, y, ref color);
 		}
 
 		public void Render(TextureAtlas atlas, int index, int x, int y, ref Color color)
@@ -329,6 +394,11 @@ namespace Blarg.GameFramework.Graphics
 			Render(atlas, index, x, y, width, height, ref _defaultSpriteColor);
 		}
 
+		public void Render(TextureAtlas atlas, int index, int x, int y, int width, int height, Color color)
+		{
+			Render(atlas, index, x, y, width, height, ref color);
+		}
+
 		public void Render(TextureAtlas atlas, int index, int x, int y, int width, int height, ref Color color)
 		{
 			RectF texCoords;
@@ -338,9 +408,19 @@ namespace Blarg.GameFramework.Graphics
 			AddSprite(atlas.Texture, x, y, x + width, y + height, texCoords.Left, texCoords.Top, texCoords.Right, texCoords.Bottom, ref color);
 		}
 
+		public void Render(TextureAtlas atlas, int index, Vector3 worldPosition)
+		{
+			Render(atlas, index, ref worldPosition, ref _defaultSpriteColor);
+		}
+
 		public void Render(TextureAtlas atlas, int index, ref Vector3 worldPosition)
 		{
 			Render(atlas, index, ref worldPosition, ref _defaultSpriteColor);
+		}
+
+		public void Render(TextureAtlas atlas, int index, Vector3 worldPosition, Color color)
+		{
+			Render(atlas, index, ref worldPosition, ref color);
 		}
 
 		public void Render(TextureAtlas atlas, int index, ref Vector3 worldPosition, ref Color color)
@@ -354,9 +434,19 @@ namespace Blarg.GameFramework.Graphics
 			Render(atlas, index, screenCoordinates.X, screenCoordinates.Y, ref color);
 		}
 
+		public void Render(TextureAtlas atlas, int index, Vector3 worldPosition, int width, int height)
+		{
+			Render(atlas, index, ref worldPosition, width, height, ref _defaultSpriteColor);
+		}
+
 		public void Render(TextureAtlas atlas, int index, ref Vector3 worldPosition, int width, int height)
 		{
 			Render(atlas, index, ref worldPosition, width, height, ref _defaultSpriteColor);
+		}
+
+		public void Render(TextureAtlas atlas, int index, Vector3 worldPosition, int width, int height, Color color)
+		{
+			Render(atlas, index, ref worldPosition, width, height, ref color);
 		}
 
 		public void Render(TextureAtlas atlas, int index, ref Vector3 worldPosition, int width, int height, ref Color color)
@@ -373,39 +463,19 @@ namespace Blarg.GameFramework.Graphics
 
 		#region Render: Fonts
 
+		public void Render(SpriteFont font, int x, int y, Color color, string text)
+		{
+			Render(font, x, y, ref color, 1.0f, text);
+		}
+
 		public void Render(SpriteFont font, int x, int y, ref Color color, string text)
 		{
-			y = FixYCoord(y, font.LetterHeight);
+			Render(font, x, y, ref color, 1.0f, text);
+		}
 
-			int drawX = x;
-			int drawY = y;
-
-			for (int i = 0; i < text.Length; ++i)
-			{
-				char c = text[i];
-				if (c == '\n')
-				{
-					// new line
-					drawX = x;
-					drawY -= font.LetterHeight;
-				}
-				else
-				{
-					RectF texCoords;
-					Rect dimensions;
-					font.GetCharTexCoords(c, out texCoords);
-					font.GetCharDimensions(c, out dimensions);
-
-					AddSprite(
-						font.Texture, 
-						drawX, drawY, drawX + dimensions.Width, drawY + dimensions.Height, 
-						texCoords.Left, texCoords.Top, texCoords.Right, texCoords.Bottom, 
-						ref color
-						);
-
-					drawX += dimensions.Width;
-				}
-			}
+		public void Render(SpriteFont font, int x, int y, Color color, float scale, string text)
+		{
+			Render(font, x, y, ref color, scale, text);
 		}
 
 		public void Render(SpriteFont font, int x, int y, ref Color color, float scale, string text)
@@ -448,18 +518,19 @@ namespace Blarg.GameFramework.Graphics
 			}
 		}
 
+		public void Render(SpriteFont font, Vector3 worldPosition, Color color, string text)
+		{
+			Render(font, ref worldPosition, ref color, 1.0f, text);
+		}
+
 		public void Render(SpriteFont font, ref Vector3 worldPosition, ref Color color, string text)
 		{
-			var screenCoordinates = GraphicsDevice.ViewContext.Camera.Project(ref worldPosition, ref _previousModelView, ref _previousProjection);
+			Render(font, ref worldPosition, ref color, 1.0f, text);
+		}
 
-			int textWidth;
-			int textHeight;
-			font.MeasureString(out textWidth, out textHeight, text);
-
-			screenCoordinates.X -= textWidth / 2;
-			screenCoordinates.Y -= textHeight / 2;
-
-			Render(font, screenCoordinates.X, screenCoordinates.Y, ref color, text);
+		public void Render(SpriteFont font, Vector3 worldPosition, Color color, float scale, string text)
+		{
+			Render(font, ref worldPosition, ref color, scale, text);
 		}
 
 		public void Render(SpriteFont font, ref Vector3 worldPosition, ref Color color, float scale, string text)
@@ -476,12 +547,19 @@ namespace Blarg.GameFramework.Graphics
 			Render(font, screenCoordinates.X, screenCoordinates.Y, ref color, scale, text);
 		}
 
+		public void Printf(SpriteFont font, int x, int y, Color color, string format, params object[] args)
+		{
+			Printf(font, x, y, ref color, 1.0f, format, args);
+		}
+
 		public void Printf(SpriteFont font, int x, int y, ref Color color, string format, params object[] args)
 		{
-			_buffer.Clear();
-			_buffer.AppendFormat(format, args);
+			Printf(font, x, y, ref color, 1.0f, format, args);
+		}
 
-			Render(font, x, y, ref color, _buffer.ToString());
+		public void Printf(SpriteFont font, int x, int y, Color color, float scale, string format, params object[] args)
+		{
+			Printf(font, x, y, ref color, scale, format, args);
 		}
 
 		public void Printf(SpriteFont font, int x, int y, ref Color color, float scale, string format, params object[] args)
@@ -492,12 +570,19 @@ namespace Blarg.GameFramework.Graphics
 			Render(font, x, y, ref color, scale, _buffer.ToString());
 		}
 
+		public void Printf(SpriteFont font, Vector3 worldPosition, Color color, string format, params object[] args)
+		{
+			Printf(font, ref worldPosition, ref color, 1.0f, format, args);
+		}
+
 		public void Printf(SpriteFont font, ref Vector3 worldPosition, ref Color color, string format, params object[] args)
 		{
-			_buffer.Clear();
-			_buffer.AppendFormat(format, args);
+			Printf(font, ref worldPosition, ref color, 1.0f, format, args);
+		}
 
-			Render(font, ref worldPosition, ref color, _buffer.ToString());
+		public void Printf(SpriteFont font, Vector3 worldPosition, Color color, float scale, string format, params object[] args)
+		{
+			Printf(font, ref worldPosition, ref color, scale, format, args);
 		}
 
 		public void Printf(SpriteFont font, ref Vector3 worldPosition, ref Color color, float scale, string format, params object[] args)
