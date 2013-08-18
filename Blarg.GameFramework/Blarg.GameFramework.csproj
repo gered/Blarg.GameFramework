@@ -133,6 +133,7 @@
     <Compile Include="Graphics\SpriteBatch.cs" />
     <Compile Include="Graphics\BillboardSpriteBatch.cs" />
     <Compile Include="Graphics\Helpers\FlatWireframeGrid.cs" />
+    <Compile Include="Support\FreeMovementCamera.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
