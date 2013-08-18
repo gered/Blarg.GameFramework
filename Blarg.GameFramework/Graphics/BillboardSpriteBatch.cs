@@ -216,15 +216,30 @@ namespace Blarg.GameFramework.Graphics
 			Render(texture, x, y, z, width, height, type, ref _defaultSpriteColor);
 		}
 
+		public void Render(Texture texture, float x, float y, float z, float width, float height, BillboardSpriteType type, Color color)
+		{
+			Render(texture, x, y, z, width, height, type, ref color);
+		}
+
 		public void Render(Texture texture, float x, float y, float z, float width, float height, BillboardSpriteType type, ref Color color)
 		{
 			var position = new Vector3(x, y, z);
 			AddSprite(type, texture, ref position, width, height, 0, 0, texture.Width, texture.Height, ref color);
 		}
 
+		public void Render(Texture texture, Vector3 position, float width, float height, BillboardSpriteType type)
+		{
+			Render(texture, ref position, width, height, type, ref _defaultSpriteColor);
+		}
+
 		public void Render(Texture texture, ref Vector3 position, float width, float height, BillboardSpriteType type)
 		{
 			Render(texture, ref position, width, height, type, ref _defaultSpriteColor);
+		}
+
+		public void Render(Texture texture, Vector3 position, float width, float height, BillboardSpriteType type, Color color)
+		{
+			Render(texture, ref position, width, height, type, ref color);
 		}
 
 		public void Render(Texture texture, ref Vector3 position, float width, float height, BillboardSpriteType type, ref Color color)
@@ -237,6 +252,11 @@ namespace Blarg.GameFramework.Graphics
 			Render(atlas, index, x, y, z, width, height, type, ref _defaultSpriteColor);
 		}
 
+		public void Render(TextureAtlas atlas, int index, float x, float y, float z, float width, float height, BillboardSpriteType type, Color color)
+		{
+			Render(atlas, index, x, y, z, width, height, type, ref color);
+		}
+
 		public void Render(TextureAtlas atlas, int index, float x, float y, float z, float width, float height, BillboardSpriteType type, ref Color color)
 		{
 			RectF texCoords;
@@ -246,9 +266,19 @@ namespace Blarg.GameFramework.Graphics
 			AddSprite(type, atlas.Texture, ref position, width, height, texCoords.Left, texCoords.Top, texCoords.Right, texCoords.Bottom, ref color);
 		}
 
+		public void Render(TextureAtlas atlas, int index, Vector3 position, float width, float height, BillboardSpriteType type)
+		{
+			Render(atlas, index, ref position, width, height, type, ref _defaultSpriteColor);
+		}
+
 		public void Render(TextureAtlas atlas, int index, ref Vector3 position, float width, float height, BillboardSpriteType type)
 		{
 			Render(atlas, index, ref position, width, height, type, ref _defaultSpriteColor);
+		}
+
+		public void Render(TextureAtlas atlas, int index, Vector3 position, float width, float height, BillboardSpriteType type, Color color)
+		{
+			Render(atlas, index, ref position, width, height, type, ref color);
 		}
 
 		public void Render(TextureAtlas atlas, int index, ref Vector3 position, float width, float height, BillboardSpriteType type, ref Color color)
@@ -263,9 +293,20 @@ namespace Blarg.GameFramework.Graphics
 
 		#region Render: Fonts
 
+		public void Render(SpriteFont font, float x, float y, float z, BillboardSpriteType type, Color color, float pixelScale, string text)
+		{
+			var position = new Vector3(x, y, z);
+			Render(font, ref position, type, ref color, pixelScale, text);
+		}
+
 		public void Render(SpriteFont font, float x, float y, float z, BillboardSpriteType type, ref Color color, float pixelScale, string text)
 		{
 			var position = new Vector3(x, y, z);
+			Render(font, ref position, type, ref color, pixelScale, text);
+		}
+
+		public void Render(SpriteFont font, Vector3 position, BillboardSpriteType type, Color color, float pixelScale, string text)
+		{
 			Render(font, ref position, type, ref color, pixelScale, text);
 		}
 
@@ -326,13 +367,21 @@ namespace Blarg.GameFramework.Graphics
 			}
 		}
 
+		public void Printf(SpriteFont font, float x, float y, float z, BillboardSpriteType type, Color color, float pixelScale, string format, params object[] args)
+		{
+			var position = new Vector3(x, y, z);
+			Printf(font, ref position, type, ref color, pixelScale, format, args);
+		}
+
 		public void Printf(SpriteFont font, float x, float y, float z, BillboardSpriteType type, ref Color color, float pixelScale, string format, params object[] args)
 		{
-			_buffer.Clear();
-			_buffer.AppendFormat(format, args);
-
 			var position = new Vector3(x, y, z);
-			Render(font, ref position, type, ref color, pixelScale, _buffer.ToString());
+			Printf(font, ref position, type, ref color, pixelScale, format, args);
+		}
+
+		public void Printf(SpriteFont font, Vector3 position, BillboardSpriteType type, Color color, float pixelScale, string format, params object[] args)
+		{
+			Printf(font, ref position, type, ref color, pixelScale, format, args);
 		}
 
 		public void Printf(SpriteFont font, ref Vector3 position, BillboardSpriteType type, ref Color color, float pixelScale, string format, params object[] args)
