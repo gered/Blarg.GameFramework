@@ -218,6 +218,8 @@ namespace Blarg.GameFramework
 
 						numUpdates = 0;
 						numRenders = 0;
+						renderTime = 0;
+						updateTime = 0;
 
 						numLoops = 0;
 						timeElapsed = 0;
