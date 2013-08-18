@@ -126,6 +126,10 @@
     <Compile Include="Support\StringExtensions.cs" />
     <Compile Include="Graphics\ImageFormat.cs" />
     <Compile Include="Graphics\IPlatformBitmap.cs" />
+    <Compile Include="Graphics\CustomShaders\CustomSpriteShader.cs" />
+    <Compile Include="Graphics\CustomShaders\CustomStandardShader.cs" />
+    <Compile Include="Graphics\CustomShaders\CustomVertexLerpShader.cs" />
+    <Compile Include="Graphics\CustomShaders\CustomVertexSkinningShader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -138,6 +142,7 @@
     <Folder Include="Resources\Shaders\" />
     <Folder Include="Graphics\BuiltinShaders\" />
     <Folder Include="Support\" />
+    <Folder Include="Graphics\CustomShaders\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Vera.ttf" />
