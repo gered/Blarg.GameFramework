@@ -45,8 +45,7 @@ namespace Game
 
 		public void OnRender(float delta)
 		{
-			Platform.GL.glClear(GL20.GL_DEPTH_BUFFER_BIT | GL20.GL_COLOR_BUFFER_BIT);
-			Platform.GL.glClearColor(0.25f, 0.5f, 1.0f, 1.0f);
+			Platform.GraphicsDevice.Clear(0.25f, 0.5f, 1.0f, 1.0f);
 		}
 
 		public void OnResize(ScreenOrientation orientation, Rect size)
