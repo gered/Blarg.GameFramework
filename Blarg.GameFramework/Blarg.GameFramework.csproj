@@ -124,6 +124,8 @@
     <Compile Include="Graphics\BuiltinShaders\Sprite2DShader.cs" />
     <Compile Include="Graphics\BuiltinShaders\Sprite3DShader.cs" />
     <Compile Include="Support\StringExtensions.cs" />
+    <Compile Include="Graphics\ImageFormat.cs" />
+    <Compile Include="Graphics\IPlatformBitmap.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

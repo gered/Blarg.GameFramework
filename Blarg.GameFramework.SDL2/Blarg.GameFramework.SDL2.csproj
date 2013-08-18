@@ -41,6 +41,7 @@
     <Reference Include="SDL2#">
       <HintPath>..\Libs\SDL2#.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -53,6 +54,7 @@
     <Compile Include="CurrentOS.cs" />
     <Compile Include="Input\SDLKeyMapper.cs" />
     <Compile Include="SDLApplication.cs" />
+    <Compile Include="Graphics\SDLBitmap.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -64,5 +66,6 @@
   <ItemGroup>
     <Folder Include="Input\" />
     <Folder Include="IO\" />
+    <Folder Include="Graphics\" />
   </ItemGroup>
 </Project>

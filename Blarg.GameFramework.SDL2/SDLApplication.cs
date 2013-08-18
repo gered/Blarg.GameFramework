@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.IO;
 using SDL2;
 using PortableGL;
 using PortableGL.SDL;
@@ -608,6 +609,15 @@ namespace Blarg.GameFramework
 					}
 				}
 			}
+		}
+
+		#endregion
+
+		#region Support Functions
+
+		public override IPlatformBitmap LoadBitmap(Stream file)
+		{
+			return new SDLBitmap(file);
 		}
 
 		#endregion

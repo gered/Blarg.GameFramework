@@ -1,14 +1,8 @@
 using System;
+using System.IO;
 
 namespace Blarg.GameFramework.Graphics
 {
-	public enum ImageFormat
-	{
-		RGB,
-		RGBA,
-		A
-	}
-
 	public partial class Image
 	{
 		private byte[] _pixels;
@@ -47,28 +41,15 @@ namespace Blarg.GameFramework.Graphics
 			Create(source, copyX, copyY, copyWidth, copyHeight);
 		}
 
-		private Image(byte[] pixels, int width, int height, ImageFormat format)
+		public Image(Stream file)
 		{
-			if (pixels == null)
-				throw new ArgumentNullException("pixels");
+			if (file == null)
+				throw new ArgumentNullException("file");
 
-			int bpp = 0;
-			if (format == ImageFormat.RGB)
-				bpp = 24;
-			else if (format == ImageFormat.RGBA)
-				bpp = 32;
-			else if (format == ImageFormat.A)
-				bpp = 8;
+			var bitmap = Platform.Application.LoadBitmap(file);
 
-			if (bpp == 0)
-				throw new ArgumentException("pixelFormat");
-
-			_pixels = pixels;
-			Width = width;
-			Height = height;
-			BitsPerPixel = bpp;
-			PixelFormat = format;
-			Pitch = Width * (BitsPerPixel / 8);
+			CreateBaseImage(bitmap.Width, bitmap.Height, bitmap.Format);
+			Buffer.BlockCopy(bitmap.Pixels, 0, _pixels, 0, bitmap.Pixels.Length);
 		}
 
 		private void CreateBaseImage(int width, int height, ImageFormat pixelFormat)

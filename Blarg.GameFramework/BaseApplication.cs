@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using PortableGL;
 using Blarg.GameFramework.Graphics;
 using Blarg.GameFramework.Input;
@@ -37,6 +38,8 @@ namespace Blarg.GameFramework
 
 		public abstract void Run(IGameApp gameApp, IPlatformConfiguration config);
 		public abstract void Quit();
+
+		public abstract IPlatformBitmap LoadBitmap(Stream file);
 
 		protected void OnInit()
 		{
