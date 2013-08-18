@@ -132,6 +132,7 @@
     <Compile Include="Graphics\CustomShaders\CustomVertexSkinningShader.cs" />
     <Compile Include="Graphics\SpriteBatch.cs" />
     <Compile Include="Graphics\BillboardSpriteBatch.cs" />
+    <Compile Include="Graphics\Helpers\FlatWireframeGrid.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -145,6 +146,7 @@
     <Folder Include="Graphics\BuiltinShaders\" />
     <Folder Include="Support\" />
     <Folder Include="Graphics\CustomShaders\" />
+    <Folder Include="Graphics\Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Vera.ttf" />
