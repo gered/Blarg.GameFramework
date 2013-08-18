@@ -346,4 +346,3 @@ namespace Blarg.GameFramework.Graphics
 		}
 	}
 }
-

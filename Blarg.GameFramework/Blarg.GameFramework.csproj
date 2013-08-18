@@ -87,6 +87,43 @@
     <Compile Include="IPlatformConfiguration.cs" />
     <Compile Include="IApplication.cs" />
     <Compile Include="BaseApplication.cs" />
+    <Compile Include="Graphics\GraphicsDevice.cs" />
+    <Compile Include="Graphics\GraphicsContextResource.cs" />
+    <Compile Include="Graphics\BufferObject.cs" />
+    <Compile Include="Graphics\Texture.cs" />
+    <Compile Include="Graphics\TextureParameters.cs" />
+    <Compile Include="Graphics\RenderState.cs" />
+    <Compile Include="Graphics\BlendState.cs" />
+    <Compile Include="Graphics\VertexAttributes.cs" />
+    <Compile Include="Graphics\VertexBuffer.cs" />
+    <Compile Include="Graphics\IndexBuffer.cs" />
+    <Compile Include="Graphics\Framebuffer.cs" />
+    <Compile Include="Graphics\Renderbuffer.cs" />
+    <Compile Include="Graphics\Camera.cs" />
+    <Compile Include="Graphics\Frustum.cs" />
+    <Compile Include="Graphics\ViewContext.cs" />
+    <Compile Include="Graphics\Shader.cs" />
+    <Compile Include="Graphics\TextureAtlas.cs" />
+    <Compile Include="Graphics\TextureRegion.cs" />
+    <Compile Include="Graphics\CustomTextureAtlas.cs" />
+    <Compile Include="Graphics\AutoGridTextureAtlas.cs" />
+    <Compile Include="Graphics\SpriteFont.cs" />
+    <Compile Include="Graphics\SpriteFontTrueTypeLoader.cs" />
+    <Compile Include="Resources\ResourceUtils.cs" />
+    <Compile Include="Graphics\StandardShader.cs" />
+    <Compile Include="Graphics\SpriteShader.cs" />
+    <Compile Include="Graphics\VertexSkinningShader.cs" />
+    <Compile Include="Graphics\VertexLerpShader.cs" />
+    <Compile Include="Graphics\GeometryDebugRenderer.cs" />
+    <Compile Include="Graphics\BuiltinShaders\DebugShader.cs" />
+    <Compile Include="Graphics\BuiltinShaders\SimpleColorShader.cs" />
+    <Compile Include="Graphics\BuiltinShaders\SimpleColorTextureShader.cs" />
+    <Compile Include="Graphics\BuiltinShaders\SimpleTextureShader.cs" />
+    <Compile Include="Graphics\BuiltinShaders\SimpleTextureVertexLerpShader.cs" />
+    <Compile Include="Graphics\BuiltinShaders\SimpleTextureVertexSkinningShader.cs" />
+    <Compile Include="Graphics\BuiltinShaders\Sprite2DShader.cs" />
+    <Compile Include="Graphics\BuiltinShaders\Sprite3DShader.cs" />
+    <Compile Include="Support\StringExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -94,5 +131,30 @@
     <Folder Include="IO\" />
     <Folder Include="Math\" />
     <Folder Include="Graphics\" />
+    <Folder Include="Resources\" />
+    <Folder Include="Resources\Fonts\" />
+    <Folder Include="Resources\Shaders\" />
+    <Folder Include="Graphics\BuiltinShaders\" />
+    <Folder Include="Support\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Fonts\Vera.ttf" />
+    <EmbeddedResource Include="Resources\Fonts\VeraMono.ttf" />
+    <EmbeddedResource Include="Resources\Shaders\debug.frag.glsl" />
+    <EmbeddedResource Include="Resources\Shaders\debug.vert.glsl" />
+    <EmbeddedResource Include="Resources\Shaders\simple_color.frag.glsl" />
+    <EmbeddedResource Include="Resources\Shaders\simple_color.vert.glsl" />
+    <EmbeddedResource Include="Resources\Shaders\simple_color_texture.frag.glsl" />
+    <EmbeddedResource Include="Resources\Shaders\simple_color_texture.vert.glsl" />
+    <EmbeddedResource Include="Resources\Shaders\simple_texture.frag.glsl" />
+    <EmbeddedResource Include="Resources\Shaders\simple_texture.vert.glsl" />
+    <EmbeddedResource Include="Resources\Shaders\sprite2d.frag.glsl" />
+    <EmbeddedResource Include="Resources\Shaders\sprite2d.vert.glsl" />
+    <EmbeddedResource Include="Resources\Shaders\sprite3d.frag.glsl" />
+    <EmbeddedResource Include="Resources\Shaders\sprite3d.vert.glsl" />
+    <EmbeddedResource Include="Resources\Shaders\vertexlerp_texture.frag.glsl" />
+    <EmbeddedResource Include="Resources\Shaders\vertexlerp_texture.vert.glsl" />
+    <EmbeddedResource Include="Resources\Shaders\vertexskinning_texture.frag.glsl" />
+    <EmbeddedResource Include="Resources\Shaders\vertexskinning_texture.vert.glsl" />
   </ItemGroup>
 </Project>
