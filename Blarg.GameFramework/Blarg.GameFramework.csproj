@@ -130,6 +130,7 @@
     <Compile Include="Graphics\CustomShaders\CustomStandardShader.cs" />
     <Compile Include="Graphics\CustomShaders\CustomVertexLerpShader.cs" />
     <Compile Include="Graphics\CustomShaders\CustomVertexSkinningShader.cs" />
+    <Compile Include="Graphics\SpriteBatch.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
