@@ -23,16 +23,52 @@ namespace Blarg.GameFramework
 
 	public static class Platform
 	{
-		public static PlatformOS OperatingSystem { get; private set; }
-		public static PlatformType Type { get; private set; }
-
 		public static IApplication Application { get; private set; }
-		public static ILogger Logger { get; private set; }
-		public static IFileSystem FileSystem { get; private set; }
-		public static IKeyboard Keyboard { get; private set; }
-		public static IMouse Mouse { get; private set; }
-		public static ITouchScreen TouchScreen { get; private set; }
-		public static GL20 GL { get; private set; }
+
+		public static PlatformOS OperatingSystem
+		{
+			get { return Application.OperatingSystem; }
+		}
+
+		public static PlatformType Type
+		{
+			get { return Application.Type; }
+		}
+
+		public static ILogger Logger
+		{
+			get { return Application.Logger; }
+		}
+
+		public static IFileSystem FileSystem
+		{
+			get { return Application.FileSystem; }
+		}
+
+		public static IKeyboard Keyboard
+		{
+			get { return Application.Keyboard; }
+		}
+
+		public static IMouse Mouse
+		{
+			get { return Application.Mouse; }
+		}
+
+		public static ITouchScreen TouchScreen
+		{
+			get { return Application.TouchScreen; }
+		}
+
+		public static GraphicsDevice GraphicsDevice
+		{
+			get { return Application.GraphicsDevice; }
+		}
+
+		public static GL20 GL
+		{
+			get { return Application.GL; }
+		}
 
 		public static void Set(IApplication application)
 		{
@@ -40,14 +76,6 @@ namespace Blarg.GameFramework
 				throw new InvalidOperationException();
 
 			Application = application;
-			OperatingSystem = Application.OperatingSystem;
-			Type = Application.Type;
-			Logger = Application.Logger;
-			FileSystem = Application.FileSystem;
-			Keyboard = Application.Keyboard;
-			Mouse = Application.Mouse;
-			TouchScreen = Application.TouchScreen;
-			GL = Application.GL;
 		}
 	}
 }

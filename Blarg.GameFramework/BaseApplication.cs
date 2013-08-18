@@ -10,6 +10,8 @@ namespace Blarg.GameFramework
 	{
 		const string LOG_TAG = "BASE_APP";
 
+		private bool _isReleased = false;
+
 		protected IGameApp GameApp { get; set; }
 
 		public abstract PlatformOS OperatingSystem { get; }
@@ -22,6 +24,7 @@ namespace Blarg.GameFramework
 		public abstract ITouchScreen TouchScreen { get; }
 		public abstract IPlatformWindow Window { get; }
 		public abstract GL20 GL { get; }
+		public GraphicsDevice GraphicsDevice { get; private set; }
 
 		public int FPS { get; protected set; }
 		public float FrameTime { get; protected set; }
@@ -33,6 +36,12 @@ namespace Blarg.GameFramework
 
 		public abstract void Run(IGameApp gameApp, IPlatformConfiguration config);
 		public abstract void Quit();
+
+		protected void OnInit()
+		{
+			Logger.Info(LOG_TAG, "Initializing application objects.");
+			GraphicsDevice = new GraphicsDevice();
+		}
 
 		protected void OnAppGainFocus()
 		{
@@ -98,10 +107,22 @@ namespace Blarg.GameFramework
 			GameApp.OnUpdate(delta);
 		}
 
+		#region Disposable
+
+		protected virtual void Release()
+		{
+			if (_isReleased)
+				return;
+
+			Logger.Info(LOG_TAG, "Releasing resources.");
+			GraphicsDevice.Dispose();
+		}
+
 		public virtual void Dispose()
 		{
 			Logger.Info(LOG_TAG, "Disposing.");
 		}
+
+		#endregion
 	}
 }
-

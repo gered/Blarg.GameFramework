@@ -22,8 +22,8 @@ namespace Blarg.GameFramework
 		SDLKeyboard _keyboard;
 		SDLMouse _mouse;
 		SDLFileSystem _filesystem;
-		SDLGL20 _gl;
 		SDLWindow _windowInfo;
+		SDLGL20 _gl;
 		PlatformOS _os;
 
 		bool _isWindowActive;
@@ -146,6 +146,7 @@ namespace Blarg.GameFramework
 
 			Platform.Set(this);
 
+			OnInit();
 			OnNewContext();
 			OnResize(ScreenOrientation.Rotation0, _windowInfo.ClientRectangle);
 			OnLoad();
@@ -161,7 +162,7 @@ namespace Blarg.GameFramework
 			GameApp.Dispose();
 			GameApp = null;
 
-			ReleaseSDL();
+			Release();
 		}
 
 		public override void Quit()
@@ -611,13 +612,15 @@ namespace Blarg.GameFramework
 
 		#region IDisposable
 
-		private void ReleaseSDL()
+		protected override void Release()
 		{
 			if (!_isSDLinited)
 				return;
 
-			Logger.Info(LOG_TAG, "Releasing SDL.");
+			Logger.Info(LOG_TAG, "Releasing SDL application object.");
+			base.Release();
 
+			Logger.Info(LOG_TAG, "Releasing SDL.");
 			DestroyOpenGLContext();
 			DestroyWindow();
 			SDL.SDL_Quit();
@@ -628,14 +631,14 @@ namespace Blarg.GameFramework
 
 		~SDLApplication()
 		{
-			ReleaseSDL();
+			Release();
 		}
 
 		public override void Dispose()
 		{
 			base.Dispose();
 			Logger.Info(LOG_TAG, "Disposing.");
-			ReleaseSDL();
+			Release();
 			GC.SuppressFinalize(this);
 		}
 
