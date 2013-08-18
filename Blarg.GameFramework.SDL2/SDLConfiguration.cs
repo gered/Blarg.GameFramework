@@ -10,6 +10,8 @@ namespace Blarg.GameFramework
 		public bool Fullscreen;
 		public bool Resizeable;
 
+		public int glMajorVersion;
+		public int glMinorVersion;
 		public bool glDoubleBuffer;
 		public int glDepthBufferSize;
 		public int glRedSize;
@@ -24,6 +26,8 @@ namespace Blarg.GameFramework
 			Height = 480;
 			Fullscreen = false;
 			Resizeable = false;
+			glMajorVersion = 2;
+			glMinorVersion = 1;
 			glDoubleBuffer = true;
 			glDepthBufferSize = 24;
 			glRedSize = 8;

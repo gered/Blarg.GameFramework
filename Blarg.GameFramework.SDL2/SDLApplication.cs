@@ -427,6 +427,8 @@ namespace Blarg.GameFramework
 				throw new InvalidOperationException("Cannot create an OpenGL context without an existing window.");
 
 			// minimum requirements
+			SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_CONTEXT_MAJOR_VERSION, config.glMajorVersion);
+			SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_CONTEXT_MINOR_VERSION, config.glMinorVersion);
 			SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_DOUBLEBUFFER, config.glDoubleBuffer ? 1 : 0);
 			SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_DEPTH_SIZE, config.glDepthBufferSize);
 			SDL.SDL_GL_SetAttribute(SDL.SDL_GLattr.SDL_GL_RED_SIZE, config.glRedSize);
