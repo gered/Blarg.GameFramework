@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using PortableGL;
 using Blarg.GameFramework;
 using Blarg.GameFramework.Graphics;
@@ -11,6 +12,8 @@ namespace Game
 	{
 		FlatWireframeGrid _grid;
 		FreeMovementCamera _camera;
+		SpriteBatch _spriteBatch;
+		StringBuilder _sb = new StringBuilder(1024);
 
 		public GameApp()
 		{
@@ -39,6 +42,8 @@ namespace Game
 			Platform.GraphicsDevice.ViewContext.Camera = _camera;
 
 			_grid = new FlatWireframeGrid(Platform.GraphicsDevice, 32, 32);
+
+			_spriteBatch = new SpriteBatch(Platform.GraphicsDevice);
 		}
 
 		public void OnUnload()
@@ -64,6 +69,18 @@ namespace Game
 			shader.SetProjectionMatrix(Platform.GraphicsDevice.ViewContext.ProjectionMatrix);
 			_grid.Render();
 			Platform.GraphicsDevice.UnbindShader();
+
+			long gcmem = GC.GetTotalMemory(false);
+			_sb.Clear();
+			_sb.Append("GC Mem Usage: ").AppendNumber((int)gcmem).Append('\n')
+				.Append("FPS: ").AppendNumber(Platform.Application.FPS)
+				.Append(", ").AppendNumber(Platform.Application.FrameTime).Append(" ms")
+				.Append(", RT: ").AppendNumber(Platform.Application.RenderTime).Append(" (").AppendNumber(Platform.Application.RendersPerSecond).Append(")")
+				.Append(", UT: ").AppendNumber(Platform.Application.UpdateTime).Append(" (").AppendNumber(Platform.Application.UpdatesPerSecond).Append(")");
+
+			_spriteBatch.Begin();
+			_spriteBatch.Render(Platform.GraphicsDevice.SansSerifFont, 10, 10, Color.White, _sb);
+			_spriteBatch.End();
 		}
 
 		public void OnResize(ScreenOrientation orientation, Rect size)
