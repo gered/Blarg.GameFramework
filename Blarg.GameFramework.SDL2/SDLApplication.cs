@@ -551,30 +551,30 @@ namespace Blarg.GameFramework
 							Logger.Info(LOG_TAG, "Window marked inactive.");
 							break;
 
-							case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_RESTORED:
+						case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_RESTORED:
 							Logger.Info(LOG_TAG, "Window focus gained.");
 							Logger.Info(LOG_TAG, "Window marked active.");
 							break;
 
-							case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_ENTER:
+						case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_ENTER:
 							Logger.Info(LOG_TAG, "Gained mouse focus.");
 							break;
 
-							case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_LEAVE:
+						case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_LEAVE:
 							Logger.Info(LOG_TAG, "Lost mouse focus.");
 							break;
 
-							case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_FOCUS_GAINED:
+						case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_FOCUS_GAINED:
 							Logger.Info(LOG_TAG, "Gained input device focus.");
 							OnAppGainFocus();
 							break;
 
-							case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_FOCUS_LOST:
+						case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_FOCUS_LOST:
 							Logger.Info(LOG_TAG, "Lost input device focus.");
 							OnAppLostFocus();
 							break;
 
-							case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_RESIZED:
+						case SDL.SDL_WindowEventID.SDL_WINDOWEVENT_RESIZED:
 							Logger.Info(LOG_TAG, "Window resized to {0}x{1}.", e.window.data1, e.window.data2);
 							Rect size = new Rect();
 							size.Right = e.window.data1;
@@ -593,17 +593,17 @@ namespace Blarg.GameFramework
 							_isQuitting = true;
 							break;
 
-							case SDL.SDL_EventType.SDL_KEYDOWN:
-							case SDL.SDL_EventType.SDL_KEYUP:
+						case SDL.SDL_EventType.SDL_KEYDOWN:
+						case SDL.SDL_EventType.SDL_KEYUP:
 							_keyboard.OnKeyEvent(e.key);
 							break;
 
-							case SDL.SDL_EventType.SDL_MOUSEMOTION:
+						case SDL.SDL_EventType.SDL_MOUSEMOTION:
 							_mouse.OnMotionEvent(e.motion);
 							break;
 
-							case SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN:
-							case SDL.SDL_EventType.SDL_MOUSEBUTTONUP:
+						case SDL.SDL_EventType.SDL_MOUSEBUTTONDOWN:
+						case SDL.SDL_EventType.SDL_MOUSEBUTTONUP:
 							_mouse.OnButtonEvent(e.button);
 							break;
 					}
