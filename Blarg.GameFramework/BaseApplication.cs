@@ -10,7 +10,8 @@ namespace Blarg.GameFramework
 	{
 		const string LOG_TAG = "BASE_APP";
 
-		private bool _isReleased = false;
+		bool _isReleased = false;
+		bool _isFirstContextCreatedYet = false;
 
 		protected IGameApp GameApp { get; set; }
 
@@ -76,29 +77,41 @@ namespace Blarg.GameFramework
 		protected void OnUnload()
 		{
 			Logger.Info(LOG_TAG, "OnUnload");
+			if (GraphicsDevice != null)
+				GraphicsDevice.OnUnload();
 			GameApp.OnUnload();
 		}
 
 		protected void OnLostContext()
 		{
 			Logger.Info(LOG_TAG, "OnLostContext");
+			if (GraphicsDevice != null)
+				GraphicsDevice.OnLostContext();
 			GameApp.OnLostContext();
 		}
 
 		protected void OnNewContext()
 		{
 			Logger.Info(LOG_TAG, "OnNewContext");
+			if (_isFirstContextCreatedYet)
+			{
+				if (GraphicsDevice != null)
+					GraphicsDevice.OnNewContext();
+			}
+			_isFirstContextCreatedYet = true;
 			GameApp.OnNewContext();
 		}
 
 		protected void OnRender(float delta)
 		{
+			GraphicsDevice.OnRender(delta);
 			GameApp.OnRender(delta);
 		}
 
 		protected void OnResize(ScreenOrientation orientation, Rect size)
 		{
 			Logger.Info(LOG_TAG, "OnResize");
+			GraphicsDevice.OnResize(ref size, orientation);
 			GameApp.OnResize(orientation, size);
 		}
 
