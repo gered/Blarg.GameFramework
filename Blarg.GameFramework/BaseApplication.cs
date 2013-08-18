@@ -121,6 +121,13 @@ namespace Blarg.GameFramework
 		protected void OnUpdate(float delta)
 		{
 			GameApp.OnUpdate(delta);
+
+			if (Platform.Keyboard != null)
+				Platform.Keyboard.OnPostUpdate(delta);
+			if (Platform.Mouse != null)
+				Platform.Mouse.OnPostUpdate(delta);
+			if (Platform.TouchScreen != null)
+				Platform.TouchScreen.OnPostUpdate(delta);
 		}
 
 		#region Disposable
