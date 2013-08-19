@@ -102,7 +102,7 @@ namespace Blarg.GameFramework
 			else
 				throw new Exception("Unable to determine OS.");
 
-			SetUpdateFrequency(60);
+			SetUpdateFrequency(25);
 		}
 
 		public override void Run(IGameApp gameApp, IPlatformConfiguration config)
@@ -181,7 +181,6 @@ namespace Blarg.GameFramework
 			int numUpdatesThisFrame = 0;
 			int numLoops = 0;
 			int timeElapsed = 0;
-			bool isDirty = false;
 
 			int updateTime = 0;
 			int renderTime = 0;
@@ -246,22 +245,17 @@ namespace Blarg.GameFramework
 						nextUpdateAt += _ticksPerUpdate;
 
 						++numUpdates;
-
-						// just updated, so we need to render the new game state
-						isDirty = true;
 					}
 
-					if (isDirty && _isWindowActive)
+					if (_isWindowActive)
 					{
+						float renderDelta = (float)(Environment.TickCount + _ticksPerUpdate - nextUpdateAt) / (float)_ticksPerUpdate;
 						int before = Environment.TickCount;
-						OnRender(_fixedRenderInterval);  // TODO
+						OnRender(renderDelta);  // TODO
 						SDL.SDL_GL_SwapWindow(_window);
 						renderTime += Environment.TickCount - before;
 
 						++numRenders;
-
-						// don't render again until we hve something new to show
-						isDirty = false;
 					}
 
 					++numLoops;
