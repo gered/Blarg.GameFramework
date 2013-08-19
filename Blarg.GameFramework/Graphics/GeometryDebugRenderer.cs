@@ -85,9 +85,19 @@ namespace Blarg.GameFramework.Graphics
 
 		#region Primitive/Shape Rendering
 
+		public void Render(BoundingBox box)
+		{
+			Render(ref box, ref _color1);
+		}
+
 		public void Render(ref BoundingBox box)
 		{
 			Render(ref box, ref _color1);
+		}
+
+		public void Render(BoundingBox box, Color color)
+		{
+			Render(ref box, ref color);
 		}
 
 		public void Render(ref BoundingBox box, ref Color color)
@@ -151,9 +161,19 @@ namespace Blarg.GameFramework.Graphics
 			_vertices.Move(NumVerticesForBox);
 		}
 
+		public void Render(Point3 boxMin, Point3 boxMax)
+		{
+			Render(ref boxMin, ref boxMax, ref _color1);
+		}
+
 		public void Render(ref Point3 boxMin, ref Point3 boxMax)
 		{
 			Render(ref boxMin, ref boxMax, ref _color1);
+		}
+
+		public void Render(Point3 boxMin, Point3 boxMax, Color color)
+		{
+			Render(ref boxMin, ref boxMax, ref color);
 		}
 
 		public void Render(ref Point3 boxMin, ref Point3 boxMax, ref Color color)
@@ -164,9 +184,19 @@ namespace Blarg.GameFramework.Graphics
 			Render(ref box, ref color);
 		}
 
+		public void Render(BoundingSphere sphere)
+		{
+			Render(ref sphere, ref _color1);
+		}
+
 		public void Render(ref BoundingSphere sphere)
 		{
 			Render(ref sphere, ref _color1);
+		}
+
+		public void Render(BoundingSphere sphere, Color color)
+		{
+			Render(ref sphere, ref color);
 		}
 
 		public void Render(ref BoundingSphere sphere, ref Color color)
@@ -234,9 +264,19 @@ namespace Blarg.GameFramework.Graphics
 			_vertices.Move(NumVerticesForSphere);
 		}
 
+		public void Render(Ray ray, float length)
+		{
+			Render(ref ray, length, ref _color1, ref _color2);
+		}
+
 		public void Render(ref Ray ray, float length)
 		{
 			Render(ref ray, length, ref _color1, ref _color2);
+		}
+
+		public void Render(Ray ray, float length, Color originColor, Color endColor)
+		{
+			Render(ref ray, length, ref originColor, ref endColor);
 		}
 
 		public void Render(ref Ray ray, float length, ref Color originColor, ref Color endColor)
@@ -257,9 +297,19 @@ namespace Blarg.GameFramework.Graphics
 			_vertices.MoveNext();
 		}
 
+		public void Render(LineSegment line)
+		{
+			Render(ref line, ref _color1);
+		}
+
 		public void Render(ref LineSegment line)
 		{
 			Render(ref line, ref _color1);
+		}
+
+		public void Render(LineSegment line, Color color)
+		{
+			Render(ref line, ref color);
 		}
 
 		public void Render(ref LineSegment line, ref Color color)
@@ -278,9 +328,19 @@ namespace Blarg.GameFramework.Graphics
 			_vertices.MoveNext();
 		}
 
+		public void Render(Vector3 a, Vector3 b)
+		{
+			Render(ref a, ref b, ref _color1);
+		}
+
 		public void Render(ref Vector3 a, ref Vector3 b)
 		{
 			Render(ref a, ref b, ref _color1);
+		}
+
+		public void Render(Vector3 a, Vector3 b, Color color)
+		{
+			Render(ref a, ref b, ref color);
 		}
 
 		public void Render(ref Vector3 a, ref Vector3 b, ref Color color)
@@ -299,9 +359,19 @@ namespace Blarg.GameFramework.Graphics
 			_vertices.MoveNext();
 		}
 
+		public void Render(Vector3 a, Vector3 b, Vector3 c)
+		{
+			Render(ref a, ref b, ref c, ref _color1);
+		}
+
 		public void Render(ref Vector3 a, ref Vector3 b, ref Vector3 c)
 		{
 			Render(ref a, ref b, ref c, ref _color1);
+		}
+
+		public void Render(Vector3 a, Vector3 b, Vector3 c, Color color)
+		{
+			Render(ref a, ref b, ref c, ref color);
 		}
 
 		public void Render(ref Vector3 a, ref Vector3 b, ref Vector3 c, ref Color color)
@@ -336,9 +406,19 @@ namespace Blarg.GameFramework.Graphics
 			_vertices.MoveNext();
 		}
 
+		public void Render(Vector3 a, Vector3 b, Vector3 c, Vector3 d)
+		{
+			Render(ref a, ref b, ref c, ref d, ref _color1);
+		}
+
 		public void Render(ref Vector3 a, ref Vector3 b, ref Vector3 c, ref Vector3 d)
 		{
 			Render(ref a, ref b, ref c, ref d, ref _color1);
+		}
+
+		public void Render(Vector3 a, Vector3 b, Vector3 c, Vector3 d, Color color)
+		{
+			Render(ref a, ref b, ref c, ref d, ref color);
 		}
 
 		public void Render(ref Vector3 a, ref Vector3 b, ref Vector3 c, ref Vector3 d, ref Color color)
