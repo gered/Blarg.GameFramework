@@ -76,7 +76,8 @@ namespace Game
 				.Append("FPS: ").AppendNumber(Platform.Application.FPS)
 				.Append(", ").AppendNumber(Platform.Application.FrameTime).Append(" ms")
 				.Append(", RT: ").AppendNumber(Platform.Application.RenderTime).Append(" (").AppendNumber(Platform.Application.RendersPerSecond).Append(")")
-				.Append(", UT: ").AppendNumber(Platform.Application.UpdateTime).Append(" (").AppendNumber(Platform.Application.UpdatesPerSecond).Append(")");
+				.Append(", UT: ").AppendNumber(Platform.Application.UpdateTime).Append(" (").AppendNumber(Platform.Application.UpdatesPerSecond).Append(")")
+				.Append(", RD: ").AppendNumber(delta);
 
 			_spriteBatch.Begin();
 			_spriteBatch.Render(Platform.GraphicsDevice.SansSerifFont, 10, 10, Color.White, _sb);
