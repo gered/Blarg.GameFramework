@@ -144,7 +144,13 @@
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="Events\IEventListener.cs" />
+    <Compile Include="Entities\Component.cs" />
+    <Compile Include="Entities\EntityManager.cs" />
+    <Compile Include="Entities\ComponentSystem.cs" />
     <Compile Include="Events\EventListener.cs" />
+    <Compile Include="Entities\Entity.cs" />
+    <Compile Include="Entities\EntityPool.cs" />
+    <Compile Include="Entities\SystemComponents\InactiveComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -160,6 +166,8 @@
     <Folder Include="Graphics\CustomShaders\" />
     <Folder Include="Graphics\Helpers\" />
     <Folder Include="Events\" />
+    <Folder Include="Entities\" />
+    <Folder Include="Entities\SystemComponents\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Vera.ttf" />
