@@ -36,9 +36,7 @@ namespace Blarg.GameFramework.Events
 				throw new ArgumentNullException("listener");
 
 			var type = typeof(T);
-			EventListenerTable listenerTable = null;
-
-			_registry.TryGetValue(type, out listenerTable);
+			EventListenerTable listenerTable = _registry.Get(type);
 			if (listenerTable == null)
 			{
 				// need to register this listener for the given type
@@ -67,8 +65,7 @@ namespace Blarg.GameFramework.Events
 			var type = typeof(T);
 
 			// get the list of listeners for the given event type
-			EventListenerTable listenersForType;
-			_registry.TryGetValue(type, out listenersForType);
+			EventListenerTable listenersForType = _registry.Get(type);
 			if (listenersForType == null)
 				return false;  // either no listeners for this type, or the listener wasn't registered with us
 
@@ -96,8 +93,7 @@ namespace Blarg.GameFramework.Events
 			var type = e.GetType();
 
 			// find the listeners for the event type provided
-			EventListenerTable listenersForType;
-			_registry.TryGetValue(type, out listenersForType);
+			EventListenerTable listenersForType = _registry.Get(type);
 			if (listenersForType == null)
 				return false;  // no listeners for this event type have been registered -- we can't handle the event
 
@@ -196,8 +192,7 @@ namespace Blarg.GameFramework.Events
 
 				var type = e.GetType();
 
-				EventListenerTable listenersForType;
-				_registry.TryGetValue(type, out listenersForType);
+				EventListenerTable listenersForType = _registry.Get(type);
 				if (listenersForType != null)
 				{
 					foreach (var listener in listenersForType)

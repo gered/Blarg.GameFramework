@@ -4,6 +4,7 @@ using PortableGL;
 using Blarg.GameFramework;
 using Blarg.GameFramework.Graphics.BuiltinShaders;
 using Blarg.GameFramework.Resources;
+using Blarg.GameFramework.Support;
 
 namespace Blarg.GameFramework.Graphics
 {
@@ -267,8 +268,7 @@ namespace Blarg.GameFramework.Graphics
 		public Texture GetSolidColorTexture(ref Color color)
 		{
 			int rgba = color.RGBA;
-			Texture result;
-			_solidColorTextures.TryGetValue(rgba, out result);
+			Texture result = _solidColorTextures.Get(rgba);
 			if (result == null)
 			{
 				result = CreateSolidColorTexture(ref color);

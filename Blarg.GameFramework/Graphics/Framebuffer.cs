@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using PortableGL;
+using Blarg.GameFramework.Support;
 
 namespace Blarg.GameFramework.Graphics
 {
@@ -46,16 +47,12 @@ namespace Blarg.GameFramework.Graphics
 
 		public Renderbuffer GetAttachedRenderbuffer(FramebufferRenderbufferFormat format)
 		{
-			Renderbuffer result;
-			_attachedRenderbuffers.TryGetValue(format, out result);
-			return result;
+			return _attachedRenderbuffers.Get(format);
 		}
 
 		public Texture GetAttachedTexture(FramebufferTextureFormat format)
 		{
-			Texture result;
-			_attachedTextures.TryGetValue(format, out result);
-			return result;
+			return _attachedTextures.Get(format);
 		}
 
 		public Framebuffer(GraphicsDevice graphicsDevice)
@@ -270,8 +267,7 @@ namespace Blarg.GameFramework.Graphics
 			if (IsInvalidated)
 				throw new InvalidOperationException();
 
-			Texture existing;
-			_attachedTextures.TryGetValue(format, out existing);
+			Texture existing = _attachedTextures.Get(format);
 			if (existing == null)
 				return;
 
@@ -298,8 +294,7 @@ namespace Blarg.GameFramework.Graphics
 			if (IsInvalidated)
 				throw new InvalidOperationException();
 
-			Renderbuffer existing;
-			_attachedRenderbuffers.TryGetValue(format, out existing);
+			Renderbuffer existing = _attachedRenderbuffers.Get(format);
 			if (existing == null)
 				return;
 

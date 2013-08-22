@@ -44,8 +44,7 @@ namespace Blarg.GameFramework.Support
 
 		static ObjectObjectPool GetPool(Type type)
 		{
-			ObjectObjectPool pool;
-			_pools.TryGetValue(type, out pool);
+			ObjectObjectPool pool = _pools.Get(type);
 			if (pool == null)
 			{
 				// why do we do this instead of just using a "new()" generic type constraint?

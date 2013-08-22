@@ -93,8 +93,7 @@ namespace Blarg.GameFramework.Entities
 
 		public Entity GetFirstWith<T>() where T : Component
 		{
-			EntityToComponentMap componentEntities;
-			_components.TryGetValue(typeof(T), out componentEntities);
+			EntityToComponentMap componentEntities = _components.Get(typeof(T));
 			if (componentEntities == null)
 				return null;
 
@@ -109,8 +108,7 @@ namespace Blarg.GameFramework.Entities
 		{
 			if (list == null)
 				throw new ArgumentNullException("list", "Must provide a list to store matching Entity's in.");
-			EntityToComponentMap componentEntities;
-			_components.TryGetValue(typeof(T), out componentEntities);
+			EntityToComponentMap componentEntities = _components.Get(typeof(T));
 			if (componentEntities == null)
 				return;
 			else
@@ -149,8 +147,7 @@ namespace Blarg.GameFramework.Entities
 			if (GetComponent<T>(entity) != null)
 				throw new InvalidOperationException("Component of that type has been added to this entity already.");
 
-			EntityToComponentMap componentEntities;
-			_components.TryGetValue(typeof(T), out componentEntities);
+			EntityToComponentMap componentEntities = _components.Get(typeof(T));
 			if (componentEntities == null)
 			{
 				// need to create the component-to-entity list
@@ -166,13 +163,11 @@ namespace Blarg.GameFramework.Entities
 
 		public T GetComponent<T>(Entity entity) where T : Component
 		{
-			EntityToComponentMap componentEntities;
-			_components.TryGetValue(typeof(T), out componentEntities);
+			EntityToComponentMap componentEntities = _components.Get(typeof(T));
 			if (componentEntities == null)
 				return null;
 
-			Component existing;
-			componentEntities.TryGetValue(entity, out existing);
+			Component existing = componentEntities.Get(entity);
 			if (existing == null)
 				return null;
 			else
@@ -181,13 +176,11 @@ namespace Blarg.GameFramework.Entities
 
 		public void RemoveComponent<T>(Entity entity) where T : Component
 		{
-			EntityToComponentMap componentEntities;
-			_components.TryGetValue(typeof(T), out componentEntities);
+			EntityToComponentMap componentEntities = _components.Get(typeof(T));
 			if (componentEntities == null)
 				return;
 
-			Component existing;
-			componentEntities.TryGetValue(entity, out existing);
+			Component existing = componentEntities.Get(entity);
 			if (existing == null)
 				throw new InvalidOperationException("Entity does not have this component.");
 			componentEntities.Remove(entity);
@@ -196,8 +189,7 @@ namespace Blarg.GameFramework.Entities
 
 		public bool HasComponent<T>(Entity entity) where T : Component
 		{
-			EntityToComponentMap componentEntities;
-			_components.TryGetValue(typeof(T), out componentEntities);
+			EntityToComponentMap componentEntities = _components.Get(typeof(T));
 			if (componentEntities == null)
 				return false;
 
@@ -212,8 +204,7 @@ namespace Blarg.GameFramework.Entities
 			foreach (var i in _components)
 			{
 				EntityToComponentMap entitiesWithComponent = i.Value;
-				Component component;
-				entitiesWithComponent.TryGetValue(entity, out component);
+				Component component = entitiesWithComponent.Get(entity);
 				if (component != null)
 					list.Add(component);
 			}
@@ -236,8 +227,7 @@ namespace Blarg.GameFramework.Entities
 
 		public T GetGlobalComponent<T>() where T : Component
 		{
-			Component existing;
-			_globalComponents.TryGetValue(typeof(T), out existing);
+			Component existing = _globalComponents.Get(typeof(T));
 			if (existing == null)
 				return null;
 			else
@@ -246,8 +236,7 @@ namespace Blarg.GameFramework.Entities
 
 		public void RemoveGlobalComponent<T>() where T : Component
 		{
-			Component existing;
-			_globalComponents.TryGetValue(typeof(T), out existing);
+			Component existing = _globalComponents.Get(typeof(T));
 			if (existing == null)
 				throw new InvalidOperationException("No global component of that type exists.");
 			else
@@ -319,8 +308,7 @@ namespace Blarg.GameFramework.Entities
 			foreach (var i in _components)
 			{
 				var entitiesWithComponent = i.Value;
-				Component component;
-				entitiesWithComponent.TryGetValue(entity, out component);
+				Component component = entitiesWithComponent.Get(entity);
 				if (component != null)
 				{
 					ObjectPools.Free(i.Key, component);
