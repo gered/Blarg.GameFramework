@@ -53,8 +53,11 @@ namespace Blarg.GameFramework.Graphics
 			MagFilter = magFilter;
 		}
 
-		public void Apply()
+		public void Apply(GraphicsDevice graphicsDevice)
 		{
+			if (graphicsDevice == null)
+				throw new ArgumentNullException("graphicsDevice");
+
 			int minFilter = GL20.GL_NEAREST;
 			int magFilter = GL20.GL_LINEAR;
 			int wrapS = GL20.GL_REPEAT;
@@ -88,10 +91,10 @@ namespace Blarg.GameFramework.Graphics
 				case WrapMode.Repeat:      wrapT = GL20.GL_REPEAT; break;
 			}
 
-			Platform.GL.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_MIN_FILTER, (int)minFilter);
-			Platform.GL.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_MAG_FILTER, (int)magFilter);
-			Platform.GL.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_WRAP_S, (int)wrapS);
-			Platform.GL.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_WRAP_T, (int)wrapT);
+			graphicsDevice.GL.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_MIN_FILTER, (int)minFilter);
+			graphicsDevice.GL.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_MAG_FILTER, (int)magFilter);
+			graphicsDevice.GL.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_WRAP_S, (int)wrapS);
+			graphicsDevice.GL.glTexParameteri(GL20.GL_TEXTURE_2D, GL20.GL_TEXTURE_WRAP_T, (int)wrapT);
 		}
 
 		private void Init()

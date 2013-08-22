@@ -216,7 +216,7 @@ namespace Blarg.GameFramework.Graphics
 			}
 
 			// we **do** obviously want this to be rotated (if there is a rotation)
-			Platform.GL.glViewport(viewport.Left, viewport.Top, viewport.Width, viewport.Height);
+			_graphicsDevice.GL.glViewport(viewport.Left, viewport.Top, viewport.Width, viewport.Height);
 
 			// we also **don't** want the camera to work with a rotated viewport
 			if (_camera != null)

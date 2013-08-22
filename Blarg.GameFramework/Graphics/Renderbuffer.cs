@@ -64,14 +64,14 @@ namespace Blarg.GameFramework.Graphics
 			if (glFormat == 0)
 				throw new InvalidOperationException();
 
-			ID = Platform.GL.glGenRenderbuffers();
+			ID = GraphicsDevice.GL.glGenRenderbuffers();
 
 			Width = width;
 			Height = height;
 			Format = format;
 
 			GraphicsDevice.BindRenderbuffer(this);
-			Platform.GL.glRenderbufferStorage(GL20.GL_RENDERBUFFER, glFormat, Width, Height);
+			GraphicsDevice.GL.glRenderbufferStorage(GL20.GL_RENDERBUFFER, glFormat, Width, Height);
 			GraphicsDevice.UnbindRenderbuffer(this);
 
 			Platform.Logger.Info(GraphicsContextResource.LOG_TAG, "Created renderbuffer. ID = {0}, format = {1}, size = {2}x{3}.", ID, Format.ToString(), Width, Height);
@@ -95,7 +95,7 @@ namespace Blarg.GameFramework.Graphics
 			{
 				GraphicsDevice.UnbindRenderbuffer(this);
 
-				Platform.GL.glDeleteRenderbuffers(ID);
+				GraphicsDevice.GL.glDeleteRenderbuffers(ID);
 
 				Platform.Logger.Info(GraphicsContextResource.LOG_TAG, "Deleted Renderbuffer ID = {0}.", ID);
 

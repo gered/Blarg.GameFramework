@@ -49,7 +49,7 @@ namespace Blarg.GameFramework.Graphics.Helpers
 
 		public void Render()
 		{
-			RenderState.Default.Apply();
+			RenderState.Default.Apply(GraphicsDevice);
 
 			GraphicsDevice.BindVertexBuffer(_horizontalPoints);
 			GraphicsDevice.RenderLines(0, _horizontalPoints.NumElements / 2);

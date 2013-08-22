@@ -160,7 +160,7 @@ namespace Blarg.GameFramework.Graphics
 
 			// first load and compile the vertex shader
 
-			int vertexShaderId = Platform.GL.glCreateShader(GL20.GL_VERTEX_SHADER);
+			int vertexShaderId = GraphicsDevice.GL.glCreateShader(GL20.GL_VERTEX_SHADER);
 			if (vertexShaderId == 0)
 				throw new Exception("Failed to create OpenGL Vertex Shader object.");
 
@@ -169,10 +169,10 @@ namespace Blarg.GameFramework.Graphics
 			string[] vertexSources = { "#define VERTEX\n", vertexShaderSource };
 			int[] vertexSourcesLength = { vertexSources[0].Length, vertexSources[1].Length };
 
-			Platform.GL.glShaderSource(vertexShaderId, 2, vertexSources, vertexSourcesLength);
-			Platform.GL.glCompileShader(vertexShaderId);
+			GraphicsDevice.GL.glShaderSource(vertexShaderId, 2, vertexSources, vertexSourcesLength);
+			GraphicsDevice.GL.glCompileShader(vertexShaderId);
 
-			int vertexShaderCompileStatus = Platform.GL.glGetShaderiv(vertexShaderId, GL20.GL_COMPILE_STATUS);
+			int vertexShaderCompileStatus = GraphicsDevice.GL.glGetShaderiv(vertexShaderId, GL20.GL_COMPILE_STATUS);
 
 			// log compiler error
 			if (vertexShaderCompileStatus == 0)
@@ -183,7 +183,7 @@ namespace Blarg.GameFramework.Graphics
 
 			// and now the fragment shader
 
-			int fragmentShaderId = Platform.GL.glCreateShader(GL20.GL_FRAGMENT_SHADER);
+			int fragmentShaderId = GraphicsDevice.GL.glCreateShader(GL20.GL_FRAGMENT_SHADER);
 			if (fragmentShaderId == 0)
 				throw new Exception("Failed to create OpenGL Fragment Shader object.");
 
@@ -192,10 +192,10 @@ namespace Blarg.GameFramework.Graphics
 			string[] fragmentSources = { "#define FRAGMENT\n", fragmentShaderSource };
 			int[] fragmentSourcesLength = { fragmentSources[0].Length, fragmentSources[1].Length };
 
-			Platform.GL.glShaderSource(fragmentShaderId, 2, fragmentSources, fragmentSourcesLength);
-			Platform.GL.glCompileShader(fragmentShaderId);
+			GraphicsDevice.GL.glShaderSource(fragmentShaderId, 2, fragmentSources, fragmentSourcesLength);
+			GraphicsDevice.GL.glCompileShader(fragmentShaderId);
 
-			int fragmentShaderCompileStatus = Platform.GL.glGetShaderiv(fragmentShaderId, GL20.GL_COMPILE_STATUS);
+			int fragmentShaderCompileStatus = GraphicsDevice.GL.glGetShaderiv(fragmentShaderId, GL20.GL_COMPILE_STATUS);
 
 			// log compiler error
 			if (fragmentShaderCompileStatus == 0)
@@ -218,7 +218,7 @@ namespace Blarg.GameFramework.Graphics
 
 		private string GetShaderLog(int shaderId)
 		{
-			return Platform.GL.glGetShaderInfoLog(shaderId);
+			return GraphicsDevice.GL.glGetShaderInfoLog(shaderId);
 		}
 
 		private void Link()
@@ -228,20 +228,20 @@ namespace Blarg.GameFramework.Graphics
 			if (VertexShaderID == -1 || FragmentShaderID == -1)
 				throw new InvalidOperationException();
 
-			int programId = Platform.GL.glCreateProgram();
+			int programId = GraphicsDevice.GL.glCreateProgram();
 			if (programId == 0)
 				throw new Exception("Failed to create OpenGL Shader Program object.");
 
-			Platform.GL.glAttachShader(programId, VertexShaderID);
-			Platform.GL.glAttachShader(programId, FragmentShaderID);
-			Platform.GL.glLinkProgram(programId);
+			GraphicsDevice.GL.glAttachShader(programId, VertexShaderID);
+			GraphicsDevice.GL.glAttachShader(programId, FragmentShaderID);
+			GraphicsDevice.GL.glLinkProgram(programId);
 
-			int programLinkStatus = Platform.GL.glGetProgramiv(programId, GL20.GL_LINK_STATUS);
+			int programLinkStatus = GraphicsDevice.GL.glGetProgramiv(programId, GL20.GL_LINK_STATUS);
 
 			// log linker error
 			if (programLinkStatus == 0)
 			{
-				string log = Platform.GL.glGetProgramInfoLog(programId);
+				string log = GraphicsDevice.GL.glGetProgramInfoLog(programId);
 				Platform.Logger.Error("OPENGL", "Error linking program:\n{0}", log);
 			}
 
@@ -332,7 +332,7 @@ namespace Blarg.GameFramework.Graphics
 			if (ProgramID == -1)
 				throw new InvalidOperationException();
 
-			int numUniforms = Platform.GL.glGetProgramiv(ProgramID, GL20.GL_ACTIVE_UNIFORMS);
+			int numUniforms = GraphicsDevice.GL.glGetProgramiv(ProgramID, GL20.GL_ACTIVE_UNIFORMS);
 			NumUniforms = numUniforms;
 
 			if (NumUniforms == 0)
@@ -347,8 +347,8 @@ namespace Blarg.GameFramework.Graphics
 				var uniform = new ShaderUniform();
 
 				int uniformType;
-				uniform.Name = Platform.GL.glGetActiveUniform(ProgramID, i, out uniform.Size, out uniformType);
-				uniform.Location = Platform.GL.glGetUniformLocation(ProgramID, uniform.Name);
+				uniform.Name = GraphicsDevice.GL.glGetActiveUniform(ProgramID, i, out uniform.Size, out uniformType);
+				uniform.Location = GraphicsDevice.GL.glGetUniformLocation(ProgramID, uniform.Name);
 				uniform.Type = (int)uniformType;
 
 				// it seems Windows/Mac (possibly Linux too) have differing opinions on
@@ -373,7 +373,7 @@ namespace Blarg.GameFramework.Graphics
 			if (ProgramID == -1)
 				throw new InvalidOperationException();
 
-			int numAttributes = Platform.GL.glGetProgramiv(ProgramID, GL20.GL_ACTIVE_ATTRIBUTES);
+			int numAttributes = GraphicsDevice.GL.glGetProgramiv(ProgramID, GL20.GL_ACTIVE_ATTRIBUTES);
 
 			// sanity checking, which only matters for shader reloading (e.g. when a context is lost)
 			if (_attributeMapping != null)
@@ -403,8 +403,8 @@ namespace Blarg.GameFramework.Graphics
 				var attribute = new ShaderAttribute();
 
 				int attributeType;
-				attribute.Name = Platform.GL.glGetActiveAttrib(ProgramID, i, out attribute.Size, out attributeType);
-				attribute.Location = Platform.GL.glGetAttribLocation(ProgramID, attribute.Name);
+				attribute.Name = GraphicsDevice.GL.glGetActiveAttrib(ProgramID, i, out attribute.Size, out attributeType);
+				attribute.Location = GraphicsDevice.GL.glGetAttribLocation(ProgramID, attribute.Name);
 				attribute.Type = (int)attributeType;
 
 				_attributes[i] = attribute;
@@ -608,7 +608,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				if (uniform.Size != 1)
 					throw new InvalidOperationException();
-				Platform.GL.glUniform1f(uniform.Location, x);
+				GraphicsDevice.GL.glUniform1f(uniform.Location, x);
 			}
 			else
 			{
@@ -629,7 +629,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				if (uniform.Size != 1)
 					throw new InvalidOperationException();
-				Platform.GL.glUniform1i(uniform.Location, x);
+				GraphicsDevice.GL.glUniform1i(uniform.Location, x);
 			}
 			else
 			{
@@ -650,7 +650,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				if (uniform.Size != 1)
 					throw new InvalidOperationException();
-				Platform.GL.glUniform2f(uniform.Location, x, y);
+				GraphicsDevice.GL.glUniform2f(uniform.Location, x, y);
 			}
 			else
 			{
@@ -672,7 +672,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				if (uniform.Size != 1)
 					throw new InvalidOperationException();
-				Platform.GL.glUniform2i(uniform.Location, x, y);
+				GraphicsDevice.GL.glUniform2i(uniform.Location, x, y);
 			}
 			else
 			{
@@ -699,7 +699,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				if (uniform.Size != 1)
 					throw new InvalidOperationException();
-				Platform.GL.glUniform2f(uniform.Location, v.X, v.Y);
+				GraphicsDevice.GL.glUniform2f(uniform.Location, v.X, v.Y);
 			}
 			else
 			{
@@ -726,7 +726,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				if (uniform.Size != 1)
 					throw new InvalidOperationException();
-				Platform.GL.glUniform2i(uniform.Location, p.X, p.Y);
+				GraphicsDevice.GL.glUniform2i(uniform.Location, p.X, p.Y);
 			}
 			else
 			{
@@ -748,7 +748,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				if (uniform.Size != 1)
 					throw new InvalidOperationException();
-				Platform.GL.glUniform3f(uniform.Location, x, y, z);
+				GraphicsDevice.GL.glUniform3f(uniform.Location, x, y, z);
 			}
 			else
 			{
@@ -771,7 +771,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				if (uniform.Size != 1)
 					throw new InvalidOperationException();
-				Platform.GL.glUniform3i(uniform.Location, x, y, z);
+				GraphicsDevice.GL.glUniform3i(uniform.Location, x, y, z);
 			}
 			else
 			{
@@ -799,7 +799,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				if (uniform.Size != 1)
 					throw new InvalidOperationException();
-				Platform.GL.glUniform3f(uniform.Location, v.X, v.Y, v.Z);
+				GraphicsDevice.GL.glUniform3f(uniform.Location, v.X, v.Y, v.Z);
 			}
 			else
 			{
@@ -827,7 +827,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				if (uniform.Size != 1)
 					throw new InvalidOperationException();
-				Platform.GL.glUniform3i(uniform.Location, p.X, p.Y, p.Z);
+				GraphicsDevice.GL.glUniform3i(uniform.Location, p.X, p.Y, p.Z);
 			}
 			else
 			{
@@ -850,7 +850,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				if (uniform.Size != 1)
 					throw new InvalidOperationException();
-				Platform.GL.glUniform4f(uniform.Location, x, y, z, w);
+				GraphicsDevice.GL.glUniform4f(uniform.Location, x, y, z, w);
 			}
 			else
 			{
@@ -874,7 +874,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				if (uniform.Size != 1)
 					throw new InvalidOperationException();
-				Platform.GL.glUniform4i(uniform.Location, x, y, z, w);
+				GraphicsDevice.GL.glUniform4i(uniform.Location, x, y, z, w);
 			}
 			else
 			{
@@ -903,7 +903,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				if (uniform.Size != 1)
 					throw new InvalidOperationException();
-				Platform.GL.glUniform4f(uniform.Location, v.X, v.Y, v.Z, v.W);
+				GraphicsDevice.GL.glUniform4f(uniform.Location, v.X, v.Y, v.Z, v.W);
 			}
 			else
 			{
@@ -932,7 +932,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				if (uniform.Size != 1)
 					throw new InvalidOperationException();
-				Platform.GL.glUniform4f(uniform.Location, q.X, q.Y, q.Z, q.W);
+				GraphicsDevice.GL.glUniform4f(uniform.Location, q.X, q.Y, q.Z, q.W);
 			}
 			else
 			{
@@ -961,7 +961,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				if (uniform.Size != 1)
 					throw new InvalidOperationException();
-				Platform.GL.glUniform4f(uniform.Location, c.R, c.G, c.B, c.A);
+				GraphicsDevice.GL.glUniform4f(uniform.Location, c.R, c.G, c.B, c.A);
 			}
 			else
 			{
@@ -990,7 +990,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				if (uniform.Size != 1)
 					throw new InvalidOperationException();
-				Platform.GL.glUniformMatrix3fv(uniform.Location, 1, false, ref m.M11);
+				GraphicsDevice.GL.glUniformMatrix3fv(uniform.Location, 1, false, ref m.M11);
 			}
 			else
 			{
@@ -1016,7 +1016,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				if (uniform.Size != 1)
 					throw new InvalidOperationException();
-				Platform.GL.glUniformMatrix4fv(uniform.Location, 1, false, ref m.M11);
+				GraphicsDevice.GL.glUniformMatrix4fv(uniform.Location, 1, false, ref m.M11);
 			}
 			else
 			{
@@ -1037,7 +1037,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				if (uniform.Size <= 1)
 					throw new InvalidOperationException();
-				Platform.GL.glUniform1fv(uniform.Location, x.Length, x);
+				GraphicsDevice.GL.glUniform1fv(uniform.Location, x.Length, x);
 			}
 			else
 			{
@@ -1059,7 +1059,7 @@ namespace Blarg.GameFramework.Graphics
 				{
 					fixed (int *p = x)
 					{
-						Platform.GL.glUniform1fv(uniform.Location, x.Length, new IntPtr((long)p));
+						GraphicsDevice.GL.glUniform1fv(uniform.Location, x.Length, new IntPtr((long)p));
 					}
 				}
 			}
@@ -1079,7 +1079,7 @@ namespace Blarg.GameFramework.Graphics
 				if (uniform.Size <= 1)
 					throw new InvalidOperationException();
 
-				Platform.GL.glUniform2fv(uniform.Location, v.Length, ref v[0].X);
+				GraphicsDevice.GL.glUniform2fv(uniform.Location, v.Length, ref v[0].X);
 			}
 			else
 			{
@@ -1097,7 +1097,7 @@ namespace Blarg.GameFramework.Graphics
 				if (uniform.Size <= 1)
 					throw new InvalidOperationException();
 
-				Platform.GL.glUniform3fv(uniform.Location, v.Length, ref v[0].X);
+				GraphicsDevice.GL.glUniform3fv(uniform.Location, v.Length, ref v[0].X);
 			}
 			else
 			{
@@ -1115,7 +1115,7 @@ namespace Blarg.GameFramework.Graphics
 				if (uniform.Size <= 1)
 					throw new InvalidOperationException();
 
-				Platform.GL.glUniform4fv(uniform.Location, v.Length, ref v[0].X);
+				GraphicsDevice.GL.glUniform4fv(uniform.Location, v.Length, ref v[0].X);
 			}
 			else
 			{
@@ -1133,7 +1133,7 @@ namespace Blarg.GameFramework.Graphics
 				if (uniform.Size <= 1)
 					throw new InvalidOperationException();
 
-				Platform.GL.glUniform4fv(uniform.Location, q.Length, ref q[0].X);
+				GraphicsDevice.GL.glUniform4fv(uniform.Location, q.Length, ref q[0].X);
 			}
 			else
 			{
@@ -1151,7 +1151,7 @@ namespace Blarg.GameFramework.Graphics
 				if (uniform.Size <= 1)
 					throw new InvalidOperationException();
 
-				Platform.GL.glUniform4fv(uniform.Location, c.Length, ref c[0].R);
+				GraphicsDevice.GL.glUniform4fv(uniform.Location, c.Length, ref c[0].R);
 			}
 			else
 			{
@@ -1169,7 +1169,7 @@ namespace Blarg.GameFramework.Graphics
 				if (uniform.Size <= 1)
 					throw new InvalidOperationException();
 
-				Platform.GL.glUniformMatrix3fv(uniform.Location, m.Length, false, ref m[0].M11);
+				GraphicsDevice.GL.glUniformMatrix3fv(uniform.Location, m.Length, false, ref m[0].M11);
 			}
 			else
 			{
@@ -1187,7 +1187,7 @@ namespace Blarg.GameFramework.Graphics
 				if (uniform.Size <= 1)
 					throw new InvalidOperationException();
 
-				Platform.GL.glUniformMatrix4fv(uniform.Location, m.Length, false, ref m[0].M11);
+				GraphicsDevice.GL.glUniformMatrix4fv(uniform.Location, m.Length, false, ref m[0].M11);
 			}
 			else
 			{
@@ -1224,17 +1224,17 @@ namespace Blarg.GameFramework.Graphics
 
 			if (VertexShaderID != -1)
 			{
-				Platform.GL.glDeleteShader(VertexShaderID);
+				GraphicsDevice.GL.glDeleteShader(VertexShaderID);
 				VertexShaderID = -1;
 			}
 			if (FragmentShaderID != -1)
 			{
-				Platform.GL.glDeleteShader(FragmentShaderID);
+				GraphicsDevice.GL.glDeleteShader(FragmentShaderID);
 				FragmentShaderID = -1;
 			}
 			if (ProgramID != -1)
 			{
-				Platform.GL.glDeleteProgram(ProgramID);
+				GraphicsDevice.GL.glDeleteProgram(ProgramID);
 				ProgramID = -1;
 			}
 

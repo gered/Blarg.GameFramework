@@ -46,7 +46,8 @@ namespace Blarg.GameFramework
 		{
 			Logger.Info(LOG_TAG, "Initializing application objects.");
 			Services = new ServiceContainer();
-			GraphicsDevice = new GraphicsDevice();
+			GraphicsDevice = new GraphicsDevice(GL);
+			GraphicsDevice.OnInit();
 		}
 
 		protected void OnShutdown()

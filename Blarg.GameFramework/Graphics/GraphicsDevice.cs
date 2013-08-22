@@ -17,6 +17,8 @@ namespace Blarg.GameFramework.Graphics
 		const int SolidColorTextureWidth = 8;
 		const int SolidColorTextureHeight = 8;
 
+		public readonly GL20 GL;
+
 		List<GraphicsContextResource> _managedResources;
 		Dictionary<int, Texture> _solidColorTextures;
 		VertexBuffer _boundVertexBuffer;
@@ -72,18 +74,46 @@ namespace Blarg.GameFramework.Graphics
 			}
 		}
 
-		public GraphicsDevice()
+		public GraphicsDevice(GL20 gl)
 		{
-			ScreenOrientation = ScreenOrientation.Rotation0;
+			if (gl == null)
+				throw new ArgumentNullException("gl");
 
+			GL = gl;
+			ScreenOrientation = ScreenOrientation.Rotation0;
+		}
+
+		private void LoadStandardShaders()
+		{
+			DebugShader = new DebugShader(this);
+			SimpleColorShader = new SimpleColorShader(this);
+			SimpleColorTextureShader = new SimpleColorTextureShader(this);
+			SimpleTextureShader = new SimpleTextureShader(this);
+			SimpleTextureVertexLerpShader = new SimpleTextureVertexLerpShader(this);
+			SimpleTextureVertexSkinningShader = new SimpleTextureVertexSkinningShader(this);
+			Sprite2DShader = new Sprite2DShader(this);
+			Sprite3DShader = new Sprite3DShader(this);
+		}
+
+		private void LoadStandardFonts()
+		{
+			var sansSerifFontStream = ResourceUtils.GetResource("Blarg.GameFramework.Resources.Fonts.Vera.ttf");
+			SansSerifFont = SpriteFontTrueTypeLoader.Load(this, sansSerifFontStream, 16, SansSerifFont);
+
+			var monospaceFontStream = ResourceUtils.GetResource("Blarg.GameFramework.Resources.Fonts.VeraMono.ttf");
+			MonospaceFont = SpriteFontTrueTypeLoader.Load(this, monospaceFontStream, 16, MonospaceFont);
+		}
+
+		public void OnInit()
+		{
 			_boundTextures = new Texture[MaxTextureUnits];
 			_enabledVertexAttribIndices = new Stack<int>(MaxGpuAttributeSlots);
 
-			string vendor = Platform.GL.glGetString(GL20.GL_VENDOR);
-			string renderer = Platform.GL.glGetString(GL20.GL_RENDERER);
-			string version = Platform.GL.glGetString(GL20.GL_VERSION);
-			string extensions = Platform.GL.glGetString(GL20.GL_EXTENSIONS);
-			string shadingLangVersion = Platform.GL.glGetString(GL20.GL_SHADING_LANGUAGE_VERSION);
+			string vendor = GL.glGetString(GL20.GL_VENDOR);
+			string renderer = GL.glGetString(GL20.GL_RENDERER);
+			string version = GL.glGetString(GL20.GL_VERSION);
+			string extensions = GL.glGetString(GL20.GL_EXTENSIONS);
+			string shadingLangVersion = GL.glGetString(GL20.GL_SHADING_LANGUAGE_VERSION);
 
 			Platform.Logger.Info(LOG_TAG, "GL_VENDOR = {0}", vendor);
 			Platform.Logger.Info(LOG_TAG, "GL_RENDERER = {0}", renderer);
@@ -119,27 +149,6 @@ namespace Blarg.GameFramework.Graphics
 			DebugRenderer = new GeometryDebugRenderer(this);
 		}
 
-		private void LoadStandardShaders()
-		{
-			DebugShader = new DebugShader(this);
-			SimpleColorShader = new SimpleColorShader(this);
-			SimpleColorTextureShader = new SimpleColorTextureShader(this);
-			SimpleTextureShader = new SimpleTextureShader(this);
-			SimpleTextureVertexLerpShader = new SimpleTextureVertexLerpShader(this);
-			SimpleTextureVertexSkinningShader = new SimpleTextureVertexSkinningShader(this);
-			Sprite2DShader = new Sprite2DShader(this);
-			Sprite3DShader = new Sprite3DShader(this);
-		}
-
-		private void LoadStandardFonts()
-		{
-			var sansSerifFontStream = ResourceUtils.GetResource("Blarg.GameFramework.Resources.Fonts.Vera.ttf");
-			SansSerifFont = SpriteFontTrueTypeLoader.Load(this, sansSerifFontStream, 16, SansSerifFont);
-
-			var monospaceFontStream = ResourceUtils.GetResource("Blarg.GameFramework.Resources.Fonts.VeraMono.ttf");
-			MonospaceFont = SpriteFontTrueTypeLoader.Load(this, monospaceFontStream, 16, MonospaceFont);
-		}
-
 		public void OnLostContext()
 		{
 			Platform.Logger.Info(LOG_TAG, "Cleaning up objects/state specific to the lost OpenGL context.");
@@ -160,8 +169,8 @@ namespace Blarg.GameFramework.Graphics
 
 			_activeViewContext.OnNewContext();
 
-			RenderState.Default.Apply();
-			BlendState.Default.Apply();
+			RenderState.Default.Apply(this);
+			BlendState.Default.Apply(this);
 
 			UnbindVertexBuffer();
 			UnbindIndexBuffer();
@@ -203,14 +212,14 @@ namespace Blarg.GameFramework.Graphics
 
 		public void OnRender(float delta)
 		{
-			int error = Platform.GL.glGetError();
+			int error = GL.glGetError();
 			System.Diagnostics.Debug.Assert(error == GL20.GL_NO_ERROR);
 			if (error != GL20.GL_NO_ERROR)
 			{
 				Platform.Logger.Error("OPENGL", "OpenGL error \"{0}\"", error.ToString());
 
 				// keep checking for and reporting errors until there are no more left
-				while ((error = Platform.GL.glGetError()) != GL20.GL_NO_ERROR)
+				while ((error = GL.glGetError()) != GL20.GL_NO_ERROR)
 					Platform.Logger.Error("OPENGL", "OpenGL error \"{0}\"", error.ToString());
 			}
 
@@ -231,7 +240,7 @@ namespace Blarg.GameFramework.Graphics
 		{
 			var color = new Color(r, g, b, a);
 			Clear(ref color);
-			Platform.GL.glClearColor(r, g, b, a);
+			GL.glClearColor(r, g, b, a);
 		}
 
 		public void Clear(Color color)
@@ -241,8 +250,8 @@ namespace Blarg.GameFramework.Graphics
 
 		public void Clear(ref Color color)
 		{
-			Platform.GL.glClearColor(color.R, color.G, color.B, color.A);
-			Platform.GL.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+			GL.glClearColor(color.R, color.G, color.B, color.A);
+			GL.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		}
 
 		public void SetTextureParameters(TextureParameters parameters)
@@ -315,8 +324,8 @@ namespace Blarg.GameFramework.Graphics
 
 			if (texture != _boundTextures[unit])
 			{
-				Platform.GL.glActiveTexture(GL20.GL_TEXTURE0 + unit);
-				Platform.GL.glBindTexture(GL20.GL_TEXTURE_2D, texture.ID);
+				GL.glActiveTexture(GL20.GL_TEXTURE0 + unit);
+				GL.glBindTexture(GL20.GL_TEXTURE_2D, texture.ID);
 
 				_boundTextures[unit] = texture;
 			}
@@ -327,8 +336,8 @@ namespace Blarg.GameFramework.Graphics
 			if (unit < 0 || unit >= MaxTextureUnits)
 				throw new ArgumentOutOfRangeException("unit");
 
-			Platform.GL.glActiveTexture(GL20.GL_TEXTURE0 + unit);
-			Platform.GL.glBindTexture(GL20.GL_TEXTURE_2D, 0);
+			GL.glActiveTexture(GL20.GL_TEXTURE0 + unit);
+			GL.glBindTexture(GL20.GL_TEXTURE_2D, 0);
 
 			_boundTextures[unit] = null;
 		}
@@ -352,14 +361,14 @@ namespace Blarg.GameFramework.Graphics
 
 			if (_boundRenderbuffer != renderbuffer)
 			{
-				Platform.GL.glBindRenderbuffer(GL20.GL_RENDERBUFFER, renderbuffer.ID);
+				GL.glBindRenderbuffer(GL20.GL_RENDERBUFFER, renderbuffer.ID);
 				_boundRenderbuffer = renderbuffer;
 			}
 		}
 
 		public void UnbindRenderbuffer()
 		{
-			Platform.GL.glBindRenderbuffer(GL20.GL_RENDERBUFFER, 0);
+			GL.glBindRenderbuffer(GL20.GL_RENDERBUFFER, 0);
 			_boundRenderbuffer = null;
 		}
 
@@ -379,14 +388,14 @@ namespace Blarg.GameFramework.Graphics
 
 			if (_boundFramebuffer != framebuffer)
 			{
-				Platform.GL.glBindFramebuffer(GL20.GL_FRAMEBUFFER, framebuffer.ID);
+				GL.glBindFramebuffer(GL20.GL_FRAMEBUFFER, framebuffer.ID);
 				_boundFramebuffer = framebuffer;
 			}
 		}
 
 		public void UnbindFramebuffer()
 		{
-			Platform.GL.glBindFramebuffer(GL20.GL_FRAMEBUFFER, 0);
+			GL.glBindFramebuffer(GL20.GL_FRAMEBUFFER, 0);
 			_boundFramebuffer = null;
 		}
 
@@ -422,7 +431,7 @@ namespace Blarg.GameFramework.Graphics
 
 		public void UnbindVertexBuffer()
 		{
-			Platform.GL.glBindBuffer(GL20.GL_ARRAY_BUFFER, 0);
+			GL.glBindBuffer(GL20.GL_ARRAY_BUFFER, 0);
 			_boundVertexBuffer = null;
 
 			if (_isShaderVertexAttribsSet)
@@ -434,12 +443,12 @@ namespace Blarg.GameFramework.Graphics
 			if (buffer.IsDirty)
 				buffer.Update();
 
-			Platform.GL.glBindBuffer(GL20.GL_ARRAY_BUFFER, buffer.ID);
+			GL.glBindBuffer(GL20.GL_ARRAY_BUFFER, buffer.ID);
 		}
 
 		private void BindVertexClientArrays(VertexBuffer buffer)
 		{
-			Platform.GL.glBindBuffer(GL20.GL_ARRAY_BUFFER, 0);
+			GL.glBindBuffer(GL20.GL_ARRAY_BUFFER, 0);
 		}
 
 		public void BindIndexBuffer(IndexBuffer buffer)
@@ -462,7 +471,7 @@ namespace Blarg.GameFramework.Graphics
 
 		public void UnbindIndexBuffer()
 		{
-			Platform.GL.glBindBuffer(GL20.GL_ELEMENT_ARRAY_BUFFER, 0);
+			GL.glBindBuffer(GL20.GL_ELEMENT_ARRAY_BUFFER, 0);
 			_boundIndexBuffer = null;
 		}
 
@@ -471,12 +480,12 @@ namespace Blarg.GameFramework.Graphics
 			if (buffer.IsDirty)
 				buffer.Update();
 
-			Platform.GL.glBindBuffer(GL20.GL_ELEMENT_ARRAY_BUFFER, buffer.ID);
+			GL.glBindBuffer(GL20.GL_ELEMENT_ARRAY_BUFFER, buffer.ID);
 		}
 
 		private void BindIndexClientArray(IndexBuffer buffer)
 		{
-			Platform.GL.glBindBuffer(GL20.GL_ELEMENT_ARRAY_BUFFER, 0);
+			GL.glBindBuffer(GL20.GL_ELEMENT_ARRAY_BUFFER, 0);
 		}
 
 		public void BindShader(Shader shader)
@@ -486,7 +495,7 @@ namespace Blarg.GameFramework.Graphics
 			if (!shader.IsReadyForUse)
 				throw new InvalidOperationException("Shader hasn't been compiled and linked.");
 
-			Platform.GL.glUseProgram(shader.ProgramID);
+			GL.glUseProgram(shader.ProgramID);
 			_boundShader = shader;
 
 			if (_isShaderVertexAttribsSet)
@@ -497,7 +506,7 @@ namespace Blarg.GameFramework.Graphics
 
 		public void UnbindShader()
 		{
-			Platform.GL.glUseProgram(0);
+			GL.glUseProgram(0);
 
 			if (_boundShader != null)
 				_boundShader.OnUnbind();
@@ -537,7 +546,7 @@ namespace Blarg.GameFramework.Graphics
 				offset = _boundVertexBuffer.GetAttributeOffset(bufferAttribIndex);
 				size = _boundVertexBuffer.GetAttributeSize(bufferAttribIndex);
 
-				Platform.GL.glEnableVertexAttribArray(i);
+				GL.glEnableVertexAttribArray(i);
 				if (_boundVertexBuffer.IsClientSide)
 				{
 					// pass reference to the first vertex and the first float within that vertex that is for this attribute
@@ -546,14 +555,14 @@ namespace Blarg.GameFramework.Graphics
 						fixed (float *p = _boundVertexBuffer.Data)
 						{
 							float *src = p + offset;
-							Platform.GL.glVertexAttribPointer(i, size, GL20.GL_FLOAT, false, _boundVertexBuffer.ElementWidthInBytes, new IntPtr((long)src));
+							GL.glVertexAttribPointer(i, size, GL20.GL_FLOAT, false, _boundVertexBuffer.ElementWidthInBytes, new IntPtr((long)src));
 						}
 					}
 
 				}
 				else
 					// pass offset in bytes (starting from zero) that corresponds with the start of this attribute
-					Platform.GL.glVertexAttribPointer(i, size, GL20.GL_FLOAT, false, _boundVertexBuffer.ElementWidthInBytes, (IntPtr)(offset * sizeof(float)));
+					GL.glVertexAttribPointer(i, size, GL20.GL_FLOAT, false, _boundVertexBuffer.ElementWidthInBytes, (IntPtr)(offset * sizeof(float)));
 
 				_enabledVertexAttribIndices.Push(i);
 			}
@@ -566,7 +575,7 @@ namespace Blarg.GameFramework.Graphics
 			while (_enabledVertexAttribIndices.Count > 0)
 			{
 				int index = _enabledVertexAttribIndices.Pop();
-				Platform.GL.glDisableVertexAttribArray(index);
+				GL.glDisableVertexAttribArray(index);
 			}
 
 			_isShaderVertexAttribsSet = false;
@@ -605,7 +614,7 @@ namespace Blarg.GameFramework.Graphics
 			if (numVertices % 3 != 0)
 				throw new InvalidOperationException("Number of elements in index buffer do not perfectly make up a set of triangles.");
 
-			Platform.GL.glDrawElements(GL20.GL_TRIANGLES, numVertices, GL20.GL_UNSIGNED_SHORT, buffer.Data);
+			GL.glDrawElements(GL20.GL_TRIANGLES, numVertices, GL20.GL_UNSIGNED_SHORT, buffer.Data);
 		}
 
 		public void RenderTriangles()
@@ -624,9 +633,9 @@ namespace Blarg.GameFramework.Graphics
 					throw new InvalidOperationException("Number of elements in bound index buffer do not perfectly make up a set of triangles.");
 
 				if (_boundIndexBuffer.IsClientSide)
-					Platform.GL.glDrawElements(GL20.GL_TRIANGLES, numVertices, GL20.GL_UNSIGNED_SHORT, _boundIndexBuffer.Data);
+					GL.glDrawElements(GL20.GL_TRIANGLES, numVertices, GL20.GL_UNSIGNED_SHORT, _boundIndexBuffer.Data);
 				else
-					Platform.GL.glDrawElements(GL20.GL_TRIANGLES, numVertices, GL20.GL_UNSIGNED_SHORT, (IntPtr)0);
+					GL.glDrawElements(GL20.GL_TRIANGLES, numVertices, GL20.GL_UNSIGNED_SHORT, (IntPtr)0);
 			}
 			else
 			{
@@ -635,7 +644,7 @@ namespace Blarg.GameFramework.Graphics
 				if (numVertices % 3 != 0)
 					throw new InvalidOperationException("Number of vertices in bound vertex buffer do not perfectly make up a set of triangles.");
 
-				Platform.GL.glDrawArrays(GL20.GL_TRIANGLES, 0, numVertices);
+				GL.glDrawArrays(GL20.GL_TRIANGLES, 0, numVertices);
 			}
 		}
 
@@ -662,7 +671,7 @@ namespace Blarg.GameFramework.Graphics
 						fixed (ushort *p = _boundIndexBuffer.Data)
 						{
 							ushort *src = p + startVertex;
-							Platform.GL.glDrawElements(GL20.GL_TRIANGLES, numVertices, GL20.GL_UNSIGNED_SHORT, new IntPtr((long)src));
+							GL.glDrawElements(GL20.GL_TRIANGLES, numVertices, GL20.GL_UNSIGNED_SHORT, new IntPtr((long)src));
 						}
 					}
 				}
@@ -670,7 +679,7 @@ namespace Blarg.GameFramework.Graphics
 				{
 					// this offset needs to be in terms of bytes
 					int offset = startVertex * _boundIndexBuffer.ElementWidthInBytes;
-					Platform.GL.glDrawElements(GL20.GL_TRIANGLES, numVertices, GL20.GL_UNSIGNED_SHORT, (IntPtr)offset);
+					GL.glDrawElements(GL20.GL_TRIANGLES, numVertices, GL20.GL_UNSIGNED_SHORT, (IntPtr)offset);
 				}
 			}
 			else
@@ -679,7 +688,7 @@ namespace Blarg.GameFramework.Graphics
 				if ((_boundVertexBuffer.NumElements - startVertex) < numVertices)
 					throw new InvalidOperationException("Bound vertex buffer does not contain enough vertices.");
 
-				Platform.GL.glDrawArrays(GL20.GL_TRIANGLES, startVertex, numVertices);
+				GL.glDrawArrays(GL20.GL_TRIANGLES, startVertex, numVertices);
 			}
 		}
 
@@ -701,7 +710,7 @@ namespace Blarg.GameFramework.Graphics
 			if (numVertices % 2 != 0)
 				throw new InvalidOperationException("Number of elements in index buffer do not perfectly make up a set of lines.");
 
-			Platform.GL.glDrawElements(GL20.GL_LINES, numVertices, GL20.GL_UNSIGNED_SHORT, buffer.Data);
+			GL.glDrawElements(GL20.GL_LINES, numVertices, GL20.GL_UNSIGNED_SHORT, buffer.Data);
 		}
 
 		public void RenderLines()
@@ -720,9 +729,9 @@ namespace Blarg.GameFramework.Graphics
 					throw new InvalidOperationException("Number of elements in bound index buffer do not perfectly make up a set of lines.");
 
 				if (_boundIndexBuffer.IsClientSide)
-					Platform.GL.glDrawElements(GL20.GL_LINES, numVertices, GL20.GL_UNSIGNED_SHORT, _boundIndexBuffer.Data);
+					GL.glDrawElements(GL20.GL_LINES, numVertices, GL20.GL_UNSIGNED_SHORT, _boundIndexBuffer.Data);
 				else
-					Platform.GL.glDrawElements(GL20.GL_LINES, numVertices, GL20.GL_UNSIGNED_SHORT, (IntPtr)0);
+					GL.glDrawElements(GL20.GL_LINES, numVertices, GL20.GL_UNSIGNED_SHORT, (IntPtr)0);
 			}
 			else
 			{
@@ -731,7 +740,7 @@ namespace Blarg.GameFramework.Graphics
 				if (numVertices % 2 != 0)
 					throw new InvalidOperationException("Number of vertices in bound vertex buffer do not perfectly make up a set of lines.");
 
-				Platform.GL.glDrawArrays(GL20.GL_LINES, 0, numVertices);
+				GL.glDrawArrays(GL20.GL_LINES, 0, numVertices);
 			}
 		}
 
@@ -758,7 +767,7 @@ namespace Blarg.GameFramework.Graphics
 						fixed (ushort *p = _boundIndexBuffer.Data)
 						{
 							ushort *src = p + startVertex;
-							Platform.GL.glDrawElements(GL20.GL_LINES, numVertices, GL20.GL_UNSIGNED_SHORT, new IntPtr((long)src));
+							GL.glDrawElements(GL20.GL_LINES, numVertices, GL20.GL_UNSIGNED_SHORT, new IntPtr((long)src));
 						}
 					}
 				}
@@ -766,7 +775,7 @@ namespace Blarg.GameFramework.Graphics
 				{
 					// this offset needs to be in terms of bytes
 					int offset = startVertex * _boundIndexBuffer.ElementWidthInBytes;
-					Platform.GL.glDrawElements(GL20.GL_LINES, numVertices, GL20.GL_UNSIGNED_SHORT, (IntPtr)offset);
+					GL.glDrawElements(GL20.GL_LINES, numVertices, GL20.GL_UNSIGNED_SHORT, (IntPtr)offset);
 				}
 			}
 			else
@@ -775,7 +784,7 @@ namespace Blarg.GameFramework.Graphics
 				if ((_boundVertexBuffer.NumElements - startVertex) < numVertices)
 					throw new InvalidOperationException("Bound vertex buffer does not contain enough vertices.");
 
-				Platform.GL.glDrawArrays(GL20.GL_LINES, startVertex, numVertices);
+				GL.glDrawArrays(GL20.GL_LINES, startVertex, numVertices);
 			}
 		}
 
@@ -795,7 +804,7 @@ namespace Blarg.GameFramework.Graphics
 
 			int numVertices = buffer.NumElements;
 
-			Platform.GL.glDrawElements(GL20.GL_POINTS, numVertices, GL20.GL_UNSIGNED_SHORT, buffer.Data);
+			GL.glDrawElements(GL20.GL_POINTS, numVertices, GL20.GL_UNSIGNED_SHORT, buffer.Data);
 		}
 
 		public void RenderPoints()
@@ -812,16 +821,16 @@ namespace Blarg.GameFramework.Graphics
 				int numVertices = _boundIndexBuffer.NumElements;
 
 				if (_boundIndexBuffer.IsClientSide)
-					Platform.GL.glDrawElements(GL20.GL_POINTS, numVertices, GL20.GL_UNSIGNED_SHORT, _boundIndexBuffer.Data);
+					GL.glDrawElements(GL20.GL_POINTS, numVertices, GL20.GL_UNSIGNED_SHORT, _boundIndexBuffer.Data);
 				else
-					Platform.GL.glDrawElements(GL20.GL_POINTS, numVertices, GL20.GL_UNSIGNED_SHORT, (IntPtr)0);
+					GL.glDrawElements(GL20.GL_POINTS, numVertices, GL20.GL_UNSIGNED_SHORT, (IntPtr)0);
 			}
 			else
 			{
 				// no index buffer, just render the whole vertex buffer
 				int numVertices = _boundVertexBuffer.NumElements;
 
-				Platform.GL.glDrawArrays(GL20.GL_POINTS, 0, numVertices);
+				GL.glDrawArrays(GL20.GL_POINTS, 0, numVertices);
 			}
 		}
 
@@ -846,7 +855,7 @@ namespace Blarg.GameFramework.Graphics
 						fixed (ushort *p = _boundIndexBuffer.Data)
 						{
 							ushort *src = p + startVertex;
-							Platform.GL.glDrawElements(GL20.GL_POINTS, numPoints, GL20.GL_UNSIGNED_SHORT, new IntPtr((long)src));
+							GL.glDrawElements(GL20.GL_POINTS, numPoints, GL20.GL_UNSIGNED_SHORT, new IntPtr((long)src));
 						}
 					}
 				}
@@ -854,7 +863,7 @@ namespace Blarg.GameFramework.Graphics
 				{
 					// this offset needs to be in terms of bytes
 					int offset = startVertex * _boundIndexBuffer.ElementWidthInBytes;
-					Platform.GL.glDrawElements(GL20.GL_POINTS, numPoints, GL20.GL_UNSIGNED_SHORT, (IntPtr)offset);
+					GL.glDrawElements(GL20.GL_POINTS, numPoints, GL20.GL_UNSIGNED_SHORT, (IntPtr)offset);
 				}
 			}
 			else
@@ -863,7 +872,7 @@ namespace Blarg.GameFramework.Graphics
 				if ((_boundVertexBuffer.NumElements - startVertex) < numPoints)
 					throw new InvalidOperationException("Bound vertex buffer does not contain enough vertices.");
 
-				Platform.GL.glDrawArrays(GL20.GL_POINTS, startVertex, numPoints);
+				GL.glDrawArrays(GL20.GL_POINTS, startVertex, numPoints);
 			}
 		}
 

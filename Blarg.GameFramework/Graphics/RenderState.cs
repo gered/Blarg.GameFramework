@@ -50,11 +50,14 @@ namespace Blarg.GameFramework.Graphics
 			Init();
 		}
 
-		public void Apply()
+		public void Apply(GraphicsDevice graphicsDevice)
 		{
+			if (graphicsDevice == null)
+				throw new ArgumentNullException("graphicsDevice");
+
 			if (DepthTesting)
 			{
-				Platform.GL.glEnable(GL20.GL_DEPTH_TEST);
+				graphicsDevice.GL.glEnable(GL20.GL_DEPTH_TEST);
 
 				int depthFunc = GL20.GL_LESS;
 				switch (DepthFunc)
@@ -68,25 +71,25 @@ namespace Blarg.GameFramework.Graphics
 					case DepthFunc.GreaterOrEqual: depthFunc = GL20.GL_GEQUAL; break;
 					case DepthFunc.Always:         depthFunc = GL20.GL_ALWAYS; break;
 				}
-				Platform.GL.glDepthFunc(depthFunc);
+				graphicsDevice.GL.glDepthFunc(depthFunc);
 			}
 			else
-				Platform.GL.glDisable(GL20.GL_DEPTH_TEST);
+				graphicsDevice.GL.glDisable(GL20.GL_DEPTH_TEST);
 
 			if (FaceCulling)
 			{
-				Platform.GL.glEnable(GL20.GL_CULL_FACE);
+				graphicsDevice.GL.glEnable(GL20.GL_CULL_FACE);
 				if (FaceCullingMode == CullMode.FrontAndBack)
-					Platform.GL.glCullFace(GL20.GL_FRONT_AND_BACK);
+					graphicsDevice.GL.glCullFace(GL20.GL_FRONT_AND_BACK);
 				else if (FaceCullingMode == CullMode.Front)
-					Platform.GL.glCullFace(GL20.GL_FRONT);
+					graphicsDevice.GL.glCullFace(GL20.GL_FRONT);
 				else
-					Platform.GL.glCullFace(GL20.GL_BACK);
+					graphicsDevice.GL.glCullFace(GL20.GL_BACK);
 			}
 			else
-				Platform.GL.glDisable(GL20.GL_CULL_FACE);
+				graphicsDevice.GL.glDisable(GL20.GL_CULL_FACE);
 
-			Platform.GL.glLineWidth(LineWidth);
+			graphicsDevice.GL.glLineWidth(LineWidth);
 		}
 
 		private void Init()

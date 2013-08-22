@@ -97,15 +97,15 @@ namespace Blarg.GameFramework.Graphics
 			Height = image.Height;
 			Format = textureFormat;
 
-			ID = Platform.GL.glGenTextures();
+			ID = GraphicsDevice.GL.glGenTextures();
 
 			GraphicsDevice.BindTexture(this, 0);
 
 			if (_textureParams == null)
 				_textureParams = GraphicsDevice.GetCopyOfTextureParameters();
-			_textureParams.Apply();
+			_textureParams.Apply(GraphicsDevice);
 
-			Platform.GL.glTexImage2D(GL20.GL_TEXTURE_2D, 0, internalFormat, Width, Height, 0, pixelFormat, pixelType, image.Pixels);
+			GraphicsDevice.GL.glTexImage2D(GL20.GL_TEXTURE_2D, 0, internalFormat, Width, Height, 0, pixelFormat, pixelType, image.Pixels);
 
 			Platform.Logger.Info(GraphicsContextResource.LOG_TAG, "Created texture from image. ID = {0}, bpp = {1}, size = {2}x{3}.", ID, image.BitsPerPixel, Width, Height);
 		}
@@ -131,15 +131,15 @@ namespace Blarg.GameFramework.Graphics
 			Height = height;
 			Format = format;
 
-			ID = Platform.GL.glGenTextures();
+			ID = GraphicsDevice.GL.glGenTextures();
 
 			GraphicsDevice.BindTexture(this, 0);
 
 			if (!useExistingTextureParams || _textureParams == null)
 				_textureParams = GraphicsDevice.GetCopyOfTextureParameters();
-			_textureParams.Apply();
+			_textureParams.Apply(GraphicsDevice);
 
-			Platform.GL.glTexImage2D(GL20.GL_TEXTURE_2D, 0, internalFormat, Width, Height, 0, pixelFormat, pixelType, IntPtr.Zero);
+			GraphicsDevice.GL.glTexImage2D(GL20.GL_TEXTURE_2D, 0, internalFormat, Width, Height, 0, pixelFormat, pixelType, IntPtr.Zero);
 
 			if (Format == TextureFormat.Depth)
 				Platform.Logger.Info(GraphicsContextResource.LOG_TAG, "Created uninitialized texture. ID = {0}, depth component only, size = {1}x{2}", ID, Width, Height);
@@ -192,7 +192,7 @@ namespace Blarg.GameFramework.Graphics
 			}
 
 			GraphicsDevice.BindTexture(this, 0);
-			Platform.GL.glTexSubImage2D(GL20.GL_TEXTURE_2D, 0, destX, destY, image.Width, image.Height, pixelFormat, pixelType, image.Pixels);
+			GraphicsDevice.GL.glTexSubImage2D(GL20.GL_TEXTURE_2D, 0, destX, destY, image.Width, image.Height, pixelFormat, pixelType, image.Pixels);
 		}
 
 		private void GetTextureSpecsFromFormat(TextureFormat textureFormat, out int bpp, out int internalFormat, out int pixelFormat, out int type)
@@ -271,7 +271,7 @@ namespace Blarg.GameFramework.Graphics
 				if (GraphicsDevice != null)
 					GraphicsDevice.UnbindTexture(this);
 
-				Platform.GL.glDeleteTextures(ID);
+				GraphicsDevice.GL.glDeleteTextures(ID);
 
 				Platform.Logger.Info(GraphicsContextResource.LOG_TAG, "Deleted Texture ID = {0}.", ID);
 

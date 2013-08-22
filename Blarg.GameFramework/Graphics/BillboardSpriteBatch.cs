@@ -102,14 +102,14 @@ namespace Blarg.GameFramework.Graphics
 			}
 
 			if (_providedRenderState != null)
-				_providedRenderState.Apply();
+				_providedRenderState.Apply(GraphicsDevice);
 			else
-				_defaultRenderState.Apply();
+				_defaultRenderState.Apply(GraphicsDevice);
 
 			if (_providedBlendState != null)
-				_providedBlendState.Apply();
+				_providedBlendState.Apply(GraphicsDevice);
 			else
-				_defaultBlendState.Apply();
+				_defaultBlendState.Apply(GraphicsDevice);
 
 			GraphicsDevice.BindShader(_shader);
 			_shader.SetModelViewMatrix(GraphicsDevice.ViewContext.ModelViewMatrix);

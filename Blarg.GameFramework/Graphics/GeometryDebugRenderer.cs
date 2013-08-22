@@ -69,7 +69,7 @@ namespace Blarg.GameFramework.Graphics
 			shader.SetModelViewMatrix(ref modelView);
 			shader.SetProjectionMatrix(ref projection);
 
-			_renderState.Apply();
+			_renderState.Apply(GraphicsDevice);
 
 			GraphicsDevice.BindVertexBuffer(_vertices);
 			GraphicsDevice.RenderLines(0, numLinesToRender);

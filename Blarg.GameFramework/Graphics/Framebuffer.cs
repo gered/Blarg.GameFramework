@@ -85,7 +85,7 @@ namespace Blarg.GameFramework.Graphics
 			if (!IsInvalidated)
 				throw new InvalidOperationException();
 
-			ID = Platform.GL.glGenFramebuffers();
+			ID = GraphicsDevice.GL.glGenFramebuffers();
 
 			_fixedWidth = width;
 			_fixedHeight = height;
@@ -103,7 +103,7 @@ namespace Blarg.GameFramework.Graphics
 					texture.Value.Dispose();
 				_attachedTextures.Clear();
 
-				Platform.GL.glDeleteFramebuffers(ID);
+				GraphicsDevice.GL.glDeleteFramebuffers(ID);
 				ID = -1;
 			}
 			if (GraphicsDevice.ViewContext == _attachedViewContext)
@@ -180,7 +180,7 @@ namespace Blarg.GameFramework.Graphics
 			GraphicsDevice.UnregisterManagedResource(texture);
 
 			GraphicsDevice.BindFramebuffer(this);
-			Platform.GL.glFramebufferTexture2D(GL20.GL_FRAMEBUFFER, attachmentType, GL20.GL_TEXTURE_2D, texture.ID, 0);
+			GraphicsDevice.GL.glFramebufferTexture2D(GL20.GL_FRAMEBUFFER, attachmentType, GL20.GL_TEXTURE_2D, texture.ID, 0);
 			GraphicsDevice.UnbindFramebuffer(this);
 
 			_attachedTextures.Add(format, texture);
@@ -238,7 +238,7 @@ namespace Blarg.GameFramework.Graphics
 			GraphicsDevice.UnregisterManagedResource(renderbuffer);
 
 			GraphicsDevice.BindFramebuffer(this);
-			Platform.GL.glFramebufferRenderbuffer(GL20.GL_FRAMEBUFFER, attachmentType,GL20.GL_RENDERBUFFER, renderbuffer.ID);
+			GraphicsDevice.GL.glFramebufferRenderbuffer(GL20.GL_FRAMEBUFFER, attachmentType,GL20.GL_RENDERBUFFER, renderbuffer.ID);
 			GraphicsDevice.UnbindFramebuffer(this);
 
 			_attachedRenderbuffers.Add(format, renderbuffer);
@@ -282,7 +282,7 @@ namespace Blarg.GameFramework.Graphics
 			}
 
 			GraphicsDevice.BindFramebuffer(this);
-			Platform.GL.glFramebufferTexture2D(GL20.GL_FRAMEBUFFER, attachmentType, GL20.GL_TEXTURE_2D, 0, 0);
+			GraphicsDevice.GL.glFramebufferTexture2D(GL20.GL_FRAMEBUFFER, attachmentType, GL20.GL_TEXTURE_2D, 0, 0);
 			GraphicsDevice.UnbindFramebuffer(this);
 
 			_attachedTextures.Remove(format);
@@ -310,7 +310,7 @@ namespace Blarg.GameFramework.Graphics
 			}
 
 			GraphicsDevice.BindFramebuffer(this);
-			Platform.GL.glFramebufferRenderbuffer(GL20.GL_FRAMEBUFFER, attachmentType, GL20.GL_RENDERBUFFER, 0);
+			GraphicsDevice.GL.glFramebufferRenderbuffer(GL20.GL_FRAMEBUFFER, attachmentType, GL20.GL_RENDERBUFFER, 0);
 			GraphicsDevice.UnbindFramebuffer(this);
 
 			_attachedRenderbuffers.Remove(format);
@@ -357,7 +357,7 @@ namespace Blarg.GameFramework.Graphics
 			GraphicsDevice.UnregisterManagedResource(newTexture);
 
 			GraphicsDevice.BindFramebuffer(this);
-			Platform.GL.glFramebufferTexture2D(GL20.GL_FRAMEBUFFER, attachmentType, GL20.GL_TEXTURE_2D, newTexture.ID, 0);
+			GraphicsDevice.GL.glFramebufferTexture2D(GL20.GL_FRAMEBUFFER, attachmentType, GL20.GL_TEXTURE_2D, newTexture.ID, 0);
 			GraphicsDevice.UnbindFramebuffer(this);
 
 			_attachedTextures[key] = newTexture;
@@ -395,7 +395,7 @@ namespace Blarg.GameFramework.Graphics
 			GraphicsDevice.UnregisterManagedResource(newRenderbuffer);
 
 			GraphicsDevice.BindFramebuffer(this);
-			Platform.GL.glFramebufferRenderbuffer(GL20.GL_FRAMEBUFFER, attachmentType, GL20.GL_RENDERBUFFER, newRenderbuffer.ID);
+			GraphicsDevice.GL.glFramebufferRenderbuffer(GL20.GL_FRAMEBUFFER, attachmentType, GL20.GL_RENDERBUFFER, newRenderbuffer.ID);
 			GraphicsDevice.UnbindFramebuffer(this);
 
 			_attachedRenderbuffers[key] = newRenderbuffer;

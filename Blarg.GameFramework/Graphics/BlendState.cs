@@ -50,11 +50,14 @@ namespace Blarg.GameFramework.Graphics
 			DestinationBlendFactor = destinationFactor;
 		}
 
-		public void Apply()
+		public void Apply(GraphicsDevice graphicsDevice)
 		{
+			if (graphicsDevice == null)
+				throw new ArgumentNullException("graphicsDevice");
+
 			if (Blending)
 			{
-				Platform.GL.glEnable(GL20.GL_BLEND);
+				graphicsDevice.GL.glEnable(GL20.GL_BLEND);
 
 				var source = GL20.GL_ONE;
 				var dest = GL20.GL_ZERO;
@@ -95,10 +98,10 @@ namespace Blarg.GameFramework.Graphics
 					case BlendFactor.ConstantColor:   dest = GL20.GL_CONSTANT_COLOR; break;
 				}
 
-				Platform.GL.glBlendFunc(source, dest);
+				graphicsDevice.GL.glBlendFunc(source, dest);
 			}
 			else
-				Platform.GL.glDisable(GL20.GL_BLEND);
+				graphicsDevice.GL.glDisable(GL20.GL_BLEND);
 		}
 
 		private void Init()

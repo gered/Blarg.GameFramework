@@ -20,7 +20,6 @@ namespace Blarg.GameFramework
 		ITouchScreen TouchScreen { get; }
 		IPlatformWindow Window { get; }
 		GraphicsDevice GraphicsDevice { get; }
-		GL20 GL { get; }
 
 		int FPS { get; }
 		float FrameTime { get; }

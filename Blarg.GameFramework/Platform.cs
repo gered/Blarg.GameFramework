@@ -1,5 +1,4 @@
 using System;
-using PortableGL;
 using Blarg.GameFramework.Graphics;
 using Blarg.GameFramework.Input;
 using Blarg.GameFramework.IO;
@@ -68,11 +67,6 @@ namespace Blarg.GameFramework
 		public static GraphicsDevice GraphicsDevice
 		{
 			get { return Application.GraphicsDevice; }
-		}
-
-		public static GL20 GL
-		{
-			get { return Application.GL; }
 		}
 
 		public static void Set(IApplication application)
