@@ -74,6 +74,12 @@ namespace Blarg.GameFramework.Support
 			var pool = GetPool(typeof(T));
 			pool.Free(obj);
 		}
+
+		public static void Free(Type type, object obj)
+		{
+			var pool = GetPool(type);
+			pool.Free(obj);
+		}
 	}
 }
 
