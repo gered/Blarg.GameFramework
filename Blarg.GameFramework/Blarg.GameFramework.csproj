@@ -137,6 +137,9 @@
     <Compile Include="Support\StringBuilderExtensions.cs" />
     <Compile Include="Graphics\Helpers\GraphicsHelpers.cs" />
     <Compile Include="Support\BitExtensions.cs" />
+    <Compile Include="Support\ObjectPool.cs" />
+    <Compile Include="Support\IPoolable.cs" />
+    <Compile Include="Support\BasicObjectPool.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
