@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Blarg.GameFramework.Support;
 
 namespace Blarg.GameFramework
 {
@@ -22,7 +23,6 @@ namespace Blarg.GameFramework
 			var type = service.GetType();
 			if (type.IsValueType)
 				throw new ArgumentException("ServiceContainer cannot be used with value types.", "service");
-
 			if (_services.ContainsKey(type))
 				throw new InvalidOperationException("Service object of this type has already been registered.");
 
@@ -41,17 +41,14 @@ namespace Blarg.GameFramework
 			if (type.IsValueType)
 				throw new ArgumentException("ServiceContainer cannot be used with value types.", "service");
 
-			object registeredService;
-			_services.TryGetValue(type, out registeredService);
+			var registeredService = _services.Get(type);
 			if (registeredService == null)
 				return;
-
 			if (registeredService != service)
 				throw new InvalidOperationException("This is not the service object that was registered under this type.");
 
 			_services.Remove(type);
 			Platform.Logger.Debug(LOG_TAG, "Unregistered object of type {0}.", type);
-
 
 			if (registeredService is IService)
 				((IService)registeredService).OnUnregister();
@@ -67,10 +64,8 @@ namespace Blarg.GameFramework
 		{
 			if (type.IsValueType)
 				throw new ArgumentException("ServiceContainer cannot be used with value types.", "type");
-
-			object service;
-			_services.TryGetValue(type, out service);
-			return service;
+			else
+				return _services.Get(type);
 		}
 
 		public void Dispose()

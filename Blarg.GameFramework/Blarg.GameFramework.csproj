@@ -159,6 +159,7 @@
     <Compile Include="Graphics\ScreenEffects\FlashEffect.cs" />
     <Compile Include="IService.cs" />
     <Compile Include="ServiceContainer.cs" />
+    <Compile Include="Support\DictionaryExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
