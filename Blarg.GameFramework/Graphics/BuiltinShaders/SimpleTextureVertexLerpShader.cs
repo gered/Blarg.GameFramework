@@ -14,7 +14,7 @@ namespace Blarg.GameFramework.Graphics.BuiltinShaders
 			LoadCompileAndLinkInlineSources(vertexSources, fragmentSources);
 
 			MapToVBOAttribute("a_position1", 0);
-			MapToVBOAttribute("a_position2", 0);
+			MapToVBOAttribute("a_position2", 1);
 			MapToVBOStandardAttribute("a_texcoord0", VertexStandardAttributes.TexCoord);
 		}
 	}
