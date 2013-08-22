@@ -13,7 +13,7 @@ namespace Blarg.GameFramework.Graphics
 
 	public class Texture : GraphicsContextResource
 	{
-		private TextureParameters _textureParams;
+		TextureParameters _textureParams;
 
 		public int ID { get; private set; }
 		public int Width { get; private set; }

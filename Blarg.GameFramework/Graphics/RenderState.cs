@@ -39,11 +39,11 @@ namespace Blarg.GameFramework.Graphics
 			NoCulling.FaceCulling = false;
 		}
 
-		public bool DepthTesting { get; set; }
-		public DepthFunc DepthFunc { get; set; }
-		public bool FaceCulling { get; set; }
-		public CullMode FaceCullingMode { get; set; }
-		public float LineWidth { get; set; }
+		public bool DepthTesting;
+		public DepthFunc DepthFunc;
+		public bool FaceCulling;
+		public CullMode FaceCullingMode;
+		public float LineWidth;
 
 		public RenderState()
 		{

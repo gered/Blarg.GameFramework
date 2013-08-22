@@ -6,7 +6,7 @@ namespace Blarg.GameFramework.Input
 {
 	public static class SDLKeyMapper
 	{
-		static IDictionary<SDL.SDL_Scancode, Key> _mapping = new Dictionary<SDL.SDL_Scancode, Key>();
+		static Dictionary<SDL.SDL_Scancode, Key> _mapping = new Dictionary<SDL.SDL_Scancode, Key>();
 
 		static SDLKeyMapper()
 		{

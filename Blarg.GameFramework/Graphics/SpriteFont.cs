@@ -5,12 +5,12 @@ namespace Blarg.GameFramework.Graphics
 {
 	public class SpriteFont : GraphicsContextResource
 	{
-		private static StringBuilder _buffer = new StringBuilder(8192);
+		static StringBuilder _buffer = new StringBuilder(8192);
 
 		public const int LowGlyphAscii = 32;
 		public const int HighGlyphAscii = 127;
 
-		private TextureAtlas _glyphs;
+		readonly TextureAtlas _glyphs;
 
 		public int Size { get; private set; }
 		public int LetterHeight { get; private set; }

@@ -12,25 +12,25 @@ namespace Blarg.GameFramework.Graphics
 	{
 		const string LOG_TAG = "GRAPHICS";
 
-		private const int MaxTextureUnits = 8;
-		private const int MaxGpuAttributeSlots = 8;
-		private const int SolidColorTextureWidth = 8;
-		private const int SolidColorTextureHeight = 8;
+		const int MaxTextureUnits = 8;
+		const int MaxGpuAttributeSlots = 8;
+		const int SolidColorTextureWidth = 8;
+		const int SolidColorTextureHeight = 8;
 
-		private IList<GraphicsContextResource> _managedResources;
-		private IDictionary<int, Texture> _solidColorTextures;
-		private VertexBuffer _boundVertexBuffer;
-		private IndexBuffer _boundIndexBuffer;
-		private Texture[] _boundTextures;
-		private Renderbuffer _boundRenderbuffer;
-		private Framebuffer _boundFramebuffer;
-		private Shader _boundShader;
-		private bool _isShaderVertexAttribsSet;
-		private Stack<int> _enabledVertexAttribIndices;
-		private ViewContext _defaultViewContext;
-		private ViewContext _activeViewContext;
-		private TextureParameters _currentTextureParams;
-		private TextureParameters _solidColorTextureParams;
+		List<GraphicsContextResource> _managedResources;
+		Dictionary<int, Texture> _solidColorTextures;
+		VertexBuffer _boundVertexBuffer;
+		IndexBuffer _boundIndexBuffer;
+		Texture[] _boundTextures;
+		Renderbuffer _boundRenderbuffer;
+		Framebuffer _boundFramebuffer;
+		Shader _boundShader;
+		bool _isShaderVertexAttribsSet;
+		Stack<int> _enabledVertexAttribIndices;
+		ViewContext _defaultViewContext;
+		ViewContext _activeViewContext;
+		TextureParameters _currentTextureParams;
+		TextureParameters _solidColorTextureParams;
 
 		public ScreenOrientation ScreenOrientation { get; private set; }
 

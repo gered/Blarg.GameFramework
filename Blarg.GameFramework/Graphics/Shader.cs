@@ -69,16 +69,16 @@ namespace Blarg.GameFramework.Graphics
 		//       Might be worthwhile to populate them via the uniform/attribute
 		//       location value (same ordering) assuming the location value isn't
 		//       some weird large number sometimes... that if it's zero-based in all cases
-		private ShaderUniform[] _uniforms;
-		private ShaderAttribute[] _attributes;
-		private ShaderAttributeMapInfo[] _attributeMapping;
-		private ShaderCachedUniform[] _cachedUniforms;
+		ShaderUniform[] _uniforms;
+		ShaderAttribute[] _attributes;
+		ShaderAttributeMapInfo[] _attributeMapping;
+		ShaderCachedUniform[] _cachedUniforms;
 
-		private string _inlineVertexShaderSource;
-		private string _inlineFragmentShaderSource;
+		string _inlineVertexShaderSource;
+		string _inlineFragmentShaderSource;
 
-		private string _cachedVertexShaderSource;
-		private string _cachedFragmentShaderSource;
+		string _cachedVertexShaderSource;
+		string _cachedFragmentShaderSource;
 
 		public int ProgramID { get; private set; }
 		public int VertexShaderID { get; private set; }

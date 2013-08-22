@@ -5,15 +5,15 @@ namespace Blarg.GameFramework.Graphics
 {
 	public class ViewContext
 	{
-		private GraphicsDevice _graphicsDevice;
-		private Rect _viewport;
-		private bool _viewportIsFixedSize;
-		private ScreenOrientation _screenOrientation;
-		private Camera _camera;
-		private bool _isUsingDefaultCamera;
+		readonly GraphicsDevice _graphicsDevice;
+		Rect _viewport;
+		bool _viewportIsFixedSize;
+		ScreenOrientation _screenOrientation;
+		Camera _camera;
+		bool _isUsingDefaultCamera;
 
-		private Matrix4x4 _modelViewMatrix;
-		private Matrix4x4 _projectionMatrix;
+		Matrix4x4 _modelViewMatrix;
+		Matrix4x4 _projectionMatrix;
 
 		public int ViewportTop { get { return _viewport.Top; } }
 		public int ViewportLeft { get { return _viewport.Left; } }

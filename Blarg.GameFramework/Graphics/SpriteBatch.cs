@@ -28,7 +28,7 @@ namespace Blarg.GameFramework.Graphics
 		bool _hasBegunRendering;
 		Color _defaultSpriteColor = Color.White;
 
-		public GraphicsDevice GraphicsDevice { get; private set; }
+		public readonly GraphicsDevice GraphicsDevice;
 
 		public SpriteBatch(GraphicsDevice graphicsDevice)
 		{

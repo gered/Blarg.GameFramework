@@ -26,9 +26,9 @@ namespace Blarg.GameFramework.Graphics
 		public static readonly BlendState Opaque;
 		public static readonly BlendState AlphaBlend;
 
-		public bool Blending { get; set; }
-		public BlendFactor SourceBlendFactor { get; set; }
-		public BlendFactor DestinationBlendFactor { get; set; }
+		public bool Blending;
+		public BlendFactor SourceBlendFactor;
+		public BlendFactor DestinationBlendFactor;
 
 		static BlendState()
 		{

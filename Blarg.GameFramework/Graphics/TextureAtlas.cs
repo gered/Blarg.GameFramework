@@ -7,7 +7,7 @@ namespace Blarg.GameFramework.Graphics
 	{
 		public const float TexCoordEdgeBleedOffset = 0.02f;
 
-		private Texture _texture;
+		Texture _texture;
 
 		public int Width { get; protected set; }
 		public int Height { get; protected set; }

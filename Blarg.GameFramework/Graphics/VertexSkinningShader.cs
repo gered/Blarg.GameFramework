@@ -5,8 +5,8 @@ namespace Blarg.GameFramework.Graphics
 {
 	public abstract class VertexSkinningShader : StandardShader
 	{
-		protected string JointPositionsUniformName { get; set; }
-		protected string JointRotationsUniformName { get; set; }
+		protected string JointPositionsUniformName;
+		protected string JointRotationsUniformName;
 
 		protected VertexSkinningShader(GraphicsDevice graphicsDevice)
 			: base(graphicsDevice)

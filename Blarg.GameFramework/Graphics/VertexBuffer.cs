@@ -11,9 +11,9 @@ namespace Blarg.GameFramework.Graphics
 			public int size;
 		}
 
-		private float[] _buffer;
-		private int _standardVertexAttribs;
-		private AttributeInfo[] _attributes;
+		float[] _buffer;
+		int _standardVertexAttribs;
+		AttributeInfo[] _attributes;
 
 		public int CurrentPosition { get; private set; }
 		public int ElementWidth { get; private set; }

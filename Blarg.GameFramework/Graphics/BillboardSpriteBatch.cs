@@ -39,7 +39,7 @@ namespace Blarg.GameFramework.Graphics
 		Vector3 _yAxis = Vector3.YAxis;
 		Vector3 _up = Vector3.Up;
 
-		public GraphicsDevice GraphicsDevice { get; private set; }
+		public readonly GraphicsDevice GraphicsDevice;
 
 		public BillboardSpriteBatch(GraphicsDevice graphicsDevice)
 		{

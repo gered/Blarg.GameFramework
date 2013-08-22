@@ -8,7 +8,7 @@ namespace Blarg.GameFramework.Input
 	{
 		bool[] _buttons;
 		bool[] _lockedButtons;
-		IList<IMouseListener> _listeners;
+		List<IMouseListener> _listeners;
 
 		public SDLMouse()
 		{

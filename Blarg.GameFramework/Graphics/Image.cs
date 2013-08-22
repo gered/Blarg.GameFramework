@@ -5,7 +5,7 @@ namespace Blarg.GameFramework.Graphics
 {
 	public partial class Image
 	{
-		private byte[] _pixels;
+		byte[] _pixels;
 
 		public int Pitch { get; private set; }
 		public int Width { get; private set; }

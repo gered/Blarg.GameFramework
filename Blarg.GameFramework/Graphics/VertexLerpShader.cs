@@ -5,7 +5,7 @@ namespace Blarg.GameFramework.Graphics
 {
 	public abstract class VertexLerpShader : StandardShader
 	{
-		protected string LerpUniformName { get; set; }
+		protected string LerpUniformName;
 
 		protected VertexLerpShader(GraphicsDevice graphicsDevice)
 			: base(graphicsDevice)

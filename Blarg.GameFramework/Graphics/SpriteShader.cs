@@ -5,7 +5,7 @@ namespace Blarg.GameFramework.Graphics
 {
 	public abstract class SpriteShader : StandardShader
 	{
-		protected string TextureHasAlphaOnlyUniformName { get; set; }
+		protected string TextureHasAlphaOnlyUniformName;
 
 		protected SpriteShader(GraphicsDevice graphicsDevice)
 			: base(graphicsDevice)

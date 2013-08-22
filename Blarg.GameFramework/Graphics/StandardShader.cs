@@ -5,8 +5,8 @@ namespace Blarg.GameFramework.Graphics
 {
 	public abstract class StandardShader : Shader
 	{
-		protected string ModelViewMatrixUniformName { get; set; }
-		protected string ProjectionMatrixUniformName { get; set; }
+		protected string ModelViewMatrixUniformName;
+		protected string ProjectionMatrixUniformName;
 
 		protected StandardShader(GraphicsDevice graphicsDevice)
 			: base(graphicsDevice)

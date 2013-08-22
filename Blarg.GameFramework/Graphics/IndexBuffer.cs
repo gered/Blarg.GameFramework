@@ -4,7 +4,7 @@ namespace Blarg.GameFramework.Graphics
 {
 	public class IndexBuffer : BufferObject<ushort>
 	{
-		private ushort[] _buffer;
+		ushort[] _buffer;
 
 		public int CurrentPosition { get; private set; }
 

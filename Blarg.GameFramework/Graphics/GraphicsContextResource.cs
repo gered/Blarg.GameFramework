@@ -6,7 +6,7 @@ namespace Blarg.GameFramework.Graphics
 	{
 		public const string LOG_TAG = "GRAPHICS_RESOURCE";
 
-		public GraphicsDevice GraphicsDevice { get; private set; }
+		public readonly GraphicsDevice GraphicsDevice;
 		public bool IsReleased { get; private set; }
 
 		public GraphicsContextResource()

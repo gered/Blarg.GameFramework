@@ -22,11 +22,11 @@ namespace Blarg.GameFramework.Graphics
 
 	public class Framebuffer : GraphicsContextResource
 	{
-		private int _fixedWidth;
-		private int _fixedHeight;
-		private IDictionary<FramebufferTextureFormat, Texture> _attachedTextures;
-		private IDictionary<FramebufferRenderbufferFormat, Renderbuffer> _attachedRenderbuffers;
-		private ViewContext _attachedViewContext;
+		int _fixedWidth;
+		int _fixedHeight;
+		Dictionary<FramebufferTextureFormat, Texture> _attachedTextures;
+		Dictionary<FramebufferRenderbufferFormat, Renderbuffer> _attachedRenderbuffers;
+		ViewContext _attachedViewContext;
 
 		public int ID { get; private set; }
 

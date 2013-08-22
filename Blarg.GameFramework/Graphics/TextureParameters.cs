@@ -30,10 +30,10 @@ namespace Blarg.GameFramework.Graphics
 		public static readonly TextureParameters Default;
 		public static readonly TextureParameters Pixelated;
 
-		public MinificationFilter MinFilter { get; set; }
-		public MagnificationFilter MagFilter { get; set; }
-		public WrapMode WrapS { get; set; }
-		public WrapMode WrapT { get; set; }
+		public MinificationFilter MinFilter;
+		public MagnificationFilter MagFilter;
+		public WrapMode WrapS;
+		public WrapMode WrapT;
 
 		static TextureParameters()
 		{

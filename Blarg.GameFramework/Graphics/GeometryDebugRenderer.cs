@@ -4,15 +4,15 @@ namespace Blarg.GameFramework.Graphics
 {
 	public class GeometryDebugRenderer
 	{
-		private const int DefaultVerticesAmount = 4096;
+		const int DefaultVerticesAmount = 4096;
 
-		private VertexBuffer _vertices;
-		private RenderState _renderState;
-		private Color _color1;
-		private Color _color2;
-		private bool _hasBegunRendering;
+		VertexBuffer _vertices;
+		RenderState _renderState;
+		Color _color1;
+		Color _color2;
+		bool _hasBegunRendering;
 
-		public GraphicsDevice GraphicsDevice { get; private set; }
+		public readonly GraphicsDevice GraphicsDevice;
 
 		public GeometryDebugRenderer(GraphicsDevice graphicsDevice)
 		{

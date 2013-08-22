@@ -4,18 +4,18 @@ namespace Blarg.GameFramework.Graphics
 {
 	public class Camera
 	{
-		private ViewContext _viewContext;
-		private float _nearHeight;
-		private float _nearWidth;
+		ViewContext _viewContext;
+		float _nearHeight;
+		float _nearWidth;
 
-		public Frustum Frustum { get; private set; }
-		public Matrix4x4 LookAt { get; private set; }
-		public Matrix4x4 Projection { get; private set; }
-		public Vector3 Forward { get; private set; }
-		public Vector3 Up { get; private set; }
+		public readonly Frustum Frustum;
+		public Matrix4x4 LookAt;
+		public Matrix4x4 Projection;
+		public Vector3 Forward;
+		public Vector3 Up;
 
-		public Vector3 Orientation { get; set; }
-		public Vector3 Position { get; set; }
+		public Vector3 Orientation;
+		public Vector3 Position;
 
 		public int ViewportWidth { get; private set; }
 		public int ViewportHeight { get; private set; }

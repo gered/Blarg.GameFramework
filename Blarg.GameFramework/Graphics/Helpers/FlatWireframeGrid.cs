@@ -10,7 +10,7 @@ namespace Blarg.GameFramework.Graphics.Helpers
 		public int Width { get; private set; }
 		public int Height { get; private set; }
 
-		public GraphicsDevice GraphicsDevice { get; private set; }
+		public readonly GraphicsDevice GraphicsDevice;
 
 		public FlatWireframeGrid(GraphicsDevice graphicsDevice, int width, int height)
 		{

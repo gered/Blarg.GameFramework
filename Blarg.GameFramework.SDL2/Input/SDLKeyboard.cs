@@ -8,7 +8,7 @@ namespace Blarg.GameFramework.Input
 	{
 		bool[] _keys;
 		bool[] _lockedKeys;
-		IList<IKeyboardListener> _listeners;
+		List<IKeyboardListener> _listeners;
 
 		public SDLKeyboard()
 		{

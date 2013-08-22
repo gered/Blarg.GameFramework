@@ -16,15 +16,15 @@ namespace Blarg.GameFramework
 		public float M23;
 		public float M33;
 
-		private const int _11 = 0;
-		private const int _12 = 3;
-		private const int _13 = 6;
-		private const int _21 = 1;
-		private const int _22 = 4;
-		private const int _23 = 7;
-		private const int _31 = 2;
-		private const int _32 = 5;
-		private const int _33 = 8;
+		const int _11 = 0;
+		const int _12 = 3;
+		const int _13 = 6;
+		const int _21 = 1;
+		const int _22 = 4;
+		const int _23 = 7;
+		const int _31 = 2;
+		const int _32 = 5;
+		const int _33 = 8;
 
 		public float Determinant
 		{

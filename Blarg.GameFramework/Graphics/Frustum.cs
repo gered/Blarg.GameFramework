@@ -14,8 +14,8 @@ namespace Blarg.GameFramework.Graphics
 
 	public class Frustum
 	{
-		private ViewContext _viewContext;
-		private Plane[] _planes = new Plane[6];
+		ViewContext _viewContext;
+		Plane[] _planes = new Plane[6];
 
 		public Frustum(ViewContext viewContext)
 		{

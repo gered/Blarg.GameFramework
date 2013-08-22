@@ -23,22 +23,22 @@ namespace Blarg.GameFramework
 		public float M34;
 		public float M44;
 
-		private const int _11 = 0;
-		private const int _12 = 4;
-		private const int _13 = 8;
-		private const int _14 = 12;
-		private const int _21 = 1;
-		private const int _22 = 5;
-		private const int _23 = 9;
-		private const int _24 = 13;
-		private const int _31 = 2;
-		private const int _32 = 6;
-		private const int _33 = 10;
-		private const int _34 = 14;
-		private const int _41 = 3;
-		private const int _42 = 7;
-		private const int _43 = 11;
-		private const int _44 = 15;
+		const int _11 = 0;
+		const int _12 = 4;
+		const int _13 = 8;
+		const int _14 = 12;
+		const int _21 = 1;
+		const int _22 = 5;
+		const int _23 = 9;
+		const int _24 = 13;
+		const int _31 = 2;
+		const int _32 = 6;
+		const int _33 = 10;
+		const int _34 = 14;
+		const int _41 = 3;
+		const int _42 = 7;
+		const int _43 = 11;
+		const int _44 = 15;
 
 		public float Determinant
 		{
