@@ -2,11 +2,11 @@ using System;
 
 namespace Blarg.GameFramework.Events
 {
-	public abstract class EventHandler : IEventListener
+	public abstract class EventListener : IEventListener
 	{
 		public readonly EventManager EventManager;
 
-		public EventHandler(EventManager eventManager)
+		public EventListener(EventManager eventManager)
 		{
 			if (eventManager == null)
 				throw new ArgumentNullException("eventManager");

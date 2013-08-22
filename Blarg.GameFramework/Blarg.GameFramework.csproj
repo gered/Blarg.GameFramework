@@ -144,7 +144,7 @@
     <Compile Include="Events\Event.cs" />
     <Compile Include="Events\EventManager.cs" />
     <Compile Include="Events\IEventListener.cs" />
-    <Compile Include="Events\EventHandler.cs" />
+    <Compile Include="Events\EventListener.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
