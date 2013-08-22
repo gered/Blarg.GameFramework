@@ -30,7 +30,7 @@ namespace Blarg.GameFramework.Graphics
 				throw new ArgumentNullException("viewContext");
 
 			_viewContext = viewContext;
-			Frustum = new Frustum(_viewContext);
+			Frustum = new Frustum(this);
 			Position = Vector3.Zero;
 			Orientation = Vector3.Zero;
 			Forward = Vector3.Zero;

@@ -14,21 +14,21 @@ namespace Blarg.GameFramework.Graphics
 
 	public class Frustum
 	{
-		ViewContext _viewContext;
+		readonly Camera _camera;
 		Plane[] _planes = new Plane[6];
 
-		public Frustum(ViewContext viewContext)
+		public Frustum(Camera camera)
 		{
-			if (viewContext == null)
-				throw new ArgumentNullException("viewContext");
+			if (camera == null)
+				throw new ArgumentNullException("camera");
 
-			_viewContext = viewContext;
+			_camera = camera;
 			Calculate();
 		}
 
 		public void Calculate()
 		{
-			Matrix4x4 combined = _viewContext.ProjectionMatrix * _viewContext.ModelViewMatrix;
+			Matrix4x4 combined = _camera.Projection * _camera.LookAt;
 
 			// Extract the sides of each of the 6 planes from this to get our viewing frustum
 			_planes[(int)FrustumSides.Right].Normal.X = combined.M41 - combined.M11;
