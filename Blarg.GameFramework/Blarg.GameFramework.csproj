@@ -141,6 +141,10 @@
     <Compile Include="Support\IPoolable.cs" />
     <Compile Include="Support\BasicObjectPool.cs" />
     <Compile Include="Support\ObjectPools.cs" />
+    <Compile Include="Events\Event.cs" />
+    <Compile Include="Events\EventManager.cs" />
+    <Compile Include="Events\IEventListener.cs" />
+    <Compile Include="Events\EventHandler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -155,6 +159,7 @@
     <Folder Include="Support\" />
     <Folder Include="Graphics\CustomShaders\" />
     <Folder Include="Graphics\Helpers\" />
+    <Folder Include="Events\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Vera.ttf" />
