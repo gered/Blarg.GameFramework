@@ -151,6 +151,12 @@
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\EntityPool.cs" />
     <Compile Include="Entities\SystemComponents\InactiveComponent.cs" />
+    <Compile Include="Graphics\ScreenEffects\ScreenEffect.cs" />
+    <Compile Include="Graphics\ScreenEffects\EffectInfo.cs" />
+    <Compile Include="Graphics\ScreenEffects\ScreenEffectManager.cs" />
+    <Compile Include="Graphics\ScreenEffects\DimEffect.cs" />
+    <Compile Include="Graphics\ScreenEffects\FadeEffect.cs" />
+    <Compile Include="Graphics\ScreenEffects\FlashEffect.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -168,6 +174,7 @@
     <Folder Include="Events\" />
     <Folder Include="Entities\" />
     <Folder Include="Entities\SystemComponents\" />
+    <Folder Include="Graphics\ScreenEffects\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Vera.ttf" />
