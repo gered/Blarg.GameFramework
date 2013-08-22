@@ -136,6 +136,7 @@
     <Compile Include="Support\FreeMovementCamera.cs" />
     <Compile Include="Support\StringBuilderExtensions.cs" />
     <Compile Include="Graphics\Helpers\GraphicsHelpers.cs" />
+    <Compile Include="Support\BitExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
