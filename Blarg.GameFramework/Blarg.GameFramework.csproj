@@ -157,8 +157,8 @@
     <Compile Include="Graphics\ScreenEffects\DimEffect.cs" />
     <Compile Include="Graphics\ScreenEffects\FadeEffect.cs" />
     <Compile Include="Graphics\ScreenEffects\FlashEffect.cs" />
-    <Compile Include="Services.cs" />
     <Compile Include="IService.cs" />
+    <Compile Include="ServiceContainer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

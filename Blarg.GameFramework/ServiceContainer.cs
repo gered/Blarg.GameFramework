@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Blarg.GameFramework
 {
-	public static class Services
+	public class ServiceContainer : IDisposable
 	{
-		static Dictionary<Type, object> _services = new Dictionary<Type, object>();
+		Dictionary<Type, object> _services = new Dictionary<Type, object>();
 
-		public static void Register(object service)
+		public void Register(object service)
 		{
 			if (service == null)
 				throw new ArgumentNullException("service");
@@ -22,9 +22,10 @@ namespace Blarg.GameFramework
 				((IService)service).OnRegister();
 
 			_services.Add(type, service);
+			Platform.Logger.Debug("ServiceContainer", "Registered object of type {0}.", type);
 		}
 
-		public static void Unregister(object service)
+		public void Unregister(object service)
 		{
 			if (service == null)
 				throw new ArgumentNullException("service");
@@ -41,18 +42,20 @@ namespace Blarg.GameFramework
 				throw new InvalidOperationException("This is not the service object that was registered under this type.");
 
 			_services.Remove(type);
+			Platform.Logger.Debug("ServiceContainer", "Unregistered object of type {0}.", type);
+
 
 			if (registeredService is IService)
 				((IService)registeredService).OnUnregister();
 		}
 
-		public static T Get<T>() where T : class
+		public T Get<T>() where T : class
 		{
 			var type = typeof(T);
 			return Get(type) as T;
 		}
 
-		public static object Get(Type type)
+		public object Get(Type type)
 		{
 			if (type.IsValueType)
 				throw new ArgumentException("Services cannot be used with value types.", "type");
@@ -60,6 +63,20 @@ namespace Blarg.GameFramework
 			object service;
 			_services.TryGetValue(type, out service);
 			return service;
+		}
+
+		public void Dispose()
+		{
+			Platform.Logger.Debug("ServiceContainer", "Disposing.");
+
+			foreach (var i in _services)
+			{
+				var service = i.Value;
+				if (service is IService)
+					((IService)service).OnUnregister();
+			}
+
+			_services.Clear();
 		}
 	}
 }
