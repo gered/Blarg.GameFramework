@@ -13,7 +13,7 @@ namespace Blarg.GameFramework
 				throw new ArgumentNullException("service");
 			var type = service.GetType();
 			if (type.IsValueType)
-				throw new ArgumentException("Services cannot be used with value types.", "service");
+				throw new ArgumentException("ServiceContainer cannot be used with value types.", "service");
 
 			if (_services.ContainsKey(type))
 				throw new InvalidOperationException("Service object of this type has already been registered.");
@@ -31,7 +31,7 @@ namespace Blarg.GameFramework
 				throw new ArgumentNullException("service");
 			var type = service.GetType();
 			if (type.IsValueType)
-				throw new ArgumentException("Services cannot be used with value types.", "service");
+				throw new ArgumentException("ServiceContainer cannot be used with value types.", "service");
 
 			object registeredService;
 			_services.TryGetValue(type, out registeredService);
@@ -58,7 +58,7 @@ namespace Blarg.GameFramework
 		public object Get(Type type)
 		{
 			if (type.IsValueType)
-				throw new ArgumentException("Services cannot be used with value types.", "type");
+				throw new ArgumentException("ServiceContainer cannot be used with value types.", "type");
 
 			object service;
 			_services.TryGetValue(type, out service);
