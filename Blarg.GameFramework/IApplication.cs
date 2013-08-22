@@ -13,6 +13,7 @@ namespace Blarg.GameFramework
 		PlatformType Type { get; }
 
 		ILogger Logger { get; }
+		ServiceContainer Services { get; }
 		IFileSystem FileSystem { get; }
 		IKeyboard Keyboard { get; }
 		IMouse Mouse { get; }

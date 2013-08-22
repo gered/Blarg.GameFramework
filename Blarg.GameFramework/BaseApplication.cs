@@ -20,6 +20,7 @@ namespace Blarg.GameFramework
 		public abstract PlatformType Type { get; }
 
 		public abstract ILogger Logger { get; }
+		public ServiceContainer Services { get; private set; }
 		public abstract IFileSystem FileSystem { get; }
 		public abstract IKeyboard Keyboard { get; }
 		public abstract IMouse Mouse { get; }
@@ -44,12 +45,15 @@ namespace Blarg.GameFramework
 		protected void OnInit()
 		{
 			Logger.Info(LOG_TAG, "Initializing application objects.");
+			Services = new ServiceContainer();
 			GraphicsDevice = new GraphicsDevice();
 		}
 
 		protected void OnShutdown()
 		{
 			Logger.Info(LOG_TAG, "Shutting down.");
+			Services.Dispose();
+			Services = null;
 		}
 
 		protected void OnAppGainFocus()

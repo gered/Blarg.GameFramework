@@ -40,6 +40,11 @@ namespace Blarg.GameFramework
 			get { return Application.Logger; }
 		}
 
+		public static ServiceContainer Services
+		{
+			get { return Application.Services; }
+		}
+
 		public static IFileSystem FileSystem
 		{
 			get { return Application.FileSystem; }
