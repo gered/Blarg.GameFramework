@@ -140,6 +140,7 @@
     <Compile Include="Support\ObjectPool.cs" />
     <Compile Include="Support\IPoolable.cs" />
     <Compile Include="Support\BasicObjectPool.cs" />
+    <Compile Include="Support\ObjectPools.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
