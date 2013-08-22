@@ -16,22 +16,22 @@ namespace Blarg.GameFramework.Entities
 
 		public T Get<T>() where T : Component
 		{
-			return null;
+			return _entityManager.GetComponent<T>(this);
 		}
 
 		public T Add<T>() where T : Component
 		{
-			return null;
+			return _entityManager.AddComponent<T>(this);
 		}
 
 		public void Remove<T>() where T : Component
 		{
-			return;
+			_entityManager.RemoveComponent<T>(this);
 		}
 
 		public bool Has<T>() where T : Component
 		{
-			return false;
+			return _entityManager.HasComponent<T>(this);
 		}
 	}
 }
