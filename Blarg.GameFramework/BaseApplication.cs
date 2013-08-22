@@ -47,6 +47,11 @@ namespace Blarg.GameFramework
 			GraphicsDevice = new GraphicsDevice();
 		}
 
+		protected void OnShutdown()
+		{
+			Logger.Info(LOG_TAG, "Shutting down.");
+		}
+
 		protected void OnAppGainFocus()
 		{
 			Logger.Info(LOG_TAG, "OnAppGainFocus");
