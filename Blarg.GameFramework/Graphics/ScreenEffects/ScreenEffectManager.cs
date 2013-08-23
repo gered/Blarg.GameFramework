@@ -3,13 +3,13 @@ using System.Collections.Generic;
 
 namespace Blarg.GameFramework.Graphics.ScreenEffects
 {
-	public class EffectManager : IDisposable
+	public class ScreenEffectManager : IDisposable
 	{
 		LinkedList<EffectInfo> _effects;
 		int _numLocalEffects;
 		int _numGlobalEffects;
 
-		public EffectManager()
+		public ScreenEffectManager()
 		{
 			_effects = new LinkedList<EffectInfo>();
 			_numLocalEffects = 0;
