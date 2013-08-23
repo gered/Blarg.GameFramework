@@ -43,6 +43,9 @@
     <Reference Include="TrueTypeSharp">
       <HintPath>..\Libs\TrueTypeSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Gwen">
+      <HintPath>..\Libs\Gwen.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
