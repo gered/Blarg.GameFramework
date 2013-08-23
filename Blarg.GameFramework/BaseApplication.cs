@@ -17,7 +17,7 @@ namespace Blarg.GameFramework
 		protected IGameApp GameApp { get; set; }
 
 		public abstract PlatformOS OperatingSystem { get; }
-		public abstract PlatformType Type { get; }
+		public abstract PlatformType PlatformType { get; }
 
 		public abstract ILogger Logger { get; }
 		public ServiceContainer Services { get; private set; }
@@ -138,12 +138,12 @@ namespace Blarg.GameFramework
 		{
 			GameApp.OnUpdate(delta);
 
-			if (Platform.Keyboard != null)
-				Platform.Keyboard.OnPostUpdate(delta);
-			if (Platform.Mouse != null)
-				Platform.Mouse.OnPostUpdate(delta);
-			if (Platform.TouchScreen != null)
-				Platform.TouchScreen.OnPostUpdate(delta);
+			if (Framework.Keyboard != null)
+				Framework.Keyboard.OnPostUpdate(delta);
+			if (Framework.Mouse != null)
+				Framework.Mouse.OnPostUpdate(delta);
+			if (Framework.TouchScreen != null)
+				Framework.TouchScreen.OnPostUpdate(delta);
 		}
 
 		#region Disposable

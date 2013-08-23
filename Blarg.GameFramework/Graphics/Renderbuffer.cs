@@ -41,7 +41,7 @@ namespace Blarg.GameFramework.Graphics
 				throw new InvalidOperationException();
 
 			int glFormat = 0;
-			if (Platform.Type == PlatformType.Mobile)
+			if (Framework.PlatformType == PlatformType.Mobile)
 			{
 				switch (format)
 				{
@@ -74,7 +74,7 @@ namespace Blarg.GameFramework.Graphics
 			GraphicsDevice.GL.glRenderbufferStorage(GL20.GL_RENDERBUFFER, glFormat, Width, Height);
 			GraphicsDevice.UnbindRenderbuffer(this);
 
-			Platform.Logger.Info(GraphicsContextResource.LOG_TAG, "Created renderbuffer. ID = {0}, format = {1}, size = {2}x{3}.", ID, Format.ToString(), Width, Height);
+			Framework.Logger.Info(GraphicsContextResource.LOG_TAG, "Created renderbuffer. ID = {0}, format = {1}, size = {2}x{3}.", ID, Format.ToString(), Width, Height);
 		}
 
 		#region GraphicsContextResource
@@ -97,7 +97,7 @@ namespace Blarg.GameFramework.Graphics
 
 				GraphicsDevice.GL.glDeleteRenderbuffers(ID);
 
-				Platform.Logger.Info(GraphicsContextResource.LOG_TAG, "Deleted Renderbuffer ID = {0}.", ID);
+				Framework.Logger.Info(GraphicsContextResource.LOG_TAG, "Deleted Renderbuffer ID = {0}.", ID);
 
 				ID = -1;
 			}

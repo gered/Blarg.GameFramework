@@ -130,7 +130,7 @@ namespace Blarg.GameFramework.Graphics
 				_graphicsDevice.Window.ClientRectangle.Bottom
 				);
 				*/
-			var r = new Rect(0, 0, Platform.Application.Window.ClientWidth, Platform.Application.Window.ClientHeight);
+			var r = new Rect(0, 0, Framework.Application.Window.ClientWidth, Framework.Application.Window.ClientHeight);
 			Init(r, false);
 		}
 

@@ -6,7 +6,7 @@ namespace Blarg.GameFramework.Graphics.Helpers
 	{
 		public static void RenderCoordinateAxis(GeometryDebugRenderer debugRenderer, SpriteBatch spriteBatch, Vector3 origin, float axisLength)
 		{
-			var font = Platform.GraphicsDevice.SansSerifFont;
+			var font = Framework.GraphicsDevice.SansSerifFont;
 
 			var upLine = new LineSegment(origin.X, origin.Y, origin.Z, origin.X + 0.0f, origin.Y + axisLength, origin.Z + 0.0f);
 			var downLine = new LineSegment(origin.X, origin.Y, origin.Z, origin.X + 0.0f, origin.Y + -axisLength, origin.Z + 0.0f);

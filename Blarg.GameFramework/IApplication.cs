@@ -10,7 +10,7 @@ namespace Blarg.GameFramework
 	public interface IApplication : IDisposable
 	{
 		PlatformOS OperatingSystem { get; }
-		PlatformType Type { get; }
+		PlatformType PlatformType { get; }
 
 		ILogger Logger { get; }
 		ServiceContainer Services { get; }

@@ -69,7 +69,7 @@ namespace Blarg.GameFramework.Graphics
 				else
 					_activeViewContext = value;
 
-				Rect r = Platform.Application.Window.ClientRectangle;
+				Rect r = Framework.Application.Window.ClientRectangle;
 				_activeViewContext.OnApply(ref r, ScreenOrientation);
 			}
 		}
@@ -115,13 +115,13 @@ namespace Blarg.GameFramework.Graphics
 			string extensions = GL.glGetString(GL20.GL_EXTENSIONS);
 			string shadingLangVersion = GL.glGetString(GL20.GL_SHADING_LANGUAGE_VERSION);
 
-			Platform.Logger.Info(LOG_TAG, "GL_VENDOR = {0}", vendor);
-			Platform.Logger.Info(LOG_TAG, "GL_RENDERER = {0}", renderer);
-			Platform.Logger.Info(LOG_TAG, "GL_VERSION = {0}", version);
-			Platform.Logger.Info(LOG_TAG, "GL_EXTENSIONS = {0}", extensions);
-			Platform.Logger.Info(LOG_TAG, "GL_SHADING_LANGUAGE_VERSION = {0}", shadingLangVersion);
+			Framework.Logger.Info(LOG_TAG, "GL_VENDOR = {0}", vendor);
+			Framework.Logger.Info(LOG_TAG, "GL_RENDERER = {0}", renderer);
+			Framework.Logger.Info(LOG_TAG, "GL_VERSION = {0}", version);
+			Framework.Logger.Info(LOG_TAG, "GL_EXTENSIONS = {0}", extensions);
+			Framework.Logger.Info(LOG_TAG, "GL_SHADING_LANGUAGE_VERSION = {0}", shadingLangVersion);
 
-			if (Platform.Type == PlatformType.Mobile)
+			if (Framework.PlatformType == PlatformType.Mobile)
 			{
 				IsNonPowerOfTwoTextureSupported = extensions.Contains("OES_texture_npot");
 				IsDepthTextureSupported = extensions.Contains("OES_depth_texture");
@@ -131,8 +131,8 @@ namespace Blarg.GameFramework.Graphics
 				IsNonPowerOfTwoTextureSupported = extensions.Contains("ARB_texture_non_power_of_two");
 				IsDepthTextureSupported = extensions.Contains("ARB_depth_texture");
 			}
-			Platform.Logger.Info(LOG_TAG, "Non-Power-Of-2 texture support: {0}", IsNonPowerOfTwoTextureSupported);
-			Platform.Logger.Info(LOG_TAG, "Depth texture support: {0}", IsDepthTextureSupported);
+			Framework.Logger.Info(LOG_TAG, "Non-Power-Of-2 texture support: {0}", IsNonPowerOfTwoTextureSupported);
+			Framework.Logger.Info(LOG_TAG, "Depth texture support: {0}", IsDepthTextureSupported);
 
 			_defaultViewContext = new ViewContext(this);
 			_activeViewContext = _defaultViewContext;
@@ -151,21 +151,21 @@ namespace Blarg.GameFramework.Graphics
 
 		public void OnLostContext()
 		{
-			Platform.Logger.Info(LOG_TAG, "Cleaning up objects/state specific to the lost OpenGL context.");
+			Framework.Logger.Info(LOG_TAG, "Cleaning up objects/state specific to the lost OpenGL context.");
 
 			_activeViewContext.OnLostContext();
 
-			Platform.Logger.Info(LOG_TAG, "Invoking OnLostContext callback for managed resources.");
+			Framework.Logger.Info(LOG_TAG, "Invoking OnLostContext callback for managed resources.");
 
 			foreach (var resource in _managedResources)
 				resource.OnLostContext();
 
-			Platform.Logger.Info(LOG_TAG, "Finished cleaning up lost managed resources.");
+			Framework.Logger.Info(LOG_TAG, "Finished cleaning up lost managed resources.");
 		}
 
 		public void OnNewContext()
 		{
-			Platform.Logger.Info(LOG_TAG, "Initializing default state for new OpenGL context.");
+			Framework.Logger.Info(LOG_TAG, "Initializing default state for new OpenGL context.");
 
 			_activeViewContext.OnNewContext();
 
@@ -180,14 +180,14 @@ namespace Blarg.GameFramework.Graphics
 			UnbindRenderbuffer();
 			UnbindFramebuffer();
 
-			Platform.Logger.Info(LOG_TAG, "Invoking OnNewContext callback for managed resources.");
+			Framework.Logger.Info(LOG_TAG, "Invoking OnNewContext callback for managed resources.");
 
 			foreach (var resource in _managedResources)
 				resource.OnNewContext();
 
-			Platform.Logger.Info(LOG_TAG, "Finished restoring managed resources.");
+			Framework.Logger.Info(LOG_TAG, "Finished restoring managed resources.");
 
-			Platform.Logger.Info(LOG_TAG, "Restoring image data for solid color texture cache.");
+			Framework.Logger.Info(LOG_TAG, "Restoring image data for solid color texture cache.");
 
 			foreach (var texture in _solidColorTextures)
 			{
@@ -195,13 +195,13 @@ namespace Blarg.GameFramework.Graphics
 				FillSolidColorTexture(texture.Value, ref color);
 			}
 
-			Platform.Logger.Info(LOG_TAG, "Restoring standard fonts.");
+			Framework.Logger.Info(LOG_TAG, "Restoring standard fonts.");
 			LoadStandardFonts();
 		}
 
 		public void OnUnload()
 		{
-			Platform.Logger.Info(LOG_TAG, "Unloading managed resources.");
+			Framework.Logger.Info(LOG_TAG, "Unloading managed resources.");
 			while (_managedResources.Count > 0)
 			{
 				var resource = _managedResources[0];
@@ -216,11 +216,11 @@ namespace Blarg.GameFramework.Graphics
 			System.Diagnostics.Debug.Assert(error == GL20.GL_NO_ERROR);
 			if (error != GL20.GL_NO_ERROR)
 			{
-				Platform.Logger.Error("OPENGL", "OpenGL error \"{0}\"", error.ToString());
+				Framework.Logger.Error("OPENGL", "OpenGL error \"{0}\"", error.ToString());
 
 				// keep checking for and reporting errors until there are no more left
 				while ((error = GL.glGetError()) != GL20.GL_NO_ERROR)
-					Platform.Logger.Error("OPENGL", "OpenGL error \"{0}\"", error.ToString());
+					Framework.Logger.Error("OPENGL", "OpenGL error \"{0}\"", error.ToString());
 			}
 
 			_activeViewContext.OnRender(delta);
@@ -228,9 +228,9 @@ namespace Blarg.GameFramework.Graphics
 
 		public void OnResize(ref Rect rect, ScreenOrientation orientation)
 		{
-			Platform.Logger.Info(LOG_TAG, "Window resized {0}.", rect);
+			Framework.Logger.Info(LOG_TAG, "Window resized {0}.", rect);
 			if (orientation != ScreenOrientation.Rotation0)
-				Platform.Logger.Info(LOG_TAG, "Screen is rotated (angle = {0}).", (int)orientation);
+				Framework.Logger.Info(LOG_TAG, "Screen is rotated (angle = {0}).", (int)orientation);
 
 			ScreenOrientation = orientation;
 			_activeViewContext.OnResize(ref rect, orientation);
@@ -289,7 +289,7 @@ namespace Blarg.GameFramework.Graphics
 
 		private Texture CreateSolidColorTexture(ref Color color)
 		{
-			Platform.Logger.Info(LOG_TAG, "Creating texture for solid color 0x{0:x}.", color.RGBA);
+			Framework.Logger.Info(LOG_TAG, "Creating texture for solid color 0x{0:x}.", color.RGBA);
 
 			var solidColorImage = new Image(SolidColorTextureWidth, SolidColorTextureHeight, ImageFormat.RGBA);
 			solidColorImage.Clear(ref color);
@@ -300,7 +300,7 @@ namespace Blarg.GameFramework.Graphics
 
 		private void FillSolidColorTexture(Texture texture, ref Color color)
 		{
-			Platform.Logger.Info(LOG_TAG, "Filling image data for solid color texture using color 0x{0:x}.", color.RGBA);
+			Framework.Logger.Info(LOG_TAG, "Filling image data for solid color texture using color 0x{0:x}.", color.RGBA);
 
 			if (texture == null || texture.IsInvalidated || texture.Width != SolidColorTextureWidth || texture.Height != SolidColorTextureHeight)
 				throw new ArgumentException("Invalid texture.");
@@ -921,7 +921,7 @@ namespace Blarg.GameFramework.Graphics
 
 			_isGlResourcesReleased = true;
 
-			Platform.Logger.Info(LOG_TAG, "Managed graphics context resources cleaned up.");
+			Framework.Logger.Info(LOG_TAG, "Managed graphics context resources cleaned up.");
 		}
 
 		~GraphicsDevice()

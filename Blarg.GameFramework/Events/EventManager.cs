@@ -49,7 +49,7 @@ namespace Blarg.GameFramework.Events
 				throw new InvalidOperationException("Duplicate event listener registration.");
 
 			listenerTable.Add(listener);
-			Platform.Logger.Debug("EventManager", "Added {0} as a listener for event type {1}", listener.GetType().Name, type.Name);
+			Framework.Logger.Debug("EventManager", "Added {0} as a listener for event type {1}", listener.GetType().Name, type.Name);
 
 			// also update the list of currently registered event types
 			_typeList.Add(type);
@@ -72,7 +72,7 @@ namespace Blarg.GameFramework.Events
 			if (listenersForType.Contains(listener))
 			{
 				listenersForType.Remove(listener);
-				Platform.Logger.Debug("EventManager", "Removed {0} as a listener for event type {1}", listener.GetType().Name, type.Name);
+				Framework.Logger.Debug("EventManager", "Removed {0} as a listener for event type {1}", listener.GetType().Name, type.Name);
 
 				// if there are no more listeners for this type, remove the type
 				// from the list of registered event types

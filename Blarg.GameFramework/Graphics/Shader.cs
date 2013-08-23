@@ -178,7 +178,7 @@ namespace Blarg.GameFramework.Graphics
 			if (vertexShaderCompileStatus == 0)
 			{
 				string log = GetShaderLog(vertexShaderId);
-				Platform.Logger.Error("OPENGL", "Error compiling vertex shader:\n{0}", log);
+				Framework.Logger.Error("OPENGL", "Error compiling vertex shader:\n{0}", log);
 			}
 
 			// and now the fragment shader
@@ -201,7 +201,7 @@ namespace Blarg.GameFramework.Graphics
 			if (fragmentShaderCompileStatus == 0)
 			{
 				string log = GetShaderLog(fragmentShaderId);
-				Platform.Logger.Error("OPENGL", "Error compiling fragment shader:\n{0}", log);
+				Framework.Logger.Error("OPENGL", "Error compiling fragment shader:\n{0}", log);
 			}
 
 			// only return success if both compiled successfully
@@ -242,7 +242,7 @@ namespace Blarg.GameFramework.Graphics
 			if (programLinkStatus == 0)
 			{
 				string log = GraphicsDevice.GL.glGetProgramInfoLog(programId);
-				Platform.Logger.Error("OPENGL", "Error linking program:\n{0}", log);
+				Framework.Logger.Error("OPENGL", "Error linking program:\n{0}", log);
 			}
 
 			if (programLinkStatus != 0)

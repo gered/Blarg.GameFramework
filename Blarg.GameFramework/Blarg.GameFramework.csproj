@@ -77,7 +77,6 @@
     <Compile Include="Math\Transformation.cs" />
     <Compile Include="Math\SweptEllipsoidCollisionPacket.cs" />
     <Compile Include="Math\IntersectionTester.cs" />
-    <Compile Include="Platform.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="Graphics\Color.cs" />
     <Compile Include="Graphics\Image.cs" />
@@ -166,6 +165,7 @@
     <Compile Include="Processes\GameProcess.cs" />
     <Compile Include="Processes\ProcessManager.cs" />
     <Compile Include="Processes\ProcessInfo.cs" />
+    <Compile Include="Framework.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

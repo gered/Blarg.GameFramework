@@ -106,7 +106,7 @@ namespace Blarg.GameFramework.Graphics
 			var usage = GLUsageHint;
 			var target = GLTarget;
 
-			Platform.GraphicsDevice.GL.glBindBuffer(target, ID);
+			Framework.GraphicsDevice.GL.glBindBuffer(target, ID);
 
 			if (SizeInBytes != currentSizeInBytes)
 			{
@@ -115,7 +115,7 @@ namespace Blarg.GameFramework.Graphics
 				SizeInBytes = currentSizeInBytes;
 
 				// and then allocate + update
-				Platform.GraphicsDevice.GL.glBufferData<T>(target, SizeInBytes, Data, usage);
+				Framework.GraphicsDevice.GL.glBufferData<T>(target, SizeInBytes, Data, usage);
 			}
 			else
 			{
@@ -124,18 +124,18 @@ namespace Blarg.GameFramework.Graphics
 				// previous contents allowing it to do some extra optimizations which is
 				// fine since our glBufferSubData call is going to completely replace 
 				// the contents anyway
-				Platform.GraphicsDevice.GL.glBufferData(target, SizeInBytes, IntPtr.Zero, usage);
-				Platform.GraphicsDevice.GL.glBufferSubData<T>(target, 0, SizeInBytes, Data);
+				Framework.GraphicsDevice.GL.glBufferData(target, SizeInBytes, IntPtr.Zero, usage);
+				Framework.GraphicsDevice.GL.glBufferSubData<T>(target, 0, SizeInBytes, Data);
 			}
 
-			Platform.GraphicsDevice.GL.glBindBuffer(target, 0);
+			Framework.GraphicsDevice.GL.glBindBuffer(target, 0);
 
 			IsDirty = false;
 		}
 
 		protected void CreateBufferObject()
 		{
-			ID = Platform.GraphicsDevice.GL.glGenBuffers();
+			ID = Framework.GraphicsDevice.GL.glGenBuffers();
 
 			SizeBufferObject();
 
@@ -148,7 +148,7 @@ namespace Blarg.GameFramework.Graphics
 			if (IsInvalidated)
 				throw new InvalidOperationException();
 
-			Platform.GraphicsDevice.GL.glDeleteBuffers(ID);
+			Framework.GraphicsDevice.GL.glDeleteBuffers(ID);
 
 			ID = -1;
 			IsClientSide = true;
@@ -171,9 +171,9 @@ namespace Blarg.GameFramework.Graphics
 			SizeInBytes = NumElements * ElementWidthInBytes;
 
 			// resize the buffer object without initializing it's data
-			Platform.GraphicsDevice.GL.glBindBuffer(target, ID);
-			Platform.GraphicsDevice.GL.glBufferData(target, SizeInBytes, IntPtr.Zero, usage);
-			Platform.GraphicsDevice.GL.glBindBuffer(target, 0);
+			Framework.GraphicsDevice.GL.glBindBuffer(target, ID);
+			Framework.GraphicsDevice.GL.glBufferData(target, SizeInBytes, IntPtr.Zero, usage);
+			Framework.GraphicsDevice.GL.glBindBuffer(target, 0);
 
 			IsDirty = true;
 		}

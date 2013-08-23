@@ -20,7 +20,7 @@ namespace Blarg.GameFramework
 		Desktop
 	}
 
-	public static class Platform
+	public static class Framework
 	{
 		public static IApplication Application { get; private set; }
 
@@ -29,9 +29,9 @@ namespace Blarg.GameFramework
 			get { return Application.OperatingSystem; }
 		}
 
-		public static PlatformType Type
+		public static PlatformType PlatformType
 		{
-			get { return Application.Type; }
+			get { return Application.PlatformType; }
 		}
 
 		public static ILogger Logger

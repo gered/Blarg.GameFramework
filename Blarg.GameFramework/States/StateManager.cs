@@ -265,7 +265,7 @@ namespace Blarg.GameFramework.States
 			if (IsTransitioning)
 				throw new InvalidOperationException();
 
-			Platform.Logger.Info(LOG_TAG, "Pop initiated for top-most state only.");
+			Framework.Logger.Info(LOG_TAG, "Pop initiated for top-most state only.");
 			StartOnlyTopStateTransitioningOut(false);
 		}
 
@@ -274,7 +274,7 @@ namespace Blarg.GameFramework.States
 			if (IsTransitioning)
 				throw new InvalidOperationException();
 
-			Platform.Logger.Info(LOG_TAG, "Pop initiated for all top active states");
+			Framework.Logger.Info(LOG_TAG, "Pop initiated for all top active states");
 			StartTopStatesTransitioningOut(false);
 		}
 
@@ -287,7 +287,7 @@ namespace Blarg.GameFramework.States
 			if (_pushQueueHasOverlay && !newStateInfo.IsOverlay)
 				throw new InvalidOperationException("Cannot queue new non-overlay state while queue is active with overlay states.");
 
-			Platform.Logger.Info(LOG_TAG, "Queueing state {0} for pushing.", newStateInfo.Descriptor);
+			Framework.Logger.Info(LOG_TAG, "Queueing state {0} for pushing.", newStateInfo.Descriptor);
 
 			if (!newStateInfo.IsOverlay)
 				StartTopStatesTransitioningOut(true);
@@ -307,7 +307,7 @@ namespace Blarg.GameFramework.States
 			if (_swapQueueHasOverlay && !newStateInfo.IsOverlay)
 				throw new InvalidOperationException("Cannot queue new non-overlay state while queue is active with overlay states.");
 
-			Platform.Logger.Info(LOG_TAG, "Queueing state {0} for swapping with {1}.", newStateInfo.Descriptor, (swapTopNonOverlay ? "all top active states" : "only top-most active state."));
+			Framework.Logger.Info(LOG_TAG, "Queueing state {0} for swapping with {1}.", newStateInfo.Descriptor, (swapTopNonOverlay ? "all top active states" : "only top-most active state."));
 
 			if (swapTopNonOverlay)
 				StartTopStatesTransitioningOut(false);
@@ -372,7 +372,7 @@ namespace Blarg.GameFramework.States
 					_states.Remove(node);
 					node = next;
 
-					Platform.Logger.Info(LOG_TAG, "Deleting inactive popped state {0}.", stateInfo.Descriptor);
+					Framework.Logger.Info(LOG_TAG, "Deleting inactive popped state {0}.", stateInfo.Descriptor);
 					stateInfo.State.Dispose();
 					stateInfo = null;
 				}
@@ -400,7 +400,7 @@ namespace Blarg.GameFramework.States
 			var topNonOverlayStateInfo = TopNonOverlay;
 			if (!topNonOverlayStateInfo.IsInactive && topNonOverlayStateInfo.State.IsFinished)
 			{
-				Platform.Logger.Info(LOG_TAG, "State {0} marked as finished.", topNonOverlayStateInfo.Descriptor);
+				Framework.Logger.Info(LOG_TAG, "State {0} marked as finished.", topNonOverlayStateInfo.Descriptor);
 				TransitionOut(topNonOverlayStateInfo, true);
 
 				needToAlsoTransitionOutOverlays = true;
@@ -420,7 +420,7 @@ namespace Blarg.GameFramework.States
 					var stateInfo = node.Value;
 					if (!stateInfo.IsInactive && (stateInfo.State.IsFinished || needToAlsoTransitionOutOverlays))
 					{
-						Platform.Logger.Info(LOG_TAG, "State {0} marked as finished.", stateInfo.Descriptor);
+						Framework.Logger.Info(LOG_TAG, "State {0} marked as finished.", stateInfo.Descriptor);
 						TransitionOut(stateInfo, true);
 					}
 				}
@@ -452,7 +452,7 @@ namespace Blarg.GameFramework.States
 					var currentTopStateInfo = Top;
 					if (stateInfo.IsOverlay && !currentTopStateInfo.IsInactive && !currentTopStateInfo.IsOverlayed)
 					{
-						Platform.Logger.Info(LOG_TAG, "Pausing {0}state {1} due to overlay.", (currentTopStateInfo.IsOverlay ? "overlay " : ""), currentTopStateInfo.Descriptor);
+						Framework.Logger.Info(LOG_TAG, "Pausing {0}state {1} due to overlay.", (currentTopStateInfo.IsOverlay ? "overlay " : ""), currentTopStateInfo.Descriptor);
 						currentTopStateInfo.State.OnPause(true);
 
 						// also mark the current top state as being overlay-ed
@@ -460,7 +460,7 @@ namespace Blarg.GameFramework.States
 					}
 				}
 
-				Platform.Logger.Info(LOG_TAG, "Pushing {0}state {1} from push-queue.", (stateInfo.IsOverlay ? "overlay " : ""), stateInfo.Descriptor);
+				Framework.Logger.Info(LOG_TAG, "Pushing {0}state {1} from push-queue.", (stateInfo.IsOverlay ? "overlay " : ""), stateInfo.Descriptor);
 				stateInfo.State.OnPush();
 
 				TransitionIn(stateInfo, false);
@@ -478,14 +478,14 @@ namespace Blarg.GameFramework.States
 				var currentTopStateInfo = Top;
 				if (stateInfo.IsOverlay && !currentTopStateInfo.IsInactive && !currentTopStateInfo.IsOverlayed)
 				{
-					Platform.Logger.Info(LOG_TAG, "Pausing {0}state {1} due to overlay.", (currentTopStateInfo.IsOverlay ? "overlay " : ""), currentTopStateInfo.Descriptor);
+					Framework.Logger.Info(LOG_TAG, "Pausing {0}state {1} due to overlay.", (currentTopStateInfo.IsOverlay ? "overlay " : ""), currentTopStateInfo.Descriptor);
 					currentTopStateInfo.State.OnPause(true);
 
 					// also mark the current top state as being overlay-ed
 					currentTopStateInfo.IsOverlayed = true;
 				}
 
-				Platform.Logger.Info(LOG_TAG, "Pushing {0}state {1} from swap-queue.", (stateInfo.IsOverlay ? "overlay " : ""), stateInfo.Descriptor);
+				Framework.Logger.Info(LOG_TAG, "Pushing {0}state {1} from swap-queue.", (stateInfo.IsOverlay ? "overlay " : ""), stateInfo.Descriptor);
 				stateInfo.State.OnPush();
 
 				TransitionIn(stateInfo, false);
@@ -515,7 +515,7 @@ namespace Blarg.GameFramework.States
 				if (stateInfo.IsInactive || !stateInfo.IsOverlayed)
 					throw new InvalidOperationException();
 
-				Platform.Logger.Info(LOG_TAG, "Resuming {0}state {1} due to overlay removal.", (stateInfo.IsOverlay ? "overlay " : ""), stateInfo.Descriptor);
+				Framework.Logger.Info(LOG_TAG, "Resuming {0}state {1} due to overlay removal.", (stateInfo.IsOverlay ? "overlay " : ""), stateInfo.Descriptor);
 				stateInfo.State.OnResume(true);
 
 				stateInfo.IsOverlayed = false;
@@ -527,7 +527,7 @@ namespace Blarg.GameFramework.States
 			if (!Top.IsInactive)
 				return;
 
-			Platform.Logger.Info(LOG_TAG, "Top-most state is inactive. Resuming all top states up to and including the next non-overlay.");
+			Framework.Logger.Info(LOG_TAG, "Top-most state is inactive. Resuming all top states up to and including the next non-overlay.");
 
 			// top state is inactive, time to resume one or more states...
 			// find the topmost non-overlay state and take it and all overlay
@@ -535,7 +535,7 @@ namespace Blarg.GameFramework.States
 			for (var node = TopNonOverlayNode; node != null; node = node.Next)
 			{
 				var stateInfo = node.Value;
-				Platform.Logger.Info(LOG_TAG, "Resuming {0}state {1}.", (stateInfo.IsOverlay ? "overlay " : ""), stateInfo.Descriptor);
+				Framework.Logger.Info(LOG_TAG, "Resuming {0}state {1}.", (stateInfo.IsOverlay ? "overlay " : ""), stateInfo.Descriptor);
 				stateInfo.State.OnResume(false);
 
 				TransitionIn(stateInfo, true);
@@ -553,7 +553,7 @@ namespace Blarg.GameFramework.States
 					bool isDone = stateInfo.State.OnTransition(delta, stateInfo.IsTransitioningOut, stateInfo.IsTransitionStarting);
 					if (isDone)
 					{
-						Platform.Logger.Info(LOG_TAG, "Transition {0} {1}state {2} finished.",
+						Framework.Logger.Info(LOG_TAG, "Transition {0} {1}state {2} finished.",
 						                          (stateInfo.IsTransitioningOut ? "out of" : "into"),
 						                          (stateInfo.IsOverlay ? "overlay " : ""),
 						                          stateInfo.Descriptor);
@@ -564,18 +564,18 @@ namespace Blarg.GameFramework.States
 						{
 							if (stateInfo.IsBeingPopped)
 							{
-								Platform.Logger.Info(LOG_TAG, "Popping {0}state {1}", (stateInfo.IsOverlay ? "overlay " : ""), stateInfo.Descriptor);
+								Framework.Logger.Info(LOG_TAG, "Popping {0}state {1}", (stateInfo.IsOverlay ? "overlay " : ""), stateInfo.Descriptor);
 								stateInfo.State.OnPop();
 
 								if (stateInfo.State.ReturnValue != null)
 								{
 									LastReturnValue = stateInfo.State.ReturnValue;
-									Platform.Logger.Info(LOG_TAG, "Return value of {0} retrieved from {1}.", LastReturnValue.Value, stateInfo.Descriptor);
+									Framework.Logger.Info(LOG_TAG, "Return value of {0} retrieved from {1}.", LastReturnValue.Value, stateInfo.Descriptor);
 								}
 							}
 							else
 							{
-								Platform.Logger.Info(LOG_TAG, "Pausing {0}state {1}.", (stateInfo.IsOverlay ? "overlay " : ""), stateInfo.Descriptor);
+								Framework.Logger.Info(LOG_TAG, "Pausing {0}state {1}.", (stateInfo.IsOverlay ? "overlay " : ""), stateInfo.Descriptor);
 								stateInfo.State.OnPause(false);
 							}
 							stateInfo.IsInactive = true;
@@ -597,7 +597,7 @@ namespace Blarg.GameFramework.States
 			stateInfo.IsTransitioning = true;
 			stateInfo.IsTransitioningOut = false;
 			stateInfo.IsTransitionStarting = true;
-			Platform.Logger.Info(LOG_TAG, "Transition into {0}state {1} started.", (stateInfo.IsOverlay ? "overlay " : ""), stateInfo.Descriptor);
+			Framework.Logger.Info(LOG_TAG, "Transition into {0}state {1} started.", (stateInfo.IsOverlay ? "overlay " : ""), stateInfo.Descriptor);
 
 			if (forResuming)
 				stateInfo.State.ProcessManager.OnResume(false);
@@ -609,7 +609,7 @@ namespace Blarg.GameFramework.States
 			stateInfo.IsTransitioningOut = true;
 			stateInfo.IsTransitionStarting = true;
 			stateInfo.IsBeingPopped = forPopping;
-			Platform.Logger.Info(LOG_TAG, "Transition out of {0}state {1} started.", (stateInfo.IsOverlay ? "overlay " : ""), stateInfo.Descriptor);
+			Framework.Logger.Info(LOG_TAG, "Transition out of {0}state {1} started.", (stateInfo.IsOverlay ? "overlay " : ""), stateInfo.Descriptor);
 
 			if (forPopping)
 				stateInfo.State.ProcessManager.RemoveAll();
@@ -677,12 +677,12 @@ namespace Blarg.GameFramework.States
 			if (_states == null)
 				return;
 
-			Platform.Logger.Info(LOG_TAG, "StateManager disposing.");
+			Framework.Logger.Info(LOG_TAG, "StateManager disposing.");
 
 			while (_states.Count > 0)
 			{
 				var stateInfo = _states.Last.Value;
-				Platform.Logger.Info(LOG_TAG, "Popping state {0} as part of StateManager shutdown.", stateInfo.Descriptor);
+				Framework.Logger.Info(LOG_TAG, "Popping state {0} as part of StateManager shutdown.", stateInfo.Descriptor);
 				stateInfo.State.OnPop();
 				stateInfo.State.Dispose();
 				_states.RemoveLast();
@@ -692,13 +692,13 @@ namespace Blarg.GameFramework.States
 			while (_pushQueue.Count > 0)
 			{
 				var stateInfo = _pushQueue.Dequeue();
-				Platform.Logger.Info(LOG_TAG, "Deleting push-queued state {0} as part of StateManager shutdown.", stateInfo.Descriptor);
+				Framework.Logger.Info(LOG_TAG, "Deleting push-queued state {0} as part of StateManager shutdown.", stateInfo.Descriptor);
 				stateInfo.State.Dispose();
 			}
 			while (_swapQueue.Count > 0)
 			{
 				var stateInfo = _swapQueue.Dequeue();
-				Platform.Logger.Info(LOG_TAG, "Deleting swap-queued state {0} as part of StateManager shutdown.", stateInfo.Descriptor);
+				Framework.Logger.Info(LOG_TAG, "Deleting swap-queued state {0} as part of StateManager shutdown.", stateInfo.Descriptor);
 				stateInfo.State.Dispose();
 			}
 

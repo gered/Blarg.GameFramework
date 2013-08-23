@@ -57,20 +57,20 @@ namespace Blarg.GameFramework.Processes
 
 			if (dueToOverlay)
 			{
-				Platform.Logger.Info(LOG_TAG, "Pausing all active processes due to state being overlayed on to the parent state.");
+				Framework.Logger.Info(LOG_TAG, "Pausing all active processes due to state being overlayed on to the parent state.");
 				for (var node = _processes.First; node != null; node = node.Next)
 				{
 					var processInfo = node.Value;
 					if (!processInfo.IsInactive)
 					{
-						Platform.Logger.Info(LOG_TAG, "Pausing process {0} due to parent state overlay.", processInfo.Descriptor);
+						Framework.Logger.Info(LOG_TAG, "Pausing process {0} due to parent state overlay.", processInfo.Descriptor);
 						processInfo.Process.OnPause(true);
 					}
 				}
 			}
 			else
 			{
-				Platform.Logger.Info(LOG_TAG, "Transitioning out all active processes pending pause.");
+				Framework.Logger.Info(LOG_TAG, "Transitioning out all active processes pending pause.");
 				for (var node = _processes.First; node != null; node = node.Next)
 				{
 					var processInfo = node.Value;
@@ -87,26 +87,26 @@ namespace Blarg.GameFramework.Processes
 
 			if (fromOverlay)
 			{
-				Platform.Logger.Info(LOG_TAG, "Resuming all active processes due to overlay state being removed from overtop of parent state.");
+				Framework.Logger.Info(LOG_TAG, "Resuming all active processes due to overlay state being removed from overtop of parent state.");
 				for (var node = _processes.First; node != null; node = node.Next)
 				{
 					var processInfo = node.Value;
 					if (!processInfo.IsInactive)
 					{
-						Platform.Logger.Info(LOG_TAG, "Resuming process {0} due to overlay state removal.", processInfo.Descriptor);
+						Framework.Logger.Info(LOG_TAG, "Resuming process {0} due to overlay state removal.", processInfo.Descriptor);
 						processInfo.Process.OnResume(true);
 					}
 				}
 			}
 			else
 			{
-				Platform.Logger.Info(LOG_TAG, "Resuming processes.");
+				Framework.Logger.Info(LOG_TAG, "Resuming processes.");
 				for (var node = _processes.First; node != null; node = node.Next)
 				{
 					var processInfo = node.Value;
 					if (processInfo.IsInactive && !processInfo.IsBeingRemoved)
 					{
-						Platform.Logger.Info(LOG_TAG, "Resuming process {0}", processInfo.Descriptor);
+						Framework.Logger.Info(LOG_TAG, "Resuming process {0}", processInfo.Descriptor);
 						processInfo.Process.OnResume(false);
 
 						StartTransitionIn(processInfo);
@@ -240,7 +240,7 @@ namespace Blarg.GameFramework.Processes
 
 		public void RemoveAll()
 		{
-			Platform.Logger.Info(LOG_TAG, "Transitioning out all processes pending removal.");
+			Framework.Logger.Info(LOG_TAG, "Transitioning out all processes pending removal.");
 			for (var node = _processes.First; node != null; node = node.Next)
 			{
 				var processInfo = node.Value;
@@ -256,7 +256,7 @@ namespace Blarg.GameFramework.Processes
 			if (newProcessInfo.Process == null)
 				throw new ArgumentException("No GameProcess provided.");
 
-			Platform.Logger.Info(LOG_TAG, "Queueing process {0}.", newProcessInfo.Descriptor);
+			Framework.Logger.Info(LOG_TAG, "Queueing process {0}.", newProcessInfo.Descriptor);
 			_queue.Enqueue(newProcessInfo);
 		}
 
@@ -275,7 +275,7 @@ namespace Blarg.GameFramework.Processes
 			processInfo.IsTransitioning = true;
 			processInfo.IsTransitioningOut = false;
 			processInfo.IsTransitionStarting = true;
-			Platform.Logger.Info(LOG_TAG, "Transition into process {0} started.", processInfo.Descriptor);
+			Framework.Logger.Info(LOG_TAG, "Transition into process {0} started.", processInfo.Descriptor);
 		}
 
 		private void StartTransitionOut(ProcessInfo processInfo, bool forRemoval)
@@ -289,7 +289,7 @@ namespace Blarg.GameFramework.Processes
 			processInfo.IsTransitioningOut = true;
 			processInfo.IsTransitionStarting = true;
 			processInfo.IsBeingRemoved = forRemoval;
-			Platform.Logger.Info(LOG_TAG, "Transition out of process {0} started pending {1}.", processInfo.Descriptor, (forRemoval ? "removal" : "pause"));
+			Framework.Logger.Info(LOG_TAG, "Transition out of process {0} started pending {1}.", processInfo.Descriptor, (forRemoval ? "removal" : "pause"));
 		}
 
 		private void CleanupInactiveProcesses()
@@ -304,7 +304,7 @@ namespace Blarg.GameFramework.Processes
 					_processes.Remove(node);
 					node = next;
 
-					Platform.Logger.Info(LOG_TAG, "Deleting inactive process {0}.", processInfo.Descriptor);
+					Framework.Logger.Info(LOG_TAG, "Deleting inactive process {0}.", processInfo.Descriptor);
 					processInfo.Process.Dispose();
 					processInfo = null;
 				}
@@ -320,7 +320,7 @@ namespace Blarg.GameFramework.Processes
 				var processInfo = node.Value;
 				if (!processInfo.IsInactive && processInfo.Process.IsFinished && !processInfo.IsTransitioning)
 				{
-					Platform.Logger.Info(LOG_TAG, "Process {0} marked as finished.", processInfo.Descriptor);
+					Framework.Logger.Info(LOG_TAG, "Process {0} marked as finished.", processInfo.Descriptor);
 					StartTransitionOut(processInfo, true);
 				}
 			}
@@ -332,7 +332,7 @@ namespace Blarg.GameFramework.Processes
 			{
 				var processInfo = _queue.Dequeue();
 
-				Platform.Logger.Info(LOG_TAG, "Adding process {0} from queue.", processInfo.Descriptor);
+				Framework.Logger.Info(LOG_TAG, "Adding process {0} from queue.", processInfo.Descriptor);
 				_processes.AddLast(processInfo);
 				processInfo.Process.OnAdd();
 
@@ -350,7 +350,7 @@ namespace Blarg.GameFramework.Processes
 					bool isDone = processInfo.Process.OnTransition(delta, processInfo.IsTransitioningOut, processInfo.IsTransitionStarting);
 					if (isDone)
 					{
-						Platform.Logger.Info(LOG_TAG, "Transition {0} into process {1} finished.",
+						Framework.Logger.Info(LOG_TAG, "Transition {0} into process {1} finished.",
 						                          (processInfo.IsTransitioningOut ? "out of" : "into"),
 						                          processInfo.Descriptor);
 
@@ -360,12 +360,12 @@ namespace Blarg.GameFramework.Processes
 						{
 							if (processInfo.IsBeingRemoved)
 							{
-								Platform.Logger.Info(LOG_TAG, "Removing process {0}.", processInfo.Descriptor);
+								Framework.Logger.Info(LOG_TAG, "Removing process {0}.", processInfo.Descriptor);
 								processInfo.Process.OnRemove();
 							}
 							else
 							{
-								Platform.Logger.Info(LOG_TAG, "Pausing process {0}.", processInfo.Descriptor);
+								Framework.Logger.Info(LOG_TAG, "Pausing process {0}.", processInfo.Descriptor);
 								processInfo.Process.OnPause(false);
 							}
 							processInfo.IsInactive = true;
@@ -449,12 +449,12 @@ namespace Blarg.GameFramework.Processes
 			if (_processes == null)
 				return;
 
-			Platform.Logger.Info(LOG_TAG, "ProcessManager disposing.");
+			Framework.Logger.Info(LOG_TAG, "ProcessManager disposing.");
 
 			while (_processes.Count > 0)
 			{
 				var processInfo = _processes.Last.Value;
-				Platform.Logger.Info(LOG_TAG, "Removing process {0} as part of ProcessManager shutdown.", processInfo.Descriptor);
+				Framework.Logger.Info(LOG_TAG, "Removing process {0} as part of ProcessManager shutdown.", processInfo.Descriptor);
 				processInfo.Process.OnRemove();
 				processInfo.Process.Dispose();
 				_processes.RemoveLast();
@@ -464,7 +464,7 @@ namespace Blarg.GameFramework.Processes
 			while (_queue.Count > 0)
 			{
 				var processInfo = _queue.Dequeue();
-				Platform.Logger.Info(LOG_TAG, "Removing queued process {0} as part of ProcessManager shutdown.", processInfo.Descriptor);
+				Framework.Logger.Info(LOG_TAG, "Removing queued process {0} as part of ProcessManager shutdown.", processInfo.Descriptor);
 				processInfo.Process.Dispose();
 			}
 

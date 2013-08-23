@@ -44,10 +44,10 @@ namespace Blarg.GameFramework.Graphics.ScreenEffects
 
 		public override void OnRender(float delta)
 		{
-			int width = Platform.GraphicsDevice.ViewContext.ViewportWidth;
-			int height = Platform.GraphicsDevice.ViewContext.ViewportHeight;
+			int width = Framework.GraphicsDevice.ViewContext.ViewportWidth;
+			int height = Framework.GraphicsDevice.ViewContext.ViewportHeight;
 
-			var texture = Platform.GraphicsDevice.GetSolidColorTexture(Color.White);
+			var texture = Framework.GraphicsDevice.GetSolidColorTexture(Color.White);
 			_color.A = _alpha;
 
 			//Platform.SpriteBatch.Render(texture, 0, 0, width, height, ref _color);

@@ -426,7 +426,7 @@ namespace Blarg.GameFramework.Graphics
 			// TODO: check that the check for GraphicsDevice.ViewContext != _attachedViewContext is actually needed
 			if (_attachedViewContext != null && GraphicsDevice.ViewContext != _attachedViewContext)
 			{
-				Rect r = Platform.Application.Window.ClientRectangle;
+				Rect r = Framework.Application.Window.ClientRectangle;
 				_attachedViewContext.OnResize(ref r, GraphicsDevice.ScreenOrientation);
 			}
 

@@ -46,7 +46,7 @@ namespace Blarg.GameFramework
 			get { return _os; }
 		}
 
-		public override PlatformType Type
+		public override PlatformType PlatformType
 		{
 			get { return PlatformType.Desktop; }
 		}
@@ -145,7 +145,7 @@ namespace Blarg.GameFramework
 				return;
 			}
 
-			Platform.Set(this);
+			Framework.Set(this);
 
 			OnInit();
 			OnNewContext();

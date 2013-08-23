@@ -29,16 +29,16 @@ namespace Blarg.GameFramework.Support
 			float pointerDeltaY = 0.0f;
 			bool isPointerTouching = false;
 
-			if (Platform.Mouse != null && Platform.Mouse.IsDown(MouseButton.Left))
+			if (Framework.Mouse != null && Framework.Mouse.IsDown(MouseButton.Left))
 			{
-				pointerDeltaX = Platform.Mouse.DeltaX;
-				pointerDeltaY = Platform.Mouse.DeltaY;
+				pointerDeltaX = Framework.Mouse.DeltaX;
+				pointerDeltaY = Framework.Mouse.DeltaY;
 				isPointerTouching = true;
 			}
-			else if (Platform.TouchScreen != null && Platform.TouchScreen.IsTouching)
+			else if (Framework.TouchScreen != null && Framework.TouchScreen.IsTouching)
 			{
-				pointerDeltaX = Platform.TouchScreen.PrimaryPointer.DeltaX;
-				pointerDeltaY = Platform.TouchScreen.PrimaryPointer.DeltaY;
+				pointerDeltaX = Framework.TouchScreen.PrimaryPointer.DeltaX;
+				pointerDeltaY = Framework.TouchScreen.PrimaryPointer.DeltaY;
 				isPointerTouching = true;
 			}
 
@@ -58,13 +58,13 @@ namespace Blarg.GameFramework.Support
 
 			_movement = Vector3.Zero;
 
-			if (Platform.Keyboard.IsDown(Key.Up))
+			if (Framework.Keyboard.IsDown(Key.Up))
 				_movement.Z -= delta * 6.0f;
-			if (Platform.Keyboard.IsDown(Key.Down))
+			if (Framework.Keyboard.IsDown(Key.Down))
 				_movement.Z += delta * 6.0f;
-			if (Platform.Keyboard.IsDown(Key.Left))
+			if (Framework.Keyboard.IsDown(Key.Left))
 				_movement.X -= delta * 6.0f;
-			if (Platform.Keyboard.IsDown(Key.Right))
+			if (Framework.Keyboard.IsDown(Key.Right))
 				_movement.X += delta * 6.0f;
 
 			UpdateLookAtMatrix(ref _movement);

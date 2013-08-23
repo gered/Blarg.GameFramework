@@ -46,7 +46,7 @@ namespace Blarg.GameFramework.Graphics
 			if (file == null)
 				throw new ArgumentNullException("file");
 
-			var bitmap = Platform.Application.LoadBitmap(file);
+			var bitmap = Framework.Application.LoadBitmap(file);
 
 			CreateBaseImage(bitmap.Width, bitmap.Height, bitmap.Format);
 			Buffer.BlockCopy(bitmap.Pixels, 0, _pixels, 0, bitmap.Pixels.Length);

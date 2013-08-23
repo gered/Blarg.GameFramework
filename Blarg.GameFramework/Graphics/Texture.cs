@@ -107,7 +107,7 @@ namespace Blarg.GameFramework.Graphics
 
 			GraphicsDevice.GL.glTexImage2D(GL20.GL_TEXTURE_2D, 0, internalFormat, Width, Height, 0, pixelFormat, pixelType, image.Pixels);
 
-			Platform.Logger.Info(GraphicsContextResource.LOG_TAG, "Created texture from image. ID = {0}, bpp = {1}, size = {2}x{3}.", ID, image.BitsPerPixel, Width, Height);
+			Framework.Logger.Info(GraphicsContextResource.LOG_TAG, "Created texture from image. ID = {0}, bpp = {1}, size = {2}x{3}.", ID, image.BitsPerPixel, Width, Height);
 		}
 
 		private void CreateTexture(int width, int height, TextureFormat format, bool useExistingTextureParams = false)
@@ -142,9 +142,9 @@ namespace Blarg.GameFramework.Graphics
 			GraphicsDevice.GL.glTexImage2D(GL20.GL_TEXTURE_2D, 0, internalFormat, Width, Height, 0, pixelFormat, pixelType, IntPtr.Zero);
 
 			if (Format == TextureFormat.Depth)
-				Platform.Logger.Info(GraphicsContextResource.LOG_TAG, "Created uninitialized texture. ID = {0}, depth component only, size = {1}x{2}", ID, Width, Height);
+				Framework.Logger.Info(GraphicsContextResource.LOG_TAG, "Created uninitialized texture. ID = {0}, depth component only, size = {1}x{2}", ID, Width, Height);
 			else
-				Platform.Logger.Info(GraphicsContextResource.LOG_TAG, "Created uninitialized texture. ID = {0}, bpp = {1}, size = {2}x{3}", ID, bpp, Width, Height);
+				Framework.Logger.Info(GraphicsContextResource.LOG_TAG, "Created uninitialized texture. ID = {0}, bpp = {1}, size = {2}x{3}", ID, bpp, Width, Height);
 		}
 
 		#endregion
@@ -226,7 +226,7 @@ namespace Blarg.GameFramework.Graphics
 					pixelFormat = GL20.GL_DEPTH_COMPONENT;
 
 					// TODO: check that these are correct ...
-					if (Platform.Application.Type == PlatformType.Mobile)
+					if (Framework.Application.PlatformType == PlatformType.Mobile)
 						type = GL20.GL_UNSIGNED_SHORT;
 					else
 						type = GL20.GL_FLOAT;
@@ -273,7 +273,7 @@ namespace Blarg.GameFramework.Graphics
 
 				GraphicsDevice.GL.glDeleteTextures(ID);
 
-				Platform.Logger.Info(GraphicsContextResource.LOG_TAG, "Deleted Texture ID = {0}.", ID);
+				Framework.Logger.Info(GraphicsContextResource.LOG_TAG, "Deleted Texture ID = {0}.", ID);
 
 				ID = -1;
 			}

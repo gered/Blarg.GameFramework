@@ -13,7 +13,7 @@ namespace Blarg.GameFramework
 		public ServiceContainer()
 		{
 			_services = new Dictionary<Type, object>();
-			Platform.Logger.Debug(LOG_TAG, "Ready for use.");
+			Framework.Logger.Debug(LOG_TAG, "Ready for use.");
 		}
 
 		public void Register(object service)
@@ -30,7 +30,7 @@ namespace Blarg.GameFramework
 				((IService)service).OnRegister();
 
 			_services.Add(type, service);
-			Platform.Logger.Debug(LOG_TAG, "Registered object of type {0}.", type);
+			Framework.Logger.Debug(LOG_TAG, "Registered object of type {0}.", type);
 		}
 
 		public void Unregister(object service)
@@ -48,7 +48,7 @@ namespace Blarg.GameFramework
 				throw new InvalidOperationException("This is not the service object that was registered under this type.");
 
 			_services.Remove(type);
-			Platform.Logger.Debug(LOG_TAG, "Unregistered object of type {0}.", type);
+			Framework.Logger.Debug(LOG_TAG, "Unregistered object of type {0}.", type);
 
 			if (registeredService is IService)
 				((IService)registeredService).OnUnregister();
@@ -70,7 +70,7 @@ namespace Blarg.GameFramework
 
 		public void Dispose()
 		{
-			Platform.Logger.Debug(LOG_TAG, "Disposing.");
+			Framework.Logger.Debug(LOG_TAG, "Disposing.");
 
 			foreach (var i in _services)
 			{
