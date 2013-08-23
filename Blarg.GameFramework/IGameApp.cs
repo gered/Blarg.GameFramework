@@ -5,6 +5,8 @@ namespace Blarg.GameFramework
 {
 	public interface IGameApp : IDisposable
 	{
+		void OnInit();
+		void OnShutdown();
 		void OnAppGainFocus();
 		void OnAppLostFocus();
 		void OnAppPause();

@@ -19,6 +19,14 @@ namespace Game
 		{
 		}
 
+		public void OnInit()
+		{
+		}
+
+		public void OnShutdown()
+		{
+		}
+
 		public void OnAppGainFocus()
 		{
 		}

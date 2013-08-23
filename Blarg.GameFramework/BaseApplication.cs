@@ -48,11 +48,17 @@ namespace Blarg.GameFramework
 			Services = new ServiceContainer();
 			GraphicsDevice = new GraphicsDevice(GL);
 			GraphicsDevice.OnInit();
+
+			Logger.Info(LOG_TAG, "Game app init.");
+			GameApp.OnInit();
 		}
 
 		protected void OnShutdown()
 		{
-			Logger.Info(LOG_TAG, "Shutting down.");
+			Logger.Info(LOG_TAG, "Game app shutdown.");
+			GameApp.OnShutdown();
+
+			Logger.Info(LOG_TAG, "Shutting down application objects.");
 			Services.Dispose();
 			Services = null;
 		}
