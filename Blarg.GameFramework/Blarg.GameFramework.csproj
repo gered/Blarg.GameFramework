@@ -160,6 +160,12 @@
     <Compile Include="IService.cs" />
     <Compile Include="ServiceContainer.cs" />
     <Compile Include="Support\DictionaryExtensions.cs" />
+    <Compile Include="States\GameState.cs" />
+    <Compile Include="States\StateManager.cs" />
+    <Compile Include="States\StateInfo.cs" />
+    <Compile Include="Processes\GameProcess.cs" />
+    <Compile Include="Processes\ProcessManager.cs" />
+    <Compile Include="Processes\ProcessInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -178,6 +184,8 @@
     <Folder Include="Entities\" />
     <Folder Include="Entities\SystemComponents\" />
     <Folder Include="Graphics\ScreenEffects\" />
+    <Folder Include="States\" />
+    <Folder Include="Processes\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Vera.ttf" />
