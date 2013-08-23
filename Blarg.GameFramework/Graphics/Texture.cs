@@ -206,21 +206,21 @@ namespace Blarg.GameFramework.Graphics
 					type = GL20.GL_UNSIGNED_BYTE;
 					break;
 
-					case TextureFormat.RGB:
+				case TextureFormat.RGB:
 					bpp = 24;
 					internalFormat = GL20.GL_RGB;
 					pixelFormat = GL20.GL_RGB;
 					type = GL20.GL_UNSIGNED_BYTE;
 					break;
 
-					case TextureFormat.RGBA:
+				case TextureFormat.RGBA:
 					bpp = 32;
 					internalFormat = GL20.GL_RGBA;
 					pixelFormat = GL20.GL_RGBA;
 					type = GL20.GL_UNSIGNED_BYTE;
 					break;
 
-					case TextureFormat.Depth:
+				case TextureFormat.Depth:
 					bpp = 0;        // doesn't really matter for this one... ?
 					internalFormat = GL20.GL_DEPTH_COMPONENT;
 					pixelFormat = GL20.GL_DEPTH_COMPONENT;
@@ -232,7 +232,7 @@ namespace Blarg.GameFramework.Graphics
 						type = GL20.GL_FLOAT;
 					break;
 
-					default:
+				default:
 					bpp = 0;
 
 					// junk -- just to appease the compiler
@@ -242,7 +242,6 @@ namespace Blarg.GameFramework.Graphics
 					break;
 			}
 		}
-
 		#region GraphicsContextResource
 
 		public override void OnNewContext()
