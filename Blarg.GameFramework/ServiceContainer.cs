@@ -16,13 +16,11 @@ namespace Blarg.GameFramework
 			Framework.Logger.Debug(LOG_TAG, "Ready for use.");
 		}
 
-		public void Register(object service)
+		public void Register<T>(T service) where T : class
 		{
 			if (service == null)
 				throw new ArgumentNullException("service");
-			var type = service.GetType();
-			if (type.IsValueType)
-				throw new ArgumentException("ServiceContainer cannot be used with value types.", "service");
+			var type = typeof(T);
 			if (_services.ContainsKey(type))
 				throw new InvalidOperationException("Service object of this type has already been registered.");
 
@@ -33,19 +31,13 @@ namespace Blarg.GameFramework
 			Framework.Logger.Debug(LOG_TAG, "Registered object of type {0}.", type);
 		}
 
-		public void Unregister(object service)
+		public void Unregister<T>() where T : class
 		{
-			if (service == null)
-				throw new ArgumentNullException("service");
-			var type = service.GetType();
-			if (type.IsValueType)
-				throw new ArgumentException("ServiceContainer cannot be used with value types.", "service");
+			var type = typeof(T);
 
 			var registeredService = _services.Get(type);
 			if (registeredService == null)
 				return;
-			if (registeredService != service)
-				throw new InvalidOperationException("This is not the service object that was registered under this type.");
 
 			_services.Remove(type);
 			Framework.Logger.Debug(LOG_TAG, "Unregistered object of type {0}.", type);
