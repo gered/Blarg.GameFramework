@@ -46,6 +46,16 @@ namespace Blarg.GameFramework.Graphics.ScreenEffects
 			return effect;
 		}
 
+		public T AddLocal<T>() where T : ScreenEffect
+		{
+			return Add<T>(true);
+		}
+
+		public T AddGlobal<T>() where T : ScreenEffect
+		{
+			return Add<T>(false);
+		}
+
 		public void Remove<T>() where T : ScreenEffect
 		{
 			var type = typeof(T);
