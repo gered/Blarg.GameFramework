@@ -147,6 +147,8 @@ namespace Blarg.GameFramework
 
 			Framework.Set(this);
 
+			Logger.Info(LOG_TAG, "Framework initialization complete, beginning game application set up.");
+
 			OnInit();
 			OnNewContext();
 			OnResize(ScreenOrientation.Rotation0, _windowInfo.ClientRectangle);

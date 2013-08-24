@@ -49,6 +49,17 @@ namespace Blarg.GameFramework
 			GraphicsDevice = new GraphicsDevice(GL);
 			GraphicsDevice.OnInit();
 
+			Logger.Info(LOG_TAG, "Registering framework objects with services container.");
+			Services.Register(Logger);
+			Services.Register(FileSystem);
+			if (Keyboard != null)
+				Services.Register(Keyboard);
+			if (Mouse != null)
+				Services.Register(Mouse);
+			if (TouchScreen != null)
+				Services.Register(TouchScreen);
+			Services.Register(GraphicsDevice);
+
 			Logger.Info(LOG_TAG, "Game app init.");
 			GameApp.OnInit();
 		}
