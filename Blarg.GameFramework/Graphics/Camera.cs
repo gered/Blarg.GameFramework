@@ -137,12 +137,12 @@ namespace Blarg.GameFramework.Graphics
 
 			// map to 2D viewport coordinates (ignoring Z)
 			Point2 result;
-			result.X = (int)(((transformedX * 0.5f) + 0.5f) * (float)_viewContext.ViewportWidth + (float)_viewContext.ViewportLeft);
-			result.Y = (int)(((transformedY * 0.5f) + 0.5f) * (float)_viewContext.ViewportHeight + (float)_viewContext.ViewportTop);
+			result.X = (int)(((transformedX * 0.5f) + 0.5f) * (float)_viewContext.PixelScaler.ScaledWidth + (float)_viewContext.PixelScaler.ScaledViewport.Left);
+			result.Y = (int)(((transformedY * 0.5f) + 0.5f) * (float)_viewContext.PixelScaler.ScaledHeight + (float)_viewContext.PixelScaler.ScaledViewport.Top);
 			// float z = (1.0f + transformedZ) * 0.5f;   // would be between 0.0f and 1.0f
 
 			// adjust Y coordinate so that 0 is at the top of the screen instead of the bottom
-			result.Y = (int)_viewContext.ViewportHeight - result.Y;
+			result.Y = (int)_viewContext.PixelScaler.ScaledHeight - result.Y;
 
 			return result; 
 		}
