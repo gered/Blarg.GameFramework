@@ -16,19 +16,15 @@ namespace Blarg.GameFramework.States
 		bool _swapQueueHasOverlay;
 		bool _lastCleanedStatesWereAllOverlays;
 
-		public readonly IGameApp GameApp;
 		public readonly EventManager EventManager;
 
 		public int? LastReturnValue { get; private set; }
 
-		public StateManager(IGameApp gameApp, EventManager eventManager)
+		public StateManager(EventManager eventManager)
 		{
-			if (gameApp == null)
-				throw new ArgumentNullException("gameApp");
 			if (eventManager == null)
 				throw new ArgumentNullException("eventManager");
 
-			GameApp = gameApp;
 			EventManager = eventManager;
 
 			_states = new LinkedList<StateInfo>();

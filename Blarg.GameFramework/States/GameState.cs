@@ -7,7 +7,6 @@ namespace Blarg.GameFramework.States
 {
 	public abstract class GameState : EventListener, IDisposable
 	{
-		public IGameApp GameApp { get; private set; }
 		public readonly ProcessManager ProcessManager;
 		public readonly ScreenEffectManager EffectManager;
 		public readonly StateManager StateManager;
@@ -31,7 +30,6 @@ namespace Blarg.GameFramework.States
 			if (stateManager == null)
 				throw new ArgumentNullException("stateManager");
 
-			GameApp = stateManager.GameApp;
 			StateManager = stateManager;
 
 			EffectManager = new ScreenEffectManager();

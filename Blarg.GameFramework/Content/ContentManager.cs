@@ -10,16 +10,11 @@ namespace Blarg.GameFramework.Content
 		Dictionary<Type, IContentLoaderBase> _loaders;
 
 		public bool IsLoaded { get; private set; }
-		public readonly IGameApp GameApp;
 
-		public ContentManager(IGameApp gameApp)
+		public ContentManager()
 		{
-			if (gameApp == null)
-				throw new ArgumentNullException("gameApp");
-
 			_loaders = new Dictionary<Type, IContentLoaderBase>();
 			IsLoaded = false;
-			GameApp = gameApp;
 		}
 
 		public void RegisterLoader(IContentLoaderBase loader)

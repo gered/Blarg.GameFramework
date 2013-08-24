@@ -6,7 +6,6 @@ namespace Blarg.GameFramework.Processes
 {
 	public class GameProcess : EventListener, IDisposable
 	{
-		public readonly IGameApp GameApp;
 		public readonly GameState GameState;
 		public readonly ProcessManager ProcessManager;
 
@@ -27,7 +26,6 @@ namespace Blarg.GameFramework.Processes
 
 			GameState = processManager.GameState;
 			ProcessManager = processManager;
-			GameApp = GameState.GameApp;
 		}
 
 		protected void SetFinished()
