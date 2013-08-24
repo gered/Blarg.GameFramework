@@ -820,12 +820,12 @@ namespace Blarg.GameFramework.Graphics
 
 		private int FixYCoord(int y, int sourceHeight)
 		{
-			return GraphicsDevice.ViewContext.ViewportHeight - y - sourceHeight;
+			return GraphicsDevice.ViewContext.PixelScaler.ScaledHeight - y - sourceHeight;
 		}
 
 		private float FixYCoord(int y, float sourceHeight)
 		{
-			return (float)GraphicsDevice.ViewContext.ViewportHeight - (float)y - sourceHeight;
+			return (float)GraphicsDevice.ViewContext.PixelScaler.ScaledHeight - (float)y - sourceHeight;
 		}
 
 		#endregion
@@ -841,7 +841,7 @@ namespace Blarg.GameFramework.Graphics
 
 			_isClipping = true;
 
-			int fixedTop = ((int)GraphicsDevice.ViewContext.ViewportHeight - region.Top - region.Height);
+			int fixedTop = ((int)GraphicsDevice.ViewContext.PixelScaler.ScaledHeight - region.Top - region.Height);
 			int fixedBottom = fixedTop + region.Height;
 
 			_clipRegion.Left = (float)region.Left;
