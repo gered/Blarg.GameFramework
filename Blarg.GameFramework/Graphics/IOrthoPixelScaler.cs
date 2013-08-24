@@ -6,6 +6,7 @@ namespace Blarg.GameFramework.Graphics
 	{
 		int Scale { get; }
 
+		Rect ScaledViewport { get; }
 		int ScaledWidth { get; }
 		int ScaledHeight { get; }
 

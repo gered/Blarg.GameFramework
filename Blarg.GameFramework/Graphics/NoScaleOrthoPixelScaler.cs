@@ -17,6 +17,11 @@ namespace Blarg.GameFramework.Graphics
 			get { return 1; }
 		}
 
+		public Rect ScaledViewport
+		{
+			get { return _viewport; }
+		}
+
 		public int ScaledWidth
 		{
 			get { return _viewport.Width; }
