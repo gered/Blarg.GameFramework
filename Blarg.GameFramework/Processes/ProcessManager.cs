@@ -216,7 +216,7 @@ namespace Blarg.GameFramework.Processes
 
 		public T Add<T>(string name = null) where T : GameProcess
 		{
-			var newProcess = (T)Activator.CreateInstance(typeof(T), this);
+			var newProcess = (T)Activator.CreateInstance(typeof(T), this, GameState.EventManager);
 			var processInfo = new ProcessInfo(newProcess, name);
 			Queue(processInfo);
 			return newProcess;

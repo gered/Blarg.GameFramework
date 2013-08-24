@@ -217,7 +217,7 @@ namespace Blarg.GameFramework.States
 
 		public T Push<T>(string name = null) where T : GameState
 		{
-			var newState = (T)Activator.CreateInstance(typeof(T), this);
+			var newState = (T)Activator.CreateInstance(typeof(T), this, EventManager);
 			var stateInfo = new StateInfo(newState, name);
 			QueueForPush(stateInfo);
 			return newState;
@@ -225,7 +225,7 @@ namespace Blarg.GameFramework.States
 
 		public T Overlay<T>(string name = null) where T : GameState
 		{
-			var newState = (T)Activator.CreateInstance(typeof(T), this);
+			var newState = (T)Activator.CreateInstance(typeof(T), this, EventManager);
 			var stateInfo = new StateInfo(newState, name);
 			stateInfo.IsOverlay = true;
 			QueueForPush(stateInfo);
@@ -241,7 +241,7 @@ namespace Blarg.GameFramework.States
 				throw new InvalidOperationException("Cannot swap, no existing states.");
 			bool isOverlay = currentTopStateInfo.IsOverlay;
 
-			var newState = (T)Activator.CreateInstance(typeof(T), this);
+			var newState = (T)Activator.CreateInstance(typeof(T), this, EventManager);
 			var stateInfo = new StateInfo(newState, name);
 			stateInfo.IsOverlay = isOverlay;
 			QueueForSwap(stateInfo, false);
@@ -250,7 +250,7 @@ namespace Blarg.GameFramework.States
 
 		public T SwapTopNonOverlayWith<T>(string name = null) where T : GameState
 		{
-			var newState = (T)Activator.CreateInstance(typeof(T), this);
+			var newState = (T)Activator.CreateInstance(typeof(T), this, EventManager);
 			var stateInfo = new StateInfo(newState, name);
 			QueueForSwap(stateInfo, true);
 			return newState;
