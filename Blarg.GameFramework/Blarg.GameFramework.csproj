@@ -180,6 +180,7 @@
     <Compile Include="UI\GwenInputProcessor.cs" />
     <Compile Include="UI\GwenSpriteBatchRenderer.cs" />
     <Compile Include="IServiceLocator.cs" />
+    <Compile Include="BasicGameApp.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
