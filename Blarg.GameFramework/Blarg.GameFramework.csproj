@@ -177,6 +177,8 @@
     <Compile Include="Content\Types\ImageLoader.cs" />
     <Compile Include="Content\Types\TextureLoader.cs" />
     <Compile Include="Content\Types\SpriteFontLoader.cs" />
+    <Compile Include="UI\GwenInputProcessor.cs" />
+    <Compile Include="UI\GwenSpriteBatchRenderer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -199,6 +201,7 @@
     <Folder Include="Processes\" />
     <Folder Include="Content\" />
     <Folder Include="Content\Types\" />
+    <Folder Include="UI\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Vera.ttf" />
