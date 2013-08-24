@@ -174,6 +174,9 @@
     <Compile Include="Content\ContentContainer.cs" />
     <Compile Include="Content\ContentManager.cs" />
     <Compile Include="Content\DictionaryStoreContentLoader.cs" />
+    <Compile Include="Content\Types\ImageLoader.cs" />
+    <Compile Include="Content\Types\TextureLoader.cs" />
+    <Compile Include="Content\Types\SpriteFontLoader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -195,6 +198,7 @@
     <Folder Include="States\" />
     <Folder Include="Processes\" />
     <Folder Include="Content\" />
+    <Folder Include="Content\Types\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Vera.ttf" />

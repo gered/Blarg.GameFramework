@@ -5,7 +5,7 @@ namespace Blarg.GameFramework.Content
 {
 	public class ContentManager : IDisposable
 	{
-		const string LOG_TAG = "CONTENT";
+		public const string LOG_TAG = "CONTENT";
 
 		Dictionary<Type, IContentLoaderBase> _loaders;
 

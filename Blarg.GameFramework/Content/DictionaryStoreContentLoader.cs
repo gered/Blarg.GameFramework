@@ -5,8 +5,6 @@ namespace Blarg.GameFramework.Content
 {
 	public abstract class DictionaryStoreContentLoader<T> : IContentLoader<T> where T : class
 	{
-		const string LOG_TAG = "CONTENT";
-
 		string _defaultPath;
 
 		protected readonly ContentManager ContentManager;
@@ -36,7 +34,7 @@ namespace Blarg.GameFramework.Content
 				if (!_defaultPath.EndsWith("/"))
 					_defaultPath += "/";
 
-				Framework.Logger.Info(LOG_TAG, "{0}: default path set to \"{1}\"", LoggingTag, _defaultPath);
+				Framework.Logger.Info(ContentManager.LOG_TAG, "{0}: default path set to \"{1}\"", LoggingTag, _defaultPath);
 			}
 			else
 				_defaultPath = "";
@@ -101,7 +99,7 @@ namespace Blarg.GameFramework.Content
 
 			if (removePinnedContent)
 			{
-				Framework.Logger.Info(LOG_TAG, "{0}: freeing all content.", LoggingTag);
+				Framework.Logger.Info(ContentManager.LOG_TAG, "{0}: freeing all content.", LoggingTag);
 
 				// we're removing everything here. go through all the content and
 				// call Dispose() on all IDisposable's and then just clear the dictionary
@@ -115,7 +113,7 @@ namespace Blarg.GameFramework.Content
 			}
 			else
 			{
-				Framework.Logger.Info(LOG_TAG, "{0}: freeing all non-pinned content.", LoggingTag);
+				Framework.Logger.Info(ContentManager.LOG_TAG, "{0}: freeing all non-pinned content.", LoggingTag);
 
 				// can't remove items from a dictionary inside a foreach loop iterating through it
 				// build a list of all the content (names) that need to be removed
@@ -198,7 +196,7 @@ namespace Blarg.GameFramework.Content
 
 		public void Dispose()
 		{
-			Framework.Logger.Info(LOG_TAG, "{0}: disposing. Forcibly freeing any content still loaded.", LoggingTag);
+			Framework.Logger.Info(ContentManager.LOG_TAG, "{0}: disposing. Forcibly freeing any content still loaded.", LoggingTag);
 			RemoveAll(true);
 		}
 	}
