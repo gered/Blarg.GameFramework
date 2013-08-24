@@ -183,6 +183,7 @@
     <Compile Include="BasicGameApp.cs" />
     <Compile Include="Graphics\IOrthoPixelScaler.cs" />
     <Compile Include="Graphics\NoScaleOrthoPixelScaler.cs" />
+    <Compile Include="Graphics\RetroOrthoPixelScaler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
