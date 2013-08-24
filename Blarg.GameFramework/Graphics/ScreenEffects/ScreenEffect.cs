@@ -4,7 +4,7 @@ namespace Blarg.GameFramework.Graphics.ScreenEffects
 {
 	public abstract class ScreenEffect : IDisposable
 	{
-		public bool IsActive;
+		public bool IsActive = true;
 
 		public ScreenEffect()
 		{
