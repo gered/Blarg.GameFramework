@@ -24,7 +24,7 @@ namespace Blarg.GameFramework.Graphics.ScreenEffects
 			Color = Color.White;
 		}
 
-		public override void OnRender(float delta)
+		public override void OnRender(float delta, SpriteBatch spriteBatch)
 		{
 			int width = Framework.GraphicsDevice.ViewContext.ViewportWidth;
 			int height = Framework.GraphicsDevice.ViewContext.ViewportHeight;
@@ -33,7 +33,7 @@ namespace Blarg.GameFramework.Graphics.ScreenEffects
 			var color = Color;
 			color.A = _alpha;
 
-			//Platform.SpriteBatch.Render(texture, 0, 0, width, height, ref color);
+			spriteBatch.Render(texture, 0, 0, width, height, ref color);
 		}
 
 		public override void OnUpdate(float delta)

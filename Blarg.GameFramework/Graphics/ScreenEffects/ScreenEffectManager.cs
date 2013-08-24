@@ -8,12 +8,17 @@ namespace Blarg.GameFramework.Graphics.ScreenEffects
 		LinkedList<EffectInfo> _effects;
 		int _numLocalEffects;
 		int _numGlobalEffects;
+		SpriteBatch _spriteBatch;
 
 		public ScreenEffectManager()
 		{
 			_effects = new LinkedList<EffectInfo>();
 			_numLocalEffects = 0;
 			_numGlobalEffects = 0;
+
+			_spriteBatch = Framework.Services.Get<SpriteBatch>();
+			if (_spriteBatch == null)
+				throw new InvalidOperationException("No SpriteBatch object registered with the service locator.");
 		}
 
 		#region Get / Add / Remove
@@ -133,7 +138,7 @@ namespace Blarg.GameFramework.Graphics.ScreenEffects
 			for (var node = _effects.First; node != null; node = node.Next)
 			{
 				if (node.Value.IsLocal)
-					node.Value.Effect.OnRender(delta);
+					node.Value.Effect.OnRender(delta, _spriteBatch);
 			}
 		}
 
@@ -145,7 +150,7 @@ namespace Blarg.GameFramework.Graphics.ScreenEffects
 			for (var node = _effects.First; node != null; node = node.Next)
 			{
 				if (!node.Value.IsLocal)
-					node.Value.Effect.OnRender(delta);
+					node.Value.Effect.OnRender(delta, _spriteBatch);
 			}
 		}
 

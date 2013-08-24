@@ -44,7 +44,7 @@ namespace Blarg.GameFramework.Graphics.ScreenEffects
 		{
 		}
 
-		public virtual void OnRender(float delta)
+		public virtual void OnRender(float delta, SpriteBatch spriteBatch)
 		{
 		}
 
