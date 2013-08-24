@@ -11,6 +11,8 @@ namespace Blarg.GameFramework.Graphics
 		ScreenOrientation _screenOrientation;
 		Camera _camera;
 		bool _isUsingDefaultCamera;
+		IOrthoPixelScaler _pixelScaler;
+		bool _isUsingDefaultPixelScaler;
 
 		Matrix4x4 _modelViewMatrix;
 		Matrix4x4 _projectionMatrix;
@@ -65,6 +67,36 @@ namespace Blarg.GameFramework.Graphics
 			}
 		}
 
+		public IOrthoPixelScaler PixelScaler
+		{
+			get
+			{
+				return _pixelScaler;
+			}
+			set
+			{
+				// using the default scaler but a new scaler is being provided?
+				if (_isUsingDefaultPixelScaler && value != null)
+				{
+					_isUsingDefaultPixelScaler = false;
+					_pixelScaler = value;
+				}
+
+				// not using the default scaler already, but setting a new scaler
+				else if (!_isUsingDefaultPixelScaler && value != null)
+				{
+					_pixelScaler = value;
+				}
+
+				// not using the default scaler, and clearing ("nulling") the scaler
+				else if (!_isUsingDefaultPixelScaler && value == null)
+				{
+					_pixelScaler = new NoScaleOrthoPixelScaler();
+					_isUsingDefaultPixelScaler = true;
+				}
+			}
+		}
+
 		public Matrix4x4 ProjectionMatrix
 		{
 			get
@@ -101,8 +133,11 @@ namespace Blarg.GameFramework.Graphics
 		{
 			get
 			{
+				_pixelScaler.Calculate(_viewport);
+				Rect scaledViewport = _pixelScaler.ScaledViewport;
+
 				Matrix4x4 ortho;
-				Matrix4x4.CreateOrthographic((float)_viewport.Left, (float)_viewport.Right, (float)_viewport.Top, (float)_viewport.Bottom, 0.0f, 1.0f, out ortho);
+				Matrix4x4.CreateOrthographic((float)scaledViewport.Left, (float)scaledViewport.Right, (float)scaledViewport.Top, (float)scaledViewport.Bottom, 0.0f, 1.0f, out ortho);
 
 				if (!IgnoringScreenRotation && _screenOrientation != ScreenOrientation.Rotation0)
 				{
@@ -150,6 +185,8 @@ namespace Blarg.GameFramework.Graphics
 			_screenOrientation = ScreenOrientation.Rotation0;
 			_camera = new Camera(this);
 			_isUsingDefaultCamera = true;
+			_pixelScaler = new NoScaleOrthoPixelScaler();
+			_isUsingDefaultPixelScaler = true;
 		}
 
 		public void OnNewContext()
