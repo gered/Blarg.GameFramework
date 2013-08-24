@@ -4,7 +4,7 @@ using Blarg.GameFramework.Support;
 
 namespace Blarg.GameFramework
 {
-	public class ServiceContainer : IDisposable
+	public class ServiceContainer : IServiceLocator, IDisposable
 	{
 		const string LOG_TAG = "SERVICES";
 
