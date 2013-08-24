@@ -182,6 +182,7 @@
     <Compile Include="IServiceLocator.cs" />
     <Compile Include="BasicGameApp.cs" />
     <Compile Include="Graphics\IOrthoPixelScaler.cs" />
+    <Compile Include="Graphics\NoScaleOrthoPixelScaler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
