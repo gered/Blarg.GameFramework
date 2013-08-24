@@ -135,11 +135,13 @@ namespace Blarg.GameFramework.Graphics.ScreenEffects
 			if (_numLocalEffects == 0)
 				return;
 
+			_spriteBatch.Begin();
 			for (var node = _effects.First; node != null; node = node.Next)
 			{
 				if (node.Value.IsLocal)
 					node.Value.Effect.OnRender(delta, _spriteBatch);
 			}
+			_spriteBatch.End();
 		}
 
 		public void OnRenderGlobal(float delta)
@@ -147,11 +149,13 @@ namespace Blarg.GameFramework.Graphics.ScreenEffects
 			if (_numGlobalEffects == 0)
 				return;
 
+			_spriteBatch.Begin();
 			for (var node = _effects.First; node != null; node = node.Next)
 			{
 				if (!node.Value.IsLocal)
 					node.Value.Effect.OnRender(delta, _spriteBatch);
 			}
+			_spriteBatch.End();
 		}
 
 		public void OnResize()
