@@ -169,6 +169,11 @@
     <Compile Include="Processes\ProcessManager.cs" />
     <Compile Include="Processes\ProcessInfo.cs" />
     <Compile Include="Framework.cs" />
+    <Compile Include="Content\IContentLoaderBase.cs" />
+    <Compile Include="Content\IContentLoader.cs" />
+    <Compile Include="Content\ContentContainer.cs" />
+    <Compile Include="Content\ContentManager.cs" />
+    <Compile Include="Content\DictionaryStoreContentLoader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -189,6 +194,7 @@
     <Folder Include="Graphics\ScreenEffects\" />
     <Folder Include="States\" />
     <Folder Include="Processes\" />
+    <Folder Include="Content\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Vera.ttf" />
