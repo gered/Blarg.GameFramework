@@ -242,6 +242,7 @@ namespace Blarg.GameFramework.Graphics
 					break;
 			}
 		}
+
 		#region GraphicsContextResource
 
 		public override void OnNewContext()
