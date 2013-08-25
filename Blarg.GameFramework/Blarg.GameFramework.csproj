@@ -200,6 +200,7 @@
     <Compile Include="TileMap\Meshes\TileMesh.cs" />
     <Compile Include="TileMap\Meshes\CubeTileMesh.cs" />
     <Compile Include="TileMap\Meshes\TileMeshCollection.cs" />
+    <Compile Include="TileMap\TileContainer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
