@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 
 namespace Blarg.GameFramework
 {
@@ -199,6 +200,24 @@ namespace Blarg.GameFramework
 		}
 
 		/// <summary>
+		/// A fast method for calculating the inverse square root of a nunmber.
+		/// </summary>
+		/// <returns>The inverse square root of the given number.</returns>
+		/// <param name="x">The value to get the inverse square root of.</param>
+		/// <remarks>Copy of the famous method from the Quake 3 source.</remarks>
+		public static float FastInverseSqrt(float x)
+		{
+			FloatIntUnion convert;
+			convert.i = 0;
+			convert.x = x;
+			float xhalf = 0.5f * x;
+			convert.i = 0x5f3759df - (convert.i >> 1);
+			x = convert.x;
+			x = x * (1.5f - xhalf * x * x);
+			return x;
+		}
+
+		/// <summary>
 		/// Checks two floats for equality using a defined "tolerance" to account
 		/// for floating point rounding errors, etc.
 		/// </summary>
@@ -310,6 +329,17 @@ namespace Blarg.GameFramework
 		{
 			float n = Clamp(t, 0.0f, 1.0f);
 			return Lerp(low, high, (n * n) * (3.0f - (2.0f * n)));
+		}
+
+		// this is to allow access to raw float bits
+		[StructLayout(LayoutKind.Explicit)]
+		public struct FloatIntUnion
+		{
+			[FieldOffset(0)]
+			public float x;
+
+			[FieldOffset(0)]
+			public int i;
 		}
 	}
 }
