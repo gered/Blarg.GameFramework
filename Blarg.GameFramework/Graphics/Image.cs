@@ -41,6 +41,11 @@ namespace Blarg.GameFramework.Graphics
 			Create(source, copyX, copyY, copyWidth, copyHeight);
 		}
 
+		public Image(Image source, Rect copyRegion)
+		{
+			Create(source, copyRegion.Left, copyRegion.Top, copyRegion.Width, copyRegion.Height);
+		}
+
 		public Image(Stream file)
 		{
 			if (file == null)
@@ -165,7 +170,36 @@ namespace Blarg.GameFramework.Graphics
 			if (source == null)
 				throw new ArgumentNullException("source");
 
-			Copy(source.Pixels, source.Width, source.Height, source.BitsPerPixel, copyX, copyY, copyWidth, copyHeight, destX, destY);
+			Copy(
+				source.Pixels, 
+				source.Width, 
+				source.Height, 
+				source.BitsPerPixel, 
+				copyX, 
+				copyY, 
+				copyWidth, 
+				copyHeight, 
+				destX, 
+				destY
+				);
+		}
+
+		public void Copy(Image source, Rect copyRegion, int destX, int destY)
+		{
+			if (source == null)
+				throw new ArgumentNullException("source");
+
+			Copy(source.Pixels,
+			     source.Width, 
+			     source.Height, 
+			     source.BitsPerPixel, 
+			     copyRegion.Left, 
+			     copyRegion.Top, 
+			     copyRegion.Width, 
+			     copyRegion.Height, 
+			     destX, 
+			     destY
+			     );
 		}
 
 		public void Copy(byte[] source, int sourceWidth, int sourceHeight, int sourceBpp, int destX, int destY)
@@ -173,7 +207,32 @@ namespace Blarg.GameFramework.Graphics
 			if (source == null)
 				throw new ArgumentNullException("source");
 
-			Copy(source, sourceWidth, sourceHeight, sourceBpp, 0, 0, sourceWidth, sourceHeight, destX, destY);
+			Copy(source, 
+			     sourceWidth, 
+			     sourceHeight, 
+			     sourceBpp, 
+			     0, 
+			     0, 
+			     sourceWidth, 
+			     sourceHeight, 
+			     destX, 
+			     destY
+			     );
+		}
+
+		public void Copy(byte[] source, int sourceWidth, int sourceHeight, int sourceBpp, Rect copyRegion, int destX, int destY)
+		{
+			Copy(source, 
+			     sourceWidth, 
+			     sourceHeight, 
+			     sourceBpp, 
+			     copyRegion.Left, 
+			     copyRegion.Top, 
+			     copyRegion.Width, 
+			     copyRegion.Height, 
+			     destX, 
+			     destY
+			     );
 		}
 
 		public void Copy(byte[] source, int sourceWidth, int sourceHeight, int sourceBpp, int copyX, int copyY, int copyWidth, int copyHeight, int destX, int destY)
