@@ -1,4 +1,5 @@
 using System;
+using Blarg.GameFramework.Graphics.Atlas;
 
 namespace Blarg.GameFramework.Graphics.Helpers
 {
@@ -39,6 +40,36 @@ namespace Blarg.GameFramework.Graphics.Helpers
 
 			debugRenderer.Render(backwardLine, Color.Yellow);
 			spriteBatch.Render(font, backwardPos, Color.Yellow, "BACKWARD (+Z)");
+		}
+
+		public static Vector2 ScaleTexCoord(Vector2 texCoord, TextureRegion tile) {
+			Vector2 result;
+			result.X = ScaleTexCoordU(texCoord.X, tile);
+			result.Y = ScaleTexCoordV(texCoord.Y, tile);
+			return result;
+		}
+
+		public static Vector2 ScaleTexCoord(Vector2 texCoord, float srcMin, float srcMax, TextureRegion tile) {
+			Vector2 result;
+			result.X = ScaleTexCoordU(texCoord.X, srcMin, srcMax, tile);
+			result.Y = ScaleTexCoordV(texCoord.Y, srcMin, srcMax, tile);
+			return result;
+		}
+
+		public static float ScaleTexCoordU(float u, TextureRegion tile) {
+			return MathHelpers.ScaleRange(u, 0.0f, 1.0f, tile.TexCoords.Left, tile.TexCoords.Right);
+		}
+
+		public static float ScaleTexCoordU(float u, float srcMinU, float srcMaxU, TextureRegion tile) {
+			return MathHelpers.ScaleRange(u, srcMinU, srcMaxU, tile.TexCoords.Left, tile.TexCoords.Right);
+		}
+
+		public static float ScaleTexCoordV(float v, TextureRegion tile) {
+			return MathHelpers.ScaleRange(v, 0.0f, 1.0f, tile.TexCoords.Top, tile.TexCoords.Bottom);
+		}
+
+		public static float ScaleTexCoordV(float v, float srcMinV, float srcMaxV, TextureRegion tile) {
+			return MathHelpers.ScaleRange(v, srcMinV, srcMaxV, tile.TexCoords.Top, tile.TexCoords.Bottom);
 		}
 	}
 }
