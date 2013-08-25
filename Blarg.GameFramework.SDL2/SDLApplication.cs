@@ -34,7 +34,6 @@ namespace Blarg.GameFramework
 		int _targetUpdatesPerSecond;
 		int _ticksPerUpdate;
 		float _fixedUpdateInterval;
-		float _fixedRenderInterval;
 		int _maxFrameSkip = 10;
 
 		#endregion
