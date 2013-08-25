@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using Blarg.GameFramework.Graphics.Atlas;
 
 namespace Blarg.GameFramework.Graphics
 {

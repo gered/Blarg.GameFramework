@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Blarg.GameFramework.Graphics
+namespace Blarg.GameFramework.Graphics.Atlas
 {
 	public abstract class TextureAtlas
 	{

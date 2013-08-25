@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using TrueTypeSharp;
+using Blarg.GameFramework.Graphics.Atlas;
 
 namespace Blarg.GameFramework.Graphics
 {

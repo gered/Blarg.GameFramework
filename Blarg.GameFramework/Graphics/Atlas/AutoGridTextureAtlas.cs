@@ -1,6 +1,6 @@
 using System;
 
-namespace Blarg.GameFramework.Graphics
+namespace Blarg.GameFramework.Graphics.Atlas
 {
 	public class AutoGridTextureAtlas : TextureAtlas
 	{
