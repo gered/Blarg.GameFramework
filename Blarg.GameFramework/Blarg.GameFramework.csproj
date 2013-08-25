@@ -184,6 +184,8 @@
     <Compile Include="Graphics\Atlas\TextureAtlas.cs" />
     <Compile Include="Graphics\Atlas\CustomTextureAtlas.cs" />
     <Compile Include="Graphics\Atlas\AutoGridTextureAtlas.cs" />
+    <Compile Include="Graphics\Atlas\TextureAtlasAnimator.cs" />
+    <Compile Include="Graphics\Atlas\TextureAtlasTileAnimation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
