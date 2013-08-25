@@ -10,6 +10,12 @@ namespace Blarg.GameFramework
 		public int Y;
 
 		public static readonly Point2 Zero = new Point2(0, 0);
+		public static readonly Point2 XAxis = new Point2(1, 0);
+		public static readonly Point2 YAxis = new Point2(0, 1);
+		public static readonly Point2 Up = new Point2(0, 1);
+		public static readonly Point2 Down = new Point2(0, -1);
+		public static readonly Point2 Left = new Point2(-1, 0);
+		public static readonly Point2 Right = new Point2(1, 0);
 
 		public Point2(int x, int y)
 		{

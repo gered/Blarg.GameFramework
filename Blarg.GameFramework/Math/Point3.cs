@@ -11,6 +11,15 @@ namespace Blarg.GameFramework
 		public int Z;
 
 		public static readonly Point3 Zero = new Point3(0, 0, 0);
+		public static readonly Point3 XAxis = new Point3(1, 0, 0);
+		public static readonly Point3 YAxis = new Point3(0, 1, 0);
+		public static readonly Point3 ZAxis = new Point3(0, 0, 1);
+		public static readonly Point3 Up = new Point3(0, 1, 0);
+		public static readonly Point3 Down = new Point3(0, -1, 0);
+		public static readonly Point3 Forward = new Point3(0, 0, -1);
+		public static readonly Point3 Backward = new Point3(0, 0, 1);
+		public static readonly Point3 Left = new Point3(-1, 0, 0);
+		public static readonly Point3 Right = new Point3(1, 0, 0);
 
 		public Point3(int x, int y, int z)
 		{
