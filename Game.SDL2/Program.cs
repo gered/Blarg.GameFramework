@@ -9,6 +9,7 @@ namespace Game.SDL2
 		{
 			var config = new SDLConfiguration();
 			config.Title = "Test Game";
+			config.Resizeable = true;
 
 			var app = new SDLApplication();
 			app.Run(new GameApp(), config);
