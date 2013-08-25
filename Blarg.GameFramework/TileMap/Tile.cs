@@ -251,6 +251,21 @@ namespace Blarg.GameFramework.TileMap
 					return false;
 			}
 		}
+
+		public static Matrix4x4? GetTransformationFor(Tile tile)
+		{
+			if (!tile.IsRotated)
+				return null;
+
+			switch (tile.Rotation)
+			{
+				case 0: return FaceNorthRotation;
+				case 1: return FaceEastRotation;
+				case 2: return FaceSouthRotation;
+				case 3: return FaceWestRotation;
+				default: return null;
+			}	
+		}
 	}
 }
 

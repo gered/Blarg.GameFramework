@@ -58,8 +58,7 @@ namespace Blarg.GameFramework.TileMap
 						position.Y = y + (int)chunk.Position.Y;
 						position.Z = z + (int)chunk.Position.Z;
 
-						Matrix4x4 transform = Matrix4x4.Identity;
-						Tile.GetTransformationFor(tile, ref transform);
+						Matrix4x4? transform = Tile.GetTransformationFor(tile);
 
 						// tile color
 						Color color;
