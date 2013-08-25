@@ -76,6 +76,19 @@ namespace Blarg.GameFramework.Graphics.Atlas
 			_animations.Add(name, sequence);
 		}
 
+		public void RemoveSequence(string name)
+		{
+			if (String.IsNullOrEmpty(name))
+				throw new ArgumentException("name");
+
+			var sequence = _animations.Get(name);
+			if (sequence == null)
+				throw new InvalidOperationException("Sequence not found.");
+
+			RestoreTextureWithOriginalTile(sequence);
+			_animations.Remove(name);
+		}
+
 		public void ResetSequence(string name)
 		{
 			if (String.IsNullOrEmpty(name))
