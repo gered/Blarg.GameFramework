@@ -9,8 +9,14 @@ namespace Blarg.GameFramework
 		public Vector3 Center;
 		public float Radius;
 
+		public BoundingSphere(BoundingSphere other)
+		{
+			Center = other.Center;
+			Radius = other.Radius;
+		}
+
 		public BoundingSphere(Vector3 center, float radius)
-		: this(ref center, radius)
+			: this(ref center, radius)
 		{
 		}
 

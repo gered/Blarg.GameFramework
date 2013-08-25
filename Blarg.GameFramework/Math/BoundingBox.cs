@@ -24,8 +24,14 @@ namespace Blarg.GameFramework
 			get { return Math.Abs(Max.Z - Min.Z); }
 		}
 
+		public BoundingBox(BoundingBox other)
+		{
+			Min = other.Min;
+			Max = other.Max;
+		}
+
 		public BoundingBox(Vector3 min, Vector3 max)
-		: this(ref min, ref max)
+			: this(ref min, ref max)
 		{
 		}
 
@@ -46,7 +52,7 @@ namespace Blarg.GameFramework
 		}
 
 		public BoundingBox(Vector3 center, float halfWidth)
-		: this(ref center, halfWidth)
+			: this(ref center, halfWidth)
 		{
 		}
 
