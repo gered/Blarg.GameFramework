@@ -45,10 +45,10 @@ namespace Blarg.GameFramework.Content.Types
 
 				var image = LoadImage(file);
 				if (image == null)
-					throw new Exception("Failed to load image when reloading texture.");
+					throw new ContentManagementException("Failed to load image when reloading texture.");
 
 				if (texture.Width != image.Width || texture.Height != image.Height)
-					throw new Exception("Image dimensions have changed since original texture creation.");
+					throw new ContentManagementException("Image dimensions have changed since original texture creation.");
 
 				texture.Update(image, 0, 0);
 			}

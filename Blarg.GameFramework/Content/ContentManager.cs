@@ -32,7 +32,7 @@ namespace Blarg.GameFramework.Content
 		{
 			var loader = GetLoader<T>();
 			if (loader == null)
-				throw new InvalidOperationException("No registered loader for this content type.");
+				throw new ContentManagementException("No registered loader for this content type.");
 			else
 				return loader.Get(name, null);
 
@@ -42,7 +42,7 @@ namespace Blarg.GameFramework.Content
 		{
 			var loader = GetLoader<T>();
 			if (loader == null)
-				throw new InvalidOperationException("No registered loader for this content type.");
+				throw new ContentManagementException("No registered loader for this content type.");
 			else
 				return loader.Get(name, contentParameters);
 		}
@@ -51,7 +51,7 @@ namespace Blarg.GameFramework.Content
 		{
 			var loader = GetLoader<T>();
 			if (loader == null)
-				throw new InvalidOperationException("No registered loader for this content type.");
+				throw new ContentManagementException("No registered loader for this content type.");
 			else
 				return loader.Pin(name, null);
 		}
@@ -60,7 +60,7 @@ namespace Blarg.GameFramework.Content
 		{
 			var loader = GetLoader<T>();
 			if (loader == null)
-				throw new InvalidOperationException("No registered loader for this content type.");
+				throw new ContentManagementException("No registered loader for this content type.");
 			else
 				return loader.Pin(name, contentParameters);
 		}
@@ -75,7 +75,7 @@ namespace Blarg.GameFramework.Content
 		{
 			var loader = GetLoader<T>();
 			if (loader == null)
-				throw new InvalidOperationException("No registered loader for this content type.");
+				throw new ContentManagementException("No registered loader for this content type.");
 			else
 				loader.RemoveAll(removePinnedContent);
 		}
@@ -87,7 +87,7 @@ namespace Blarg.GameFramework.Content
 
 			var loader = GetLoader<T>();
 			if (loader == null)
-				throw new InvalidOperationException("No registered loader for this content type.");
+				throw new ContentManagementException("No registered loader for this content type.");
 			else
 				return loader.GetNameOf(content);
 		}

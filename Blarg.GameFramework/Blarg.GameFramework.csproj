@@ -194,6 +194,7 @@
     <Compile Include="Graphics\Atlas\TextureAtlasLoader.cs" />
     <Compile Include="ServiceLocatorException.cs" />
     <Compile Include="ConfigFileException.cs" />
+    <Compile Include="Content\ContentManagementException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

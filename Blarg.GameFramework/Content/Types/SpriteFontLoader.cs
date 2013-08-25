@@ -48,7 +48,7 @@ namespace Blarg.GameFramework.Content.Types
 				using (var stream = Framework.FileSystem.Open(fontFilename))
 				{
 					if (stream == null)
-						throw new Exception("Failed to load font file when reloading sprite font.");
+						throw new ContentManagementException("Failed to load font file when reloading sprite font.");
 
 					SpriteFontTrueTypeLoader.Load(Framework.GraphicsDevice, stream, size, font);
 				}
@@ -76,7 +76,7 @@ namespace Blarg.GameFramework.Content.Types
 
 			int startOfSize = filename.LastIndexOf(':');
 			if (startOfSize == -1)
-				throw new InvalidOperationException("Font filename does not contain any size information.");
+				throw new ContentManagementException("Font filename does not contain any size information.");
 
 			fontFilename = filename.Substring(0, startOfSize);
 			size = Convert.ToInt32(filename.Substring(startOfSize + 1));
