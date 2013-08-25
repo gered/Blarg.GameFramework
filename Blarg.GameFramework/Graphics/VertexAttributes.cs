@@ -77,5 +77,13 @@ namespace Blarg.GameFramework.Graphics
 			VertexAttributes.Color,
 			VertexAttributes.Position3D
 		};
+
+		public static readonly VertexAttributes[] TextureColorNormalPosition3D = new VertexAttributes[]
+		{
+			VertexAttributes.TexCoord,
+			VertexAttributes.Color,
+			VertexAttributes.Normal,
+			VertexAttributes.Position3D
+		};
 	}
 }
