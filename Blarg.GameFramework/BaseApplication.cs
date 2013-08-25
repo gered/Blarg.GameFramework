@@ -107,17 +107,17 @@ namespace Blarg.GameFramework
 		protected void OnUnload()
 		{
 			Logger.Info(LOG_TAG, "OnUnload");
+			GameApp.OnUnload();
 			if (GraphicsDevice != null)
 				GraphicsDevice.OnUnload();
-			GameApp.OnUnload();
 		}
 
 		protected void OnLostContext()
 		{
 			Logger.Info(LOG_TAG, "OnLostContext");
+			GameApp.OnLostContext();
 			if (GraphicsDevice != null)
 				GraphicsDevice.OnLostContext();
-			GameApp.OnLostContext();
 		}
 
 		protected void OnNewContext()
