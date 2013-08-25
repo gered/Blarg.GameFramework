@@ -24,13 +24,12 @@ namespace Blarg.GameFramework.Graphics.Atlas
 				throw new ArgumentNullException("file");
 
 			var reader = new StreamReader(file);
-
 			var definition = JsonConvert.DeserializeObject<JsonTextureAtlasDefinition>(reader.ReadToEnd());
 
 			if (definition.Texture == null)
-				throw new Exception("No texture file specified.");
+				throw new ConfigFileException("No texture file specified.");
 			if (definition.Tiles == null || definition.Tiles.Count == 0)
-				throw new Exception("No tiles defined.");
+				throw new ConfigFileException("No tiles defined.");
 
 			var contentManager = Framework.Services.Get<ContentManager>();
 			if (contentManager == null)
