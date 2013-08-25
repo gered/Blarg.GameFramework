@@ -14,7 +14,7 @@ namespace Blarg.GameFramework.Graphics.Atlas
 		{
 			_contentManager = Framework.Services.Get<ContentManager>();
 			if (_contentManager == null)
-				throw new InvalidOperationException("Could not find ContentManager object.");
+				throw new ServiceLocatorException("Could not find a ContentManager object.");
 
 			_animations = new Dictionary<string, TextureAtlasTileAnimation>();
 		}

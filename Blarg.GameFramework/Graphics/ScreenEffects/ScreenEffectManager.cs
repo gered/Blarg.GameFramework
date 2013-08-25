@@ -18,7 +18,7 @@ namespace Blarg.GameFramework.Graphics.ScreenEffects
 
 			_spriteBatch = Framework.Services.Get<SpriteBatch>();
 			if (_spriteBatch == null)
-				throw new InvalidOperationException("No SpriteBatch object registered with the service locator.");
+				throw new ServiceLocatorException("Could not find a SpriteBatch object.");
 		}
 
 		#region Get / Add / Remove

@@ -34,7 +34,7 @@ namespace Blarg.GameFramework.Graphics.Atlas
 
 			var contentManager = Framework.Services.Get<ContentManager>();
 			if (contentManager == null)
-				throw new InvalidOperationException("Cannot find a ContentManager object.");
+				throw new ServiceLocatorException("Could not find a ContentManager object.");
 
 			string textureFile = definition.Texture;
 			if (!String.IsNullOrEmpty(texturePath))
