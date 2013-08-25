@@ -107,7 +107,7 @@ namespace Blarg.GameFramework.TileMap.Meshes
 
 			SetupFaceVertices(numVertices, topTexture, bottomTexture, frontTexture, backTexture, leftTexture, rightTexture);
 			SetupCollisionVertices();
-			_bounds = new BoundingBox(UNIT_BOUNDS);
+			_bounds = UNIT_BOUNDS;
 		}
 
 		public bool HasFace(byte side)
