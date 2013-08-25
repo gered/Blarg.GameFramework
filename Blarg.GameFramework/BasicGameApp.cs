@@ -80,6 +80,7 @@ namespace Blarg.GameFramework
 		public virtual void OnUnload()
 		{
 			Framework.Logger.Info(LOG_TAG, "OnUnload");
+			StateManager.OnUnload();
 			ContentManager.OnUnload();
 		}
 
