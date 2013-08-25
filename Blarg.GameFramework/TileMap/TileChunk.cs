@@ -101,6 +101,7 @@ namespace Blarg.GameFramework.TileMap
 			_height = height;
 			_depth = depth;
 			_position = new Vector3(x, y, z);
+			_bounds = new BoundingBox();
 			_bounds.Min.Set(x, y, z);
 			_bounds.Max.Set(x + width, y + height, z + depth);
 
@@ -158,6 +159,10 @@ namespace Blarg.GameFramework.TileMap
 
 		public void Dispose()
 		{
+			if (Mesh != null)
+				Mesh.Dispose();
+			if (AlphaMesh != null)
+				AlphaMesh.Dispose();
 		}
 	}
 }

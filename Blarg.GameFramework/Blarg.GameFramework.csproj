@@ -204,6 +204,7 @@
     <Compile Include="TileMap\TileMap.cs" />
     <Compile Include="TileMap\TileChunk.cs" />
     <Compile Include="TileMap\ChunkVertexGenerator.cs" />
+    <Compile Include="TileMap\Lighting\ITileMapLighter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -230,6 +231,7 @@
     <Folder Include="Graphics\Atlas\" />
     <Folder Include="TileMap\" />
     <Folder Include="TileMap\Meshes\" />
+    <Folder Include="TileMap\Lighting\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Vera.ttf" />
