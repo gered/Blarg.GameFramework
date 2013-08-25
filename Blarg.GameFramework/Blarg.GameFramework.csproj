@@ -195,6 +195,7 @@
     <Compile Include="ServiceLocatorException.cs" />
     <Compile Include="ConfigFileException.cs" />
     <Compile Include="Content\ContentManagementException.cs" />
+    <Compile Include="TileMap\Tile.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -219,6 +220,7 @@
     <Folder Include="Content\Types\" />
     <Folder Include="UI\" />
     <Folder Include="Graphics\Atlas\" />
+    <Folder Include="TileMap\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Vera.ttf" />

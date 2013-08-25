@@ -303,6 +303,33 @@ namespace Blarg.GameFramework
 		}
 
 		/// <summary>
+		/// Clamps a value to a given range, but if the value is outside the range
+		/// instead of returning the low/high end of the range, this will continue
+		/// counting after moving to the opposite end of the range to arrive at a
+		/// final value.
+		/// </summary>
+		/// <returns>the clamped value</returns>
+		/// <param name="value">the value to be clamped</param>
+		/// <param name="low">the low end of the range to clamp to</param>
+		/// <param name="high">the high end of the range to clamp to</param>
+		public static int RolloverClamp(int value, int low, int high)
+		{
+			int temp = value;
+			// TODO: this is really shitty... make it better
+			do
+			{
+				int range = Math.Abs(high - low);
+				if (temp < low)
+					temp = temp + range;
+				if (value > high)
+					temp = temp - range;
+			}
+			while (temp < low || temp > high); // loop through as many times as necessary to put the value within the low/high range
+
+			return temp;
+		}
+
+		/// <summary>
 		/// Re-scales a given value from an old min/max range to a new and
 		/// different min/max range such that the value is approximately
 		/// at the same distance between both min and max values.
