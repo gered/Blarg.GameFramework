@@ -35,12 +35,12 @@ namespace Blarg.GameFramework.TileMap.Meshes
 		}
 
 		public CubeTileMesh(
-			TextureRegion topTexture,
-			TextureRegion bottomTexture,
-			TextureRegion frontTexture,
-			TextureRegion backTexture,
-			TextureRegion leftTexture,
-			TextureRegion rightTexture,
+			TextureRegion? topTexture,
+			TextureRegion? bottomTexture,
+			TextureRegion? frontTexture,
+			TextureRegion? backTexture,
+			TextureRegion? leftTexture,
+			TextureRegion? rightTexture,
 			byte faces,
 			byte opaqueSides,
 			byte lightValue,
@@ -105,7 +105,13 @@ namespace Blarg.GameFramework.TileMap.Meshes
 			else
 				RightFaceVertexOffset = 0;
 
-			SetupFaceVertices(numVertices, topTexture, bottomTexture, frontTexture, backTexture, leftTexture, rightTexture);
+			SetupFaceVertices(numVertices, 
+			                  topTexture, 
+			                  bottomTexture, 
+			                  frontTexture, 
+			                  backTexture, 
+			                  leftTexture, 
+			                  rightTexture);
 			SetupCollisionVertices();
 			_bounds = UNIT_BOUNDS;
 		}
@@ -117,12 +123,12 @@ namespace Blarg.GameFramework.TileMap.Meshes
 
 		private void SetupFaceVertices(
 			int numVertices,
-			TextureRegion topTexture,
-			TextureRegion bottomTexture,
-			TextureRegion frontTexture,
-			TextureRegion backTexture,
-			TextureRegion leftTexture,
-			TextureRegion rightTexture
+			TextureRegion? topTexture,
+			TextureRegion? bottomTexture,
+			TextureRegion? frontTexture,
+			TextureRegion? backTexture,
+			TextureRegion? leftTexture,
+			TextureRegion? rightTexture
 			)
 		{
 			int pos = 0;
@@ -138,32 +144,32 @@ namespace Blarg.GameFramework.TileMap.Meshes
 				_vertices.SetPosition3D(pos, a.X, b.Y, b.Z);
 				_vertices.SetColor(pos, Color);
 				_vertices.SetNormal(pos, Vector3.Up);
-				_vertices.SetTexCoord(pos, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 1.0f), topTexture));
+				_vertices.SetTexCoord(pos, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 1.0f), topTexture.Value));
 
 				_vertices.SetPosition3D(pos + 1, b.X, b.Y, b.Z);
 				_vertices.SetColor(pos + 1, Color);
 				_vertices.SetNormal(pos + 1, Vector3.Up);
-				_vertices.SetTexCoord(pos + 1, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), topTexture));
+				_vertices.SetTexCoord(pos + 1, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), topTexture.Value));
 
 				_vertices.SetPosition3D(pos + 2, a.X, b.Y, a.Z);
 				_vertices.SetColor(pos + 2, Color);
 				_vertices.SetNormal(pos + 2, Vector3.Up);
-				_vertices.SetTexCoord(pos + 2, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), topTexture));
+				_vertices.SetTexCoord(pos + 2, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), topTexture.Value));
 
 				_vertices.SetPosition3D(pos + 3, b.X, b.Y, b.Z);
 				_vertices.SetColor(pos + 3, Color);
 				_vertices.SetNormal(pos + 3, Vector3.Up);
-				_vertices.SetTexCoord(pos + 3, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), topTexture));
+				_vertices.SetTexCoord(pos + 3, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), topTexture.Value));
 
 				_vertices.SetPosition3D(pos + 4, b.X, b.Y, a.Z);
 				_vertices.SetColor(pos + 4, Color);
 				_vertices.SetNormal(pos + 4, Vector3.Up);
-				_vertices.SetTexCoord(pos + 4, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 0.0f), topTexture));
+				_vertices.SetTexCoord(pos + 4, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 0.0f), topTexture.Value));
 
 				_vertices.SetPosition3D(pos + 5, a.X, b.Y, a.Z);
 				_vertices.SetColor(pos + 5, Color);
 				_vertices.SetNormal(pos + 5, Vector3.Up);
-				_vertices.SetTexCoord(pos + 5, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), topTexture));
+				_vertices.SetTexCoord(pos + 5, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), topTexture.Value));
 			}
 
 			if (HasFace(SIDE_BOTTOM))
@@ -173,32 +179,32 @@ namespace Blarg.GameFramework.TileMap.Meshes
 				_vertices.SetPosition3D(pos, b.X, a.Y, b.Z);
 				_vertices.SetColor(pos, Color);
 				_vertices.SetNormal(pos, Vector3.Down);
-				_vertices.SetTexCoord(pos, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 1.0f), bottomTexture));
+				_vertices.SetTexCoord(pos, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 1.0f), bottomTexture.Value));
 
 				_vertices.SetPosition3D(pos + 1, a.X, a.Y, b.Z);
 				_vertices.SetColor(pos + 1, Color);
 				_vertices.SetNormal(pos + 1, Vector3.Down);
-				_vertices.SetTexCoord(pos + 1, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), bottomTexture));
+				_vertices.SetTexCoord(pos + 1, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), bottomTexture.Value));
 
 				_vertices.SetPosition3D(pos + 2, b.X, a.Y, a.Z);
 				_vertices.SetColor(pos + 2, Color);
 				_vertices.SetNormal(pos + 2, Vector3.Down);
-				_vertices.SetTexCoord(pos + 2, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), bottomTexture));
+				_vertices.SetTexCoord(pos + 2, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), bottomTexture.Value));
 
 				_vertices.SetPosition3D(pos + 3, a.X, a.Y, b.Z);
 				_vertices.SetColor(pos + 3, Color);
 				_vertices.SetNormal(pos + 3, Vector3.Down);
-				_vertices.SetTexCoord(pos + 3, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), bottomTexture));
+				_vertices.SetTexCoord(pos + 3, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), bottomTexture.Value));
 
 				_vertices.SetPosition3D(pos + 4, a.X, a.Y, a.Z);
 				_vertices.SetColor(pos + 4, Color);
 				_vertices.SetNormal(pos + 4, Vector3.Down);
-				_vertices.SetTexCoord(pos + 4, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 0.0f), bottomTexture));
+				_vertices.SetTexCoord(pos + 4, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 0.0f), bottomTexture.Value));
 
 				_vertices.SetPosition3D(pos + 5, b.X, a.Y, a.Z);
 				_vertices.SetColor(pos + 5, Color);
 				_vertices.SetNormal(pos + 5, Vector3.Down);
-				_vertices.SetTexCoord(pos + 5, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), bottomTexture));
+				_vertices.SetTexCoord(pos + 5, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), bottomTexture.Value));
 			}
 
 			if (HasFace(SIDE_FRONT))
@@ -208,32 +214,32 @@ namespace Blarg.GameFramework.TileMap.Meshes
 				_vertices.SetPosition3D(pos, b.X, a.Y, a.Z);
 				_vertices.SetColor(pos, Color);
 				_vertices.SetNormal(pos, Vector3.Forward);
-				_vertices.SetTexCoord(pos, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 1.0f), frontTexture));
+				_vertices.SetTexCoord(pos, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 1.0f), frontTexture.Value));
 
 				_vertices.SetPosition3D(pos + 1, a.X, a.Y, a.Z);
 				_vertices.SetColor(pos + 1, Color);
 				_vertices.SetNormal(pos + 1, Vector3.Forward);
-				_vertices.SetTexCoord(pos + 1, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), frontTexture));
+				_vertices.SetTexCoord(pos + 1, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), frontTexture.Value));
 
 				_vertices.SetPosition3D(pos + 2, b.X, b.Y, a.Z);
 				_vertices.SetColor(pos + 2, Color);
 				_vertices.SetNormal(pos + 2, Vector3.Forward);
-				_vertices.SetTexCoord(pos + 2, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), frontTexture));
+				_vertices.SetTexCoord(pos + 2, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), frontTexture.Value));
 
 				_vertices.SetPosition3D(pos + 3, a.X, a.Y, a.Z);
 				_vertices.SetColor(pos + 3, Color);
 				_vertices.SetNormal(pos + 3, Vector3.Forward);
-				_vertices.SetTexCoord(pos + 3, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), frontTexture));
+				_vertices.SetTexCoord(pos + 3, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), frontTexture.Value));
 
 				_vertices.SetPosition3D(pos + 4, a.X, b.Y, a.Z);
 				_vertices.SetColor(pos + 4, Color);
 				_vertices.SetNormal(pos + 4, Vector3.Forward);
-				_vertices.SetTexCoord(pos + 4, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 0.0f), frontTexture));
+				_vertices.SetTexCoord(pos + 4, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 0.0f), frontTexture.Value));
 
 				_vertices.SetPosition3D(pos + 5, b.X, b.Y, a.Z);
 				_vertices.SetColor(pos + 5, Color);
 				_vertices.SetNormal(pos + 5, Vector3.Forward);
-				_vertices.SetTexCoord(pos + 5, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), frontTexture));
+				_vertices.SetTexCoord(pos + 5, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), frontTexture.Value));
 			}
 
 			if (HasFace(SIDE_BACK))
@@ -243,32 +249,32 @@ namespace Blarg.GameFramework.TileMap.Meshes
 				_vertices.SetPosition3D(pos, a.X, a.Y, b.Z);
 				_vertices.SetColor(pos, Color);
 				_vertices.SetNormal(pos, Vector3.Backward);
-				_vertices.SetTexCoord(pos, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 1.0f), backTexture));
+				_vertices.SetTexCoord(pos, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 1.0f), backTexture.Value));
 
 				_vertices.SetPosition3D(pos + 1, b.X, a.Y, b.Z);
 				_vertices.SetColor(pos + 1, Color);
 				_vertices.SetNormal(pos + 1, Vector3.Backward);
-				_vertices.SetTexCoord(pos + 1, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), backTexture));
+				_vertices.SetTexCoord(pos + 1, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), backTexture.Value));
 
 				_vertices.SetPosition3D(pos + 2, a.X, b.Y, b.Z);
 				_vertices.SetColor(pos + 2, Color);
 				_vertices.SetNormal(pos + 2, Vector3.Backward);
-				_vertices.SetTexCoord(pos + 2, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), backTexture));
+				_vertices.SetTexCoord(pos + 2, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), backTexture.Value));
 
 				_vertices.SetPosition3D(pos + 3, b.X, a.Y, b.Z);
 				_vertices.SetColor(pos + 3, Color);
 				_vertices.SetNormal(pos + 3, Vector3.Backward);
-				_vertices.SetTexCoord(pos + 3, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), backTexture));
+				_vertices.SetTexCoord(pos + 3, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), backTexture.Value));
 
 				_vertices.SetPosition3D(pos + 4, b.X, b.Y, b.Z);
 				_vertices.SetColor(pos + 4, Color);
 				_vertices.SetNormal(pos + 4, Vector3.Backward);
-				_vertices.SetTexCoord(pos + 4, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 0.0f), backTexture));
+				_vertices.SetTexCoord(pos + 4, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 0.0f), backTexture.Value));
 
 				_vertices.SetPosition3D(pos + 5, a.X, b.Y, b.Z);
 				_vertices.SetColor(pos + 5, Color);
 				_vertices.SetNormal(pos + 5, Vector3.Backward);
-				_vertices.SetTexCoord(pos + 5, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), backTexture));
+				_vertices.SetTexCoord(pos + 5, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), backTexture.Value));
 			}
 
 			if (HasFace(SIDE_LEFT))
@@ -278,32 +284,32 @@ namespace Blarg.GameFramework.TileMap.Meshes
 				_vertices.SetPosition3D(pos, a.X, a.Y, a.Z);
 				_vertices.SetColor(pos, Color);
 				_vertices.SetNormal(pos, Vector3.Left);
-				_vertices.SetTexCoord(pos, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 1.0f), leftTexture));
+				_vertices.SetTexCoord(pos, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 1.0f), leftTexture.Value));
 
 				_vertices.SetPosition3D(pos + 1, a.X, a.Y, b.Z);
 				_vertices.SetColor(pos + 1, Color);
 				_vertices.SetNormal(pos + 1, Vector3.Left);
-				_vertices.SetTexCoord(pos + 1, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), leftTexture));
+				_vertices.SetTexCoord(pos + 1, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), leftTexture.Value));
 
 				_vertices.SetPosition3D(pos + 2, a.X, b.Y, a.Z);
 				_vertices.SetColor(pos + 2, Color);
 				_vertices.SetNormal(pos + 2, Vector3.Left);
-				_vertices.SetTexCoord(pos + 2, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), leftTexture));
+				_vertices.SetTexCoord(pos + 2, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), leftTexture.Value));
 
 				_vertices.SetPosition3D(pos + 3, a.X, a.Y, b.Z);
 				_vertices.SetColor(pos + 3, Color);
 				_vertices.SetNormal(pos + 3, Vector3.Left);
-				_vertices.SetTexCoord(pos + 3, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), leftTexture));
+				_vertices.SetTexCoord(pos + 3, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), leftTexture.Value));
 
 				_vertices.SetPosition3D(pos + 4, a.X, b.Y, b.Z);
 				_vertices.SetColor(pos + 4, Color);
 				_vertices.SetNormal(pos + 4, Vector3.Left);
-				_vertices.SetTexCoord(pos + 4, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 0.0f), leftTexture));
+				_vertices.SetTexCoord(pos + 4, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 0.0f), leftTexture.Value));
 
 				_vertices.SetPosition3D(pos + 5, a.X, b.Y, a.Z);
 				_vertices.SetColor(pos + 5, Color);
 				_vertices.SetNormal(pos + 5, Vector3.Left);
-				_vertices.SetTexCoord(pos + 5, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), leftTexture));
+				_vertices.SetTexCoord(pos + 5, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), leftTexture.Value));
 			}
 
 			if (HasFace(SIDE_RIGHT))
@@ -313,32 +319,32 @@ namespace Blarg.GameFramework.TileMap.Meshes
 				_vertices.SetPosition3D(pos, b.X, a.Y, b.Z);
 				_vertices.SetColor(pos, Color);
 				_vertices.SetNormal(pos, Vector3.Right);
-				_vertices.SetTexCoord(pos, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 1.0f), rightTexture));
+				_vertices.SetTexCoord(pos, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 1.0f), rightTexture.Value));
 
 				_vertices.SetPosition3D(pos + 1, b.X, a.Y, a.Z);
 				_vertices.SetColor(pos + 1, Color);
 				_vertices.SetNormal(pos + 1, Vector3.Right);
-				_vertices.SetTexCoord(pos + 1, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), rightTexture));
+				_vertices.SetTexCoord(pos + 1, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), rightTexture.Value));
 
 				_vertices.SetPosition3D(pos + 2, b.X, b.Y, b.Z);
 				_vertices.SetColor(pos + 2, Color);
 				_vertices.SetNormal(pos + 2, Vector3.Right);
-				_vertices.SetTexCoord(pos + 2, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), rightTexture));
+				_vertices.SetTexCoord(pos + 2, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), rightTexture.Value));
 
 				_vertices.SetPosition3D(pos + 3, b.X, a.Y, a.Z);
 				_vertices.SetColor(pos + 3, Color);
 				_vertices.SetNormal(pos + 3, Vector3.Right);
-				_vertices.SetTexCoord(pos + 3, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), rightTexture));
+				_vertices.SetTexCoord(pos + 3, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 1.0f), rightTexture.Value));
 
 				_vertices.SetPosition3D(pos + 4, b.X, b.Y, a.Z);
 				_vertices.SetColor(pos + 4, Color);
 				_vertices.SetNormal(pos + 4, Vector3.Right);
-				_vertices.SetTexCoord(pos + 4, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 0.0f), rightTexture));
+				_vertices.SetTexCoord(pos + 4, GraphicsHelpers.ScaleTexCoord(new Vector2(1.0f, 0.0f), rightTexture.Value));
 
 				_vertices.SetPosition3D(pos + 5, b.X, b.Y, b.Z);
 				_vertices.SetColor(pos + 5, Color);
 				_vertices.SetNormal(pos + 5, Vector3.Right);
-				_vertices.SetTexCoord(pos + 5, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), rightTexture));
+				_vertices.SetTexCoord(pos + 5, GraphicsHelpers.ScaleTexCoord(new Vector2(0.0f, 0.0f), rightTexture.Value));
 			}
 
 		}
