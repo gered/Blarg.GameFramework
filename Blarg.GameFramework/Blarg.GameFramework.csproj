@@ -197,6 +197,7 @@
     <Compile Include="Content\ContentManagementException.cs" />
     <Compile Include="TileMap\Tile.cs" />
     <Compile Include="TileMap\TileRawDataContainer.cs" />
+    <Compile Include="TileMap\Meshes\TileMesh.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -222,6 +223,7 @@
     <Folder Include="UI\" />
     <Folder Include="Graphics\Atlas\" />
     <Folder Include="TileMap\" />
+    <Folder Include="TileMap\Meshes\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Vera.ttf" />
