@@ -315,8 +315,9 @@ namespace Blarg.GameFramework
 					Logger.Warn(LOG_TAG, "\tMore information could not be obtained.");
 			}
 
-			_filesystem = new SDLFileSystem();
+			_filesystem = new SDLFileSystem(Logger);
 			Logger.Info(LOG_TAG, "Filesystem access initialized.");
+			Logger.Info(LOG_TAG, "Using assets path: {0}", _filesystem.AssetsPath);
 
 			int numVideoDrivers = SDL.SDL_GetNumVideoDrivers();
 			Logger.Info(LOG_TAG, "Video drivers present: {0}.", numVideoDrivers);
