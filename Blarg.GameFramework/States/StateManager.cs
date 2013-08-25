@@ -211,6 +211,11 @@ namespace Blarg.GameFramework.States
 			}
 		}
 
+		public void OnUnload()
+		{
+			UnloadAllStates();
+		}
+
 		#endregion
 
 		#region Push / Pop / Overlay / Swap / Queue
@@ -613,6 +618,43 @@ namespace Blarg.GameFramework.States
 				stateInfo.State.ProcessManager.OnPause(false);
 		}
 
+		private void UnloadAllStates()
+		{
+			Framework.Logger.Info(LOG_TAG, "Forcefully popping all states.");
+
+			while (_states.Count > 0)
+			{
+				var stateInfo = _states.Last.Value;
+				Framework.Logger.Info(LOG_TAG, "Forcefully popping state {0}.", stateInfo.Descriptor);
+				stateInfo.State.OnPop();
+				stateInfo.State.Dispose();
+				_states.RemoveLast();
+			}
+
+			while (_pushQueue.Count > 0)
+			{
+				var stateInfo = _pushQueue.Dequeue();
+				Framework.Logger.Info(LOG_TAG, "Forcefully deleting push-queued state {0}.", stateInfo.Descriptor);
+				stateInfo.State.Dispose();
+			}
+
+			while (_swapQueue.Count > 0)
+			{
+				var stateInfo = _swapQueue.Dequeue();
+				Framework.Logger.Info(LOG_TAG, "Forcefully deleting swap-queued state {0}.", stateInfo.Descriptor);
+				stateInfo.State.Dispose();
+			}
+
+			_states.Clear();
+			_pushQueue.Clear();
+			_swapQueue.Clear();
+
+			_pushQueueHasOverlay = false;
+			_swapQueueHasOverlay = false;
+			_lastCleanedStatesWereAllOverlays = false;
+
+		}
+
 		#endregion
 
 		#region Misc
@@ -670,37 +712,11 @@ namespace Blarg.GameFramework.States
 
 		public void Dispose()
 		{
-			if (_states == null)
+			if (_states.Count == 0 && _pushQueue.Count == 0 && _swapQueue.Count == 0)
 				return;
 
-			Framework.Logger.Info(LOG_TAG, "StateManager disposing.");
-
-			while (_states.Count > 0)
-			{
-				var stateInfo = _states.Last.Value;
-				Framework.Logger.Info(LOG_TAG, "Popping state {0} as part of StateManager shutdown.", stateInfo.Descriptor);
-				stateInfo.State.OnPop();
-				stateInfo.State.Dispose();
-				_states.RemoveLast();
-			}
-
-			// these queues will likely not have anything in them, but just in case ...
-			while (_pushQueue.Count > 0)
-			{
-				var stateInfo = _pushQueue.Dequeue();
-				Framework.Logger.Info(LOG_TAG, "Deleting push-queued state {0} as part of StateManager shutdown.", stateInfo.Descriptor);
-				stateInfo.State.Dispose();
-			}
-			while (_swapQueue.Count > 0)
-			{
-				var stateInfo = _swapQueue.Dequeue();
-				Framework.Logger.Info(LOG_TAG, "Deleting swap-queued state {0} as part of StateManager shutdown.", stateInfo.Descriptor);
-				stateInfo.State.Dispose();
-			}
-
-			_states = null;
-			_pushQueue = null;
-			_swapQueue = null;
+			Framework.Logger.Info(LOG_TAG, "Disposing.");
+			UnloadAllStates();
 		}
 
 		#endregion

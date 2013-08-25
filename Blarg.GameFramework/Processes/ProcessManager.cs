@@ -380,6 +380,31 @@ namespace Blarg.GameFramework.Processes
 			}
 		}
 
+		private void UnloadAllProcesses()
+		{
+			Framework.Logger.Info(LOG_TAG, "Forcefully removing all processes.");
+
+			while (_processes.Count > 0)
+			{
+				var processInfo = _processes.Last.Value;
+				Framework.Logger.Info(LOG_TAG, "Forcefully removing process {0}.", processInfo.Descriptor);
+				processInfo.Process.OnRemove();
+				processInfo.Process.Dispose();
+				_processes.RemoveLast();
+			}
+
+			// the queues will likely not have anything in it, but just in case ...
+			while (_queue.Count > 0)
+			{
+				var processInfo = _queue.Dequeue();
+				Framework.Logger.Info(LOG_TAG, "Forcefully removing queued process {0}.", processInfo.Descriptor);
+				processInfo.Process.Dispose();
+			}
+
+			_processes.Clear();
+			_queue.Clear();
+		}
+
 		#endregion
 
 		#region Misc
@@ -446,30 +471,11 @@ namespace Blarg.GameFramework.Processes
 
 		public void Dispose()
 		{
-			if (_processes == null)
+			if (_processes.Count == 0 && _queue.Count == 0)
 				return;
 
-			Framework.Logger.Info(LOG_TAG, "ProcessManager disposing.");
-
-			while (_processes.Count > 0)
-			{
-				var processInfo = _processes.Last.Value;
-				Framework.Logger.Info(LOG_TAG, "Removing process {0} as part of ProcessManager shutdown.", processInfo.Descriptor);
-				processInfo.Process.OnRemove();
-				processInfo.Process.Dispose();
-				_processes.RemoveLast();
-			}
-
-			// the queues will likely not have anything in it, but just in case ...
-			while (_queue.Count > 0)
-			{
-				var processInfo = _queue.Dequeue();
-				Framework.Logger.Info(LOG_TAG, "Removing queued process {0} as part of ProcessManager shutdown.", processInfo.Descriptor);
-				processInfo.Process.Dispose();
-			}
-
-			_processes = null;
-			_queue = null;
+			Framework.Logger.Info(LOG_TAG, "Disposing.");
+			UnloadAllProcesses();
 		}
 
 		#endregion
