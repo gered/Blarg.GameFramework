@@ -8,6 +8,16 @@ namespace Blarg.GameFramework.Graphics.Atlas
 {
 	public static class TextureAtlasLoader
 	{
+		public static TextureAtlas Load(string file)
+		{
+			var stream = Framework.FileSystem.Open(file);
+			string path = null;
+			if (file.Contains("/"))
+				path = file.Substring(0, file.LastIndexOf('/') + 1);
+
+			return Load(stream, path);
+		}
+
 		public static TextureAtlas Load(Stream file, string texturePath = null)
 		{
 			if (file == null)
