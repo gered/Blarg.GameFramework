@@ -74,6 +74,8 @@ namespace Blarg.GameFramework.TileMap
 					}
 				}
 			}
+
+			chunk.SetMeshes(mesh, alphaMesh);
 		}
 
 		private void HandleCubeMesh(VertexBuffer buffer,
