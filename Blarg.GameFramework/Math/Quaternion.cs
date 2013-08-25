@@ -30,10 +30,15 @@ namespace Blarg.GameFramework
 			{
 				return
 					(W * W) + 
-						(X * X) + 
-						(Y * Y) + 
-						(Z * Z);
+					(X * X) + 
+					(Y * Y) + 
+					(Z * Z);
 			}
+		}
+
+		public float InverseLength
+		{
+			get { return MathHelpers.FastInverseSqrt(LengthSquared); }
 		}
 
 		public Vector3 Vector
@@ -267,7 +272,7 @@ namespace Blarg.GameFramework
 
 		public static void Normalize(ref Quaternion q, out Quaternion result)
 		{
-			float inverseLength = 1.0f / q.Length;
+			float inverseLength = q.InverseLength;
 			result.X = q.X * inverseLength;
 			result.Y = q.Y * inverseLength;
 			result.Z = q.Z * inverseLength;

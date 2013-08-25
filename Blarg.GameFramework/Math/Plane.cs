@@ -45,7 +45,7 @@ namespace Blarg.GameFramework
 			Vector3 e3 = b - a;
 			Vector3 e1 = c - b;
 			Vector3 crossed = Vector3.Cross(e3, e1);
-			float scaleFactor = 1.0f / crossed.Length;
+			float scaleFactor = crossed.InverseLength;
 
 			Normal = crossed * scaleFactor;
 
@@ -107,16 +107,11 @@ namespace Blarg.GameFramework
 
 		public static void Normalize(ref Plane plane, out Plane result)
 		{
-			float length = (float)Math.Sqrt(
-				(plane.Normal.X * plane.Normal.X) + 
-				(plane.Normal.Y * plane.Normal.Y) + 
-				(plane.Normal.Z * plane.Normal.Z)
-				);
-
-			result.Normal.X = plane.Normal.X / length;
-			result.Normal.Y = plane.Normal.Y / length;
-			result.Normal.Z = plane.Normal.Z / length;
-			result.D = plane.D / length;
+			float inverseLength = plane.Normal.InverseLength;
+			result.Normal.X = plane.Normal.X * inverseLength;
+			result.Normal.Y = plane.Normal.Y * inverseLength;
+			result.Normal.Z = plane.Normal.Z * inverseLength;
+			result.D = plane.D * inverseLength;
 		}
 
 		public static bool operator ==(Plane left, Plane right)

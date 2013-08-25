@@ -32,11 +32,11 @@ namespace Blarg.GameFramework
 			{
 				return
 					M11 * M22 * M33 + 
-						M12 * M23 * M31 + 
-						M13 * M21 * M32 - 
-						M11 * M23 * M32 - 
-						M12 * M21 * M33 - 
-						M13 * M22 * M31;
+					M12 * M23 * M31 + 
+					M13 * M21 * M32 - 
+					M11 * M23 * M32 - 
+					M12 * M21 * M33 - 
+					M13 * M22 * M31;
 			}
 		}
 

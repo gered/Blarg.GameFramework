@@ -46,17 +46,17 @@ namespace Blarg.GameFramework
 			{
 				return
 					(M11 * M22 - M21 * M12) * 
-						(M33 * M44 - M43 * M34) - 
-						(M11 * M32 - M31 * M12) * 
-						(M23 * M44 - M43 * M24) + 
-						(M11 * M42 - M41 * M12) * 
-						(M23 * M34 - M33 * M24) + 
-						(M21 * M32 - M31 * M22) * 
-						(M13 * M44 - M43 * M14) - 
-						(M21 * M42 - M41 * M22) * 
-						(M13 * M34 - M33 * M14) + 
-						(M31 * M42 - M41 * M32) * 
-						(M13 * M24 - M23 * M14);
+					(M33 * M44 - M43 * M34) - 
+					(M11 * M32 - M31 * M12) * 
+					(M23 * M44 - M43 * M24) + 
+					(M11 * M42 - M41 * M12) * 
+					(M23 * M34 - M33 * M24) + 
+					(M21 * M32 - M31 * M22) * 
+					(M13 * M44 - M43 * M14) - 
+					(M21 * M42 - M41 * M22) * 
+					(M13 * M34 - M33 * M14) + 
+					(M31 * M42 - M41 * M32) * 
+					(M13 * M24 - M23 * M14);
 			}
 		}
 
@@ -313,7 +313,7 @@ namespace Blarg.GameFramework
 			if (forwardLengthSquared < 0.0001f)
 				forward = -cameraForward;
 			else
-				forward = forward * (1.0f / ((float)Math.Sqrt(forwardLengthSquared)));
+				forward = forward * MathHelpers.FastInverseSqrt(forwardLengthSquared);
 
 			Vector3 left = Vector3.Normalize(Vector3.Cross(cameraUp, forward));
 			Vector3 up = Vector3.Cross(forward, left);
@@ -353,7 +353,7 @@ namespace Blarg.GameFramework
 			if (lengthSquared < 0.0001f)
 				temp = -cameraForward;
 			else
-				temp = temp * (1.0f / ((float)Math.Sqrt(lengthSquared)));
+				temp = temp * MathHelpers.FastInverseSqrt(lengthSquared);
 
 			Vector3 up = axis;
 			Vector3 forward;

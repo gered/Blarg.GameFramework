@@ -33,10 +33,15 @@ namespace Blarg.GameFramework
 			{
 				return
 					(X * X) + 
-						(Y * Y) + 
-						(Z * Z) +
-						(W * W);
+					(Y * Y) + 
+					(Z * Z) +
+					(W * W);
 			}
+		}
+
+		public float InverseLength
+		{
+			get { return MathHelpers.FastInverseSqrt(LengthSquared); }
 		}
 
 		public Vector4(float x, float y, float z, float w)
@@ -105,9 +110,9 @@ namespace Blarg.GameFramework
 		{
 			return
 				((b.X - a.X) * (b.X - a.X)) + 
-					((b.Y - a.Y) * (b.Y - a.Y)) + 
-					((b.Z - a.Z) * (b.Z - a.Z)) + 
-					((b.W - a.W) * (b.W - a.W));
+				((b.Y - a.Y) * (b.Y - a.Y)) + 
+				((b.Z - a.Z) * (b.Z - a.Z)) + 
+				((b.W - a.W) * (b.W - a.W));
 		}
 
 		public static float Dot(Vector4 a, Vector4 b)
@@ -119,9 +124,9 @@ namespace Blarg.GameFramework
 		{
 			return
 				(a.X * b.X) + 
-					(a.Y * b.Y) + 
-					(a.Z * b.Z) + 
-					(a.W * b.W);
+				(a.Y * b.Y) + 
+				(a.Z * b.Z) + 
+				(a.W * b.W);
 		}
 
 		public static Vector4 Lerp(Vector4 a, Vector4 b, float interpolation)
@@ -148,7 +153,7 @@ namespace Blarg.GameFramework
 
 		public static void Normalize(ref Vector4 v, out Vector4 result)
 		{
-			float inverseLength = 1.0f / v.Length;
+			float inverseLength = v.InverseLength;
 			result.X = v.X * inverseLength;
 			result.Y = v.Y * inverseLength;
 			result.Z = v.Z * inverseLength;

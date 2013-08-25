@@ -307,12 +307,9 @@ namespace Blarg.GameFramework
 		{
 			bool foundCollision = false;
 
-			Vector3 p1;
-			Vector3 p2;
-			Vector3 p3;
-			Vector3.Divide(ref v1, ref packet.EllipsoidRadius, out p1);
-			Vector3.Divide(ref v2, ref packet.EllipsoidRadius, out p2);
-			Vector3.Divide(ref v3, ref packet.EllipsoidRadius, out p3);
+			Vector3 p1 = v1 / packet.EllipsoidRadius;
+			Vector3 p2 = v2 / packet.EllipsoidRadius;
+			Vector3 p3 = v3 / packet.EllipsoidRadius;
 
 			var trianglePlane = new Plane(ref p1, ref p2, ref p3);
 
