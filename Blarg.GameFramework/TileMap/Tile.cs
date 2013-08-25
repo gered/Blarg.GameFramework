@@ -161,7 +161,7 @@ namespace Blarg.GameFramework.TileMap
 		public Tile SetCustomColor(int color)
 		{
 			Flags = Flags.SetBit(FLAG_CUSTOM_COLOR);
-			this.Color = Color;
+			Color = color;
 			return this;
 		}
 
