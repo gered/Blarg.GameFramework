@@ -69,9 +69,9 @@ namespace Blarg.GameFramework.TileMap
 							color = tileMesh.Color;
 
 						if (tileMesh is CubeTileMesh)
-							HandleCubeMesh(buffer, x, y, z, tile, chunk, (CubeTileMesh)tileMesh, position, transform, color);
+							HandleCubeMesh(buffer, x, y, z, tile, chunk, (CubeTileMesh)tileMesh, ref position, transform, ref color);
 						else
-							HandleGenericMesh(buffer, x, y, z, tile, chunk, tileMesh, position, transform, color);
+							HandleGenericMesh(buffer, x, y, z, tile, chunk, tileMesh, ref position, transform, ref color);
 					}
 				}
 			}
@@ -84,9 +84,9 @@ namespace Blarg.GameFramework.TileMap
 		                            Tile tile, 
 		                            TileChunk chunk, 
 		                            CubeTileMesh mesh, 
-		                            Point3 tileMapPosition, 
-		                            Matrix4x4 transform, 
-		                            Color color) 
+		                            ref Point3 tileMapPosition, 
+		                            Matrix4x4? transform, 
+		                            ref Color color) 
 		{
 			// determine what's next to each cube face
 			Tile left = chunk.GetWithinSelfOrNeighbourSafe(x - 1, y, z);
@@ -103,9 +103,9 @@ namespace Blarg.GameFramework.TileMap
 				        tile,
 				        mesh,
 				        chunk,
-				        tileMapPosition,
+				        ref tileMapPosition,
 				        transform,
-				        color,
+				        ref color,
 				        mesh.LeftFaceVertexOffset,
 				        TileMesh.CUBE_VERTICES_PER_FACE);
 			}
@@ -115,9 +115,9 @@ namespace Blarg.GameFramework.TileMap
 				        tile,
 				        mesh,
 				        chunk,
-				        tileMapPosition,
+				        ref tileMapPosition,
 				        transform,
-				        color,
+				        ref color,
 				        mesh.RightFaceVertexOffset,
 				        TileMesh.CUBE_VERTICES_PER_FACE);
 			}
@@ -127,9 +127,9 @@ namespace Blarg.GameFramework.TileMap
 				        tile,
 				        mesh,
 				        chunk,
-				        tileMapPosition,
+				        ref tileMapPosition,
 				        transform,
-				        color,
+				        ref color,
 				        mesh.FrontFaceVertexOffset,
 				        TileMesh.CUBE_VERTICES_PER_FACE);
 			}
@@ -139,9 +139,9 @@ namespace Blarg.GameFramework.TileMap
 				        tile,
 				        mesh,
 				        chunk,
-				        tileMapPosition,
+				        ref tileMapPosition,
 				        transform,
-				        color,
+				        ref color,
 				        mesh.BackFaceVertexOffset,
 				        TileMesh.CUBE_VERTICES_PER_FACE);
 			}
@@ -151,9 +151,9 @@ namespace Blarg.GameFramework.TileMap
 				        tile,
 				        mesh,
 				        chunk,
-				        tileMapPosition,
+				        ref tileMapPosition,
 				        transform,
-				        color,
+				        ref color,
 				        mesh.BottomFaceVertexOffset,
 				        TileMesh.CUBE_VERTICES_PER_FACE);
 			}
@@ -163,9 +163,9 @@ namespace Blarg.GameFramework.TileMap
 				        tile,
 				        mesh,
 				        chunk,
-				        tileMapPosition,
+				        ref tileMapPosition,
 				        transform,
-				        color,
+				        ref color,
 				        mesh.TopFaceVertexOffset,
 				        TileMesh.CUBE_VERTICES_PER_FACE);
 			}
@@ -178,9 +178,9 @@ namespace Blarg.GameFramework.TileMap
 		                               Tile tile,
 		                               TileChunk chunk,
 		                               TileMesh mesh,
-		                               Point3 tileMapPosition,
-		                               Matrix4x4 transform,
-		                               Color color)
+		                               ref Point3 tileMapPosition,
+		                               Matrix4x4? transform,
+		                               ref Color color)
 		{
 			bool visible = false;
 
@@ -204,16 +204,24 @@ namespace Blarg.GameFramework.TileMap
 				visible = true;
 
 			if (visible)
-				AddMesh(buffer, tile, mesh, chunk, tileMapPosition, transform, color, 0, mesh.Vertices.NumElements);
+				AddMesh(buffer,
+				        tile,
+				        mesh,
+				        chunk,
+				        ref tileMapPosition,
+				        transform,
+				        ref color,
+				        0,
+				        mesh.Vertices.NumElements);
 		}
 
 		protected void AddMesh(VertexBuffer buffer,
 		                       Tile tile,
 		                       TileMesh sourceMesh,
 		                       TileChunk chunk,
-		                       Point3 position,
+		                       ref Point3 position,
 		                       Matrix4x4? transform,
-		                       Color color,
+		                       ref Color color,
 		                       int firstVertex,
 		                       int numVertices)
 		{
