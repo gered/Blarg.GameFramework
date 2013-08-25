@@ -196,7 +196,7 @@ namespace Blarg.GameFramework
 		/// <param name="degrees">degree value to convert</param>
 		public static float DegreesToRadians(float degrees)
 		{
-			return degrees * MathConstants.PiOver180;
+			return degrees * MathConstants.DegToRad;
 		}
 
 		/// <summary>
@@ -272,7 +272,7 @@ namespace Blarg.GameFramework
 		/// <param name="radians">radian value to convert</param>
 		public static float RadiansToDegrees(float radians)
 		{
-			return radians * (1.0f / MathConstants.PiOver180);
+			return radians * MathConstants.RadToDeg;
 		}
 
 		/// <summary>
