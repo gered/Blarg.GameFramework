@@ -14,9 +14,10 @@ namespace Blarg.GameFramework.TileMap
 		readonly int _depth;
 		readonly Vector3 _position;
 		readonly BoundingBox _bounds;
-		readonly TileMap _tileMap;
 		VertexBuffer _mesh;
 		VertexBuffer _alphaMesh;
+
+		public readonly TileMap TileMap;
 
 		public Tile[] Data
 		{
@@ -93,7 +94,7 @@ namespace Blarg.GameFramework.TileMap
 			if (tileMap == null)
 				throw new ArgumentNullException("tileMap");
 
-			_tileMap = tileMap;
+			TileMap = tileMap;
 			_x = x;
 			_y = y;
 			_z = z;
@@ -119,12 +120,23 @@ namespace Blarg.GameFramework.TileMap
 			generator.Generate(this);
 		}
 
+		internal void SetMeshes(VertexBuffer mesh, VertexBuffer alphaMesh)
+		{
+			if (_mesh != null)
+				_mesh.Dispose();
+			_mesh = mesh;
+
+			if (_alphaMesh != null)
+				_alphaMesh.Dispose();
+			_alphaMesh = alphaMesh;
+		}
+
 		public Tile GetWithinSelfOrNeighbour(int x, int y, int z)
 		{
 			int checkX = x + _x;
 			int checkY = y + _y;
 			int checkZ = z + _z;
-			return _tileMap.Get(checkX, checkY, checkZ);
+			return TileMap.Get(checkX, checkY, checkZ);
 		}
 
 		public Tile GetWithinSelfOrNeighbourSafe(int x, int y, int z)
@@ -132,10 +144,10 @@ namespace Blarg.GameFramework.TileMap
 			int checkX = x + _x;
 			int checkY = y + _y;
 			int checkZ = z + _z;
-			if (!_tileMap.IsWithinBounds(checkX, checkY, checkZ))
+			if (!TileMap.IsWithinBounds(checkX, checkY, checkZ))
 				return null;
 			else
-				return _tileMap.Get(checkX, checkY, checkZ);
+				return TileMap.Get(checkX, checkY, checkZ);
 		}
 
 		public override Tile Get(int x, int y, int z)
