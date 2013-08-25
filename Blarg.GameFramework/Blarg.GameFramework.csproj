@@ -201,6 +201,9 @@
     <Compile Include="TileMap\Meshes\CubeTileMesh.cs" />
     <Compile Include="TileMap\Meshes\TileMeshCollection.cs" />
     <Compile Include="TileMap\TileContainer.cs" />
+    <Compile Include="TileMap\TileMap.cs" />
+    <Compile Include="TileMap\TileChunk.cs" />
+    <Compile Include="TileMap\ChunkVertexGenerator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
