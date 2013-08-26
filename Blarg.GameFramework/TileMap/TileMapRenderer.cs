@@ -65,7 +65,7 @@ namespace Blarg.GameFramework.TileMap
 						{
 							var bounds = chunk.Bounds;
 							if (graphicsDevice.ViewContext.Camera.Frustum.Test(ref bounds))
-								_chunkRenderer.Render(chunk);
+								_chunkRenderer.RenderAlpha(chunk);
 						}
 					}
 				}
