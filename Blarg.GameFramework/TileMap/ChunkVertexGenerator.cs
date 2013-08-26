@@ -14,7 +14,7 @@ namespace Blarg.GameFramework.TileMap
 		{
 			var buffer = new VertexBuffer(Framework.GraphicsDevice,
 			                              VertexAttributeDeclarations.TextureColorNormalPosition3D,
-			                              128,
+			                              1,
 			                              BufferObjectUsage.Static);
 			return buffer;
 		}
@@ -23,6 +23,9 @@ namespace Blarg.GameFramework.TileMap
 		{
 			VertexBuffer mesh = null;
 			VertexBuffer alphaMesh = null;
+
+			int numMeshVertices = 0;
+			int numAlphaVertices = 0;
 
 			for (int y = 0; y < chunk.Height; ++y)
 			{
@@ -67,18 +70,24 @@ namespace Blarg.GameFramework.TileMap
 						else
 							color = tileMesh.Color;
 
+						int numVertices = 0;
 						if (tileMesh is CubeTileMesh)
-							HandleCubeMesh(buffer, x, y, z, tile, chunk, (CubeTileMesh)tileMesh, ref position, transform, ref color);
+							numVertices = HandleCubeMesh(buffer, x, y, z, tile, chunk, (CubeTileMesh)tileMesh, ref position, transform, ref color);
 						else
-							HandleGenericMesh(buffer, x, y, z, tile, chunk, tileMesh, ref position, transform, ref color);
+							numVertices = HandleGenericMesh(buffer, x, y, z, tile, chunk, tileMesh, ref position, transform, ref color);
+
+						if (tileMesh.Alpha)
+							numAlphaVertices += numVertices;
+						else
+							numMeshVertices += numVertices;
 					}
 				}
 			}
 
-			chunk.SetMeshes(mesh, alphaMesh);
+			chunk.SetMeshes(mesh, numMeshVertices, alphaMesh, numAlphaVertices);
 		}
 
-		private void HandleCubeMesh(VertexBuffer buffer,
+		private int HandleCubeMesh(VertexBuffer buffer,
 			                        int x, 
 		                            int y, 
 		                            int z, 
@@ -97,6 +106,8 @@ namespace Blarg.GameFramework.TileMap
 			Tile down = chunk.GetWithinSelfOrNeighbourSafe(x, y - 1, z);
 			Tile up = chunk.GetWithinSelfOrNeighbourSafe(x, y + 1, z);
 
+			int numVertices = 0;
+
 			// evaluate each face's visibility and add it's vertices if needed one at a time
 			if ((left == null || left.TileIndex == Tile.NO_TILE || !chunk.TileMap.TileMeshes.Get(left).IsOpaque(TileMesh.SIDE_RIGHT)) && mesh.HasFace(TileMesh.SIDE_LEFT)) {
 				// left face is visible
@@ -109,6 +120,7 @@ namespace Blarg.GameFramework.TileMap
 				        ref color,
 				        mesh.LeftFaceVertexOffset,
 				        TileMesh.CUBE_VERTICES_PER_FACE);
+				numVertices += TileMesh.CUBE_VERTICES_PER_FACE;
 			}
 			if ((right == null || right.TileIndex == Tile.NO_TILE || !chunk.TileMap.TileMeshes.Get(right).IsOpaque(TileMesh.SIDE_LEFT)) && mesh.HasFace(TileMesh.SIDE_RIGHT)) {
 				// right face is visible
@@ -121,6 +133,7 @@ namespace Blarg.GameFramework.TileMap
 				        ref color,
 				        mesh.RightFaceVertexOffset,
 				        TileMesh.CUBE_VERTICES_PER_FACE);
+				numVertices += TileMesh.CUBE_VERTICES_PER_FACE;
 			}
 			if ((forward == null || forward.TileIndex == Tile.NO_TILE || !chunk.TileMap.TileMeshes.Get(forward).IsOpaque(TileMesh.SIDE_BACK)) && mesh.HasFace(TileMesh.SIDE_FRONT)) {
 				// front face is visible
@@ -133,6 +146,7 @@ namespace Blarg.GameFramework.TileMap
 				        ref color,
 				        mesh.FrontFaceVertexOffset,
 				        TileMesh.CUBE_VERTICES_PER_FACE);
+				numVertices += TileMesh.CUBE_VERTICES_PER_FACE;
 			}
 			if ((backward == null || backward.TileIndex == Tile.NO_TILE || !chunk.TileMap.TileMeshes.Get(backward).IsOpaque(TileMesh.SIDE_FRONT)) && mesh.HasFace(TileMesh.SIDE_BACK)) {
 				// back face is visible
@@ -145,6 +159,7 @@ namespace Blarg.GameFramework.TileMap
 				        ref color,
 				        mesh.BackFaceVertexOffset,
 				        TileMesh.CUBE_VERTICES_PER_FACE);
+				numVertices += TileMesh.CUBE_VERTICES_PER_FACE;
 			}
 			if ((down == null || down.TileIndex == Tile.NO_TILE || !chunk.TileMap.TileMeshes.Get(down).IsOpaque(TileMesh.SIDE_TOP)) && mesh.HasFace(TileMesh.SIDE_BOTTOM)) {
 				// bottom face is visible
@@ -157,6 +172,7 @@ namespace Blarg.GameFramework.TileMap
 				        ref color,
 				        mesh.BottomFaceVertexOffset,
 				        TileMesh.CUBE_VERTICES_PER_FACE);
+				numVertices += TileMesh.CUBE_VERTICES_PER_FACE;
 			}
 			if ((up == null || up.TileIndex == Tile.NO_TILE || !chunk.TileMap.TileMeshes.Get(up).IsOpaque(TileMesh.SIDE_BOTTOM)) && mesh.HasFace(TileMesh.SIDE_TOP)) {
 				// top face is visible
@@ -169,10 +185,13 @@ namespace Blarg.GameFramework.TileMap
 				        ref color,
 				        mesh.TopFaceVertexOffset,
 				        TileMesh.CUBE_VERTICES_PER_FACE);
+				numVertices += TileMesh.CUBE_VERTICES_PER_FACE;
 			}
+
+			return numVertices;
 		}
 
-		private void HandleGenericMesh(VertexBuffer buffer,
+		private int HandleGenericMesh(VertexBuffer buffer,
 		                               int x,
 		                               int y,
 		                               int z,
@@ -214,6 +233,8 @@ namespace Blarg.GameFramework.TileMap
 				        ref color,
 				        0,
 				        mesh.Vertices.NumElements);
+
+			return mesh.Vertices.NumElements;
 		}
 
 		protected void AddMesh(VertexBuffer buffer,
@@ -226,6 +247,15 @@ namespace Blarg.GameFramework.TileMap
 		                       int firstVertex,
 		                       int numVertices)
 		{
+			// ensure there is enough space in the destination buffer
+			int verticesToAdd = numVertices;
+			if (buffer.RemainingElements < verticesToAdd)
+			{
+				// not enough space, need to resize the destination buffer
+				// resize by the exact amount needed making sure there's no wasted space at the end
+				buffer.Extend(verticesToAdd - buffer.RemainingElements);
+			}
+
 			// adjust position by the tilemesh offset. TileMesh's are modeled using the
 			// origin (0,0,0) as the center and are 1 unit wide/deep/tall. So, their
 			// max extents are from -0.5,-0.5,-0.5 to 0.5,0.5,0.5. For rendering
@@ -236,6 +266,9 @@ namespace Blarg.GameFramework.TileMap
 			offset.Y += (float)position.Y;
 			offset.Z += (float)position.Z;
 
+			bool needsTransform = (transform != null);
+			var transformMatrix = transform.GetValueOrDefault();
+
 			var sourceVertices = sourceMesh.Vertices;
 			sourceVertices.MoveTo(firstVertex);
 
@@ -244,9 +277,8 @@ namespace Blarg.GameFramework.TileMap
 				Vector3 v = sourceVertices.GetCurrentPosition3D();
 				Vector3 n = sourceVertices.GetCurrentNormal();
 
-				if (transform != null)
+				if (needsTransform)
 				{
-					var transformMatrix = transform.Value;
 					// need to transform the vertex + normal first before copying it
 					v = Matrix4x4.Transform(transformMatrix, v);
 					n = Matrix4x4.TransformNormal(transformMatrix, n);

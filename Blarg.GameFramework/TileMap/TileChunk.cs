@@ -14,7 +14,9 @@ namespace Blarg.GameFramework.TileMap
 		readonly int _depth;
 		readonly Vector3 _position;
 		readonly BoundingBox _bounds;
+		int _numMeshVertices;
 		VertexBuffer _mesh;
+		int _numAlphaMeshVertices;
 		VertexBuffer _alphaMesh;
 
 		public readonly TileMap TileMap;
@@ -79,9 +81,19 @@ namespace Blarg.GameFramework.TileMap
 			get { return _bounds; }
 		}
 
+		public int NumMeshVertices
+		{
+			get { return _numMeshVertices; }
+		}
+
 		public VertexBuffer Mesh
 		{
 			get { return _mesh; }
+		}
+
+		public int NumAlphaMeshVertices
+		{
+			get { return _numAlphaMeshVertices; }
 		}
 
 		public VertexBuffer AlphaMesh
@@ -120,7 +132,7 @@ namespace Blarg.GameFramework.TileMap
 			generator.Generate(this);
 		}
 
-		internal void SetMeshes(VertexBuffer mesh, VertexBuffer alphaMesh)
+		internal void SetMeshes(VertexBuffer mesh, int numMeshVertices, VertexBuffer alphaMesh, int numAlphaMeshVertices)
 		{
 			if (_mesh != null)
 				_mesh.Dispose();
@@ -129,6 +141,9 @@ namespace Blarg.GameFramework.TileMap
 			if (_alphaMesh != null)
 				_alphaMesh.Dispose();
 			_alphaMesh = alphaMesh;
+
+			_numMeshVertices = numMeshVertices;
+			_numAlphaMeshVertices = numAlphaMeshVertices;
 		}
 
 		public Tile GetWithinSelfOrNeighbour(int x, int y, int z)

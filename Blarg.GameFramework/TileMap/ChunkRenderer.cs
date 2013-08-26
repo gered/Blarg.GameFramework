@@ -20,7 +20,7 @@ namespace Blarg.GameFramework.TileMap
 			_defaultBlendState.Apply(Framework.GraphicsDevice);
 			Framework.GraphicsDevice.BindTexture(texture);
 			Framework.GraphicsDevice.BindVertexBuffer(chunk.Mesh);
-			Framework.GraphicsDevice.RenderTriangles();
+			Framework.GraphicsDevice.RenderTriangles(0, chunk.NumMeshVertices / 3);
 			Framework.GraphicsDevice.UnbindVertexBuffer();
 		}
 
@@ -35,7 +35,7 @@ namespace Blarg.GameFramework.TileMap
 			_alphaBlendState.Apply(Framework.GraphicsDevice);
 			Framework.GraphicsDevice.BindTexture(texture);
 			Framework.GraphicsDevice.BindVertexBuffer(chunk.AlphaMesh);
-			Framework.GraphicsDevice.RenderTriangles();
+			Framework.GraphicsDevice.RenderTriangles(0, chunk.NumAlphaMeshVertices / 3);
 			Framework.GraphicsDevice.UnbindVertexBuffer();
 
 		}
