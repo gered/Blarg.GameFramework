@@ -289,6 +289,8 @@ namespace Blarg.GameFramework.Graphics
 		{
 			if (source == null)
 				throw new ArgumentNullException("source");
+			if (source.NumElements <= 0)
+				throw new InvalidOperationException();
 
 			Copy(source, destVertexIndex, 0, source.NumElements);
 		}
@@ -297,6 +299,8 @@ namespace Blarg.GameFramework.Graphics
 		{
 			if (source == null)
 				throw new ArgumentNullException("source");
+			if (source.NumElements <= 0)
+				throw new InvalidOperationException();
 			if (destVertexIndex <= 0 || destVertexIndex >= NumElements)
 				throw new ArgumentOutOfRangeException("destVertexIndex");
 			if (sourceVertexIndex <= 0 || sourceVertexIndex >= source.NumElements)
