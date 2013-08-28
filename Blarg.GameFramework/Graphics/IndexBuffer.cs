@@ -10,7 +10,7 @@ namespace Blarg.GameFramework.Graphics
 
 		public int RemainingElements
 		{
-			get { return (NumElements - 1) - CurrentPosition; }
+			get { return NumElements - CurrentPosition; }
 		}
 
 		public override int NumElements
@@ -91,10 +91,7 @@ namespace Blarg.GameFramework.Graphics
 		{
 			++CurrentPosition;
 			if (CurrentPosition >= NumElements)
-			{
-				--CurrentPosition;
 				return false;
-			}
 			else
 				return true;
 		}
@@ -104,10 +101,7 @@ namespace Blarg.GameFramework.Graphics
 			if (CurrentPosition == 0)
 				return false;
 			else
-			{
-				--CurrentPosition;
 				return true;
-			}
 		}
 
 		public void Move(int amount)
