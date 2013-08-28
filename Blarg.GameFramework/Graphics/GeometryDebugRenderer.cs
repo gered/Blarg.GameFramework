@@ -4,8 +4,6 @@ namespace Blarg.GameFramework.Graphics
 {
 	public class GeometryDebugRenderer
 	{
-		const int DefaultVerticesAmount = 4096;
-
 		VertexBuffer _vertices;
 		RenderState _renderState;
 		Color _color1;
@@ -21,7 +19,7 @@ namespace Blarg.GameFramework.Graphics
 
 			GraphicsDevice = graphicsDevice;
 
-			_vertices = new VertexBuffer(GraphicsDevice, VertexAttributeDeclarations.ColorPosition3D, DefaultVerticesAmount, BufferObjectUsage.Stream);
+			_vertices = new VertexBuffer(GraphicsDevice, VertexAttributeDeclarations.ColorPosition3D, 0, BufferObjectUsage.Stream);
 
 			_color1 = new Color(1.0f, 1.0f, 0.0f);
 			_color2 = new Color(1.0f, 0.0f, 0.0f);
