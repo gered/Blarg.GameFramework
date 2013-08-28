@@ -111,6 +111,8 @@ namespace Blarg.GameFramework.Graphics
 		{
 			if (source == null)
 				throw new ArgumentNullException("source");
+			if (source.NumElements <= 0)
+				throw new InvalidOperationException();
 
 			var attributes = new VertexAttributes[source.NumAttributes];
 			for (int i = 0; i < attributes.Length; ++i)
