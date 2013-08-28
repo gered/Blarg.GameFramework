@@ -207,6 +207,8 @@
     <Compile Include="TileMap\Lighting\ITileMapLighter.cs" />
     <Compile Include="TileMap\TileMapRenderer.cs" />
     <Compile Include="TileMap\ChunkRenderer.cs" />
+    <Compile Include="TileMap\Lighting\BaseTileMapLighter.cs" />
+    <Compile Include="TileMap\Lighting\SimpleTileMapLighter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
