@@ -152,8 +152,13 @@ namespace Blarg.GameFramework.Graphics
 			if (!IsClientSide)
 				SizeBufferObject();
 
-			if (CurrentPosition >= NumElements)
-				CurrentPosition = NumElements - 1;
+			if (numIndices == 0)
+				CurrentPosition = 0;
+			else
+			{
+				if (CurrentPosition >= NumElements)
+					CurrentPosition = NumElements - 1;
+			}
 		}
 
 		public void Extend(int amount)
