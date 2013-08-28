@@ -237,15 +237,15 @@ namespace Blarg.GameFramework.TileMap
 			return mesh.Vertices.NumElements;
 		}
 
-		protected void AddMesh(VertexBuffer buffer,
-		                       Tile tile,
-		                       TileMesh sourceMesh,
-		                       TileChunk chunk,
-		                       ref Point3 position,
-		                       Matrix4x4? transform,
-		                       ref Color color,
-		                       int firstVertex,
-		                       int numVertices)
+		protected virtual void AddMesh(VertexBuffer buffer,
+		                               Tile tile,
+		                               TileMesh sourceMesh,
+		                               TileChunk chunk,
+		                               ref Point3 position,
+		                               Matrix4x4? transform,
+		                               ref Color color,
+		                               int firstVertex,
+		                               int numVertices)
 		{
 			// ensure there is enough space in the destination buffer
 			int verticesToAdd = numVertices;
