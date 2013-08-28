@@ -110,9 +110,15 @@ namespace Blarg.GameFramework.TileMap.Prefabs
 			if (depth <= 0)
 				throw new ArgumentException("depth");
 
+			_width = width;
+			_height = height;
+			_depth = depth;
+
 			_bounds = new BoundingBox();
 			_bounds.Min.Set(Vector3.Zero);
 			_bounds.Max.Set(width, height, depth);
+
+			_rotationBounds = new BoundingBox();
 
 			int numTiles = width * height * depth;
 			_data = new Tile[numTiles];
