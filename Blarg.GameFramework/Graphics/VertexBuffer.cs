@@ -100,7 +100,7 @@ namespace Blarg.GameFramework.Graphics
 		{
 			if (attributes == null || attributes.Length == 0)
 				throw new ArgumentException("attributes");
-			if (numVertices <= 0)
+			if (numVertices < 0)
 				throw new ArgumentOutOfRangeException("numVertices");
 
 			SetSizesAndOffsets(attributes);
@@ -253,11 +253,10 @@ namespace Blarg.GameFramework.Graphics
 
 		public void Resize(int numVertices)
 		{
-			if (numVertices <= 0)
+			if (numVertices < 0)
 				throw new ArgumentOutOfRangeException("numIndices");
 
 			int newSizeInFloats = numVertices * ElementWidth;
-
 			if (_buffer == null)
 				_buffer = new float[newSizeInFloats];
 			else
@@ -266,8 +265,13 @@ namespace Blarg.GameFramework.Graphics
 			if (!IsClientSide)
 				SizeBufferObject();
 
-			if (CurrentPosition >= NumElements)
-				CurrentPosition = NumElements - 1;
+			if (numVertices == 0)
+				CurrentPosition = 0;
+			else
+			{
+				if (CurrentPosition >= NumElements)
+					CurrentPosition = NumElements - 1;
+			}
 		}
 
 		public void Extend(int amount)

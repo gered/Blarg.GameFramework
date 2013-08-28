@@ -87,7 +87,7 @@ namespace Blarg.GameFramework.Graphics
 		{
 			if (!IsDirty)
 				return;
-			if (IsClientSide)
+			if (IsClientSide || NumElements == 0)
 			{
 				// pretend we updated! (I guess this is pointless anyway)
 				IsDirty = false;
@@ -160,7 +160,7 @@ namespace Blarg.GameFramework.Graphics
 		{
 			if (IsInvalidated)
 				throw new InvalidOperationException();
-			if (NumElements <= 0)
+			if (NumElements < 0)
 				throw new InvalidOperationException();
 			if (ElementWidthInBytes <= 0)
 				throw new InvalidOperationException();
