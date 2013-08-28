@@ -211,6 +211,8 @@
     <Compile Include="TileMap\Lighting\SimpleTileMapLighter.cs" />
     <Compile Include="TileMap\Lighting\LitChunkVertexGenerator.cs" />
     <Compile Include="TileMap\Lighting\LightSpreadingTileMapLighter.cs" />
+    <Compile Include="TileMap\Prefabs\TilePrefab.cs" />
+    <Compile Include="TileMap\Rotation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -238,6 +240,7 @@
     <Folder Include="TileMap\" />
     <Folder Include="TileMap\Meshes\" />
     <Folder Include="TileMap\Lighting\" />
+    <Folder Include="TileMap\Prefabs\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Vera.ttf" />
