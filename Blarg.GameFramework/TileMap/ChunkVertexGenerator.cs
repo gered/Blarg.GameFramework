@@ -14,7 +14,7 @@ namespace Blarg.GameFramework.TileMap
 		{
 			var buffer = new VertexBuffer(Framework.GraphicsDevice,
 			                              VertexAttributeDeclarations.TextureColorNormalPosition3D,
-			                              1,
+			                              0,
 			                              BufferObjectUsage.Static);
 			return buffer;
 		}
