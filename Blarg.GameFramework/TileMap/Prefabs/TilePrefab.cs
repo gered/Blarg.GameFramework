@@ -4,6 +4,8 @@ namespace Blarg.GameFramework.TileMap.Prefabs
 {
 	public class TilePrefab : TileContainer, TileRawDataContainer
 	{
+		#region Fields
+
 		Tile[] _data;
 		int _width;
 		int _height;
@@ -20,6 +22,10 @@ namespace Blarg.GameFramework.TileMap.Prefabs
 		int _rotationXPreMultiplier;
 		int _rotationZPreMultiplier;
 		BoundingBox _rotationBounds;
+
+		#endregion
+
+		#region Properties
 
 		public override int Width
 		{
@@ -101,6 +107,8 @@ namespace Blarg.GameFramework.TileMap.Prefabs
 			get { return _data; }
 		}
 
+		#endregion
+
 		public TilePrefab(int width, int height, int depth)
 		{
 			if (width <= 0)
@@ -146,6 +154,8 @@ namespace Blarg.GameFramework.TileMap.Prefabs
 		{
 			return (y * _width * _depth) + (z * _width) + x;
 		}
+
+		#region Rotation Handling
 
 		public void Rotate(Rotation rotation)
 		{
@@ -253,6 +263,8 @@ namespace Blarg.GameFramework.TileMap.Prefabs
 				+ ((_rotationZPreMultiplier * z + _rotationZOffset) * _rotationZMultiplier)
 				+ ((_rotationXPreMultiplier * x + _rotationXOffset) * _rotationXMultiplier);
 		}
-		}
+
+		#endregion
+	}
 }
 

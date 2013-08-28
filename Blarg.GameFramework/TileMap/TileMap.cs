@@ -6,8 +6,14 @@ namespace Blarg.GameFramework.TileMap
 {
 	public class TileMap : TileContainer, IDisposable
 	{
+		#region Fields
+
 		readonly Vector3 _position;
 		readonly BoundingBox _bounds;
+
+		#endregion
+
+		#region Properties
 
 		public readonly TileChunk[] Chunks;
 		public readonly TileMeshCollection TileMeshes;
@@ -78,6 +84,8 @@ namespace Blarg.GameFramework.TileMap
 			get { return _bounds; }
 		}
 
+		#endregion
+
 		public TileMap(int chunkWidth, int chunkHeight, int chunkDepth,
 		               int widthInChunks, int heightInChunks, int depthInChunks,
 		               TileMeshCollection tileMeshes,
@@ -134,7 +142,7 @@ namespace Blarg.GameFramework.TileMap
 			_bounds.Max.Set(Width, Height, Depth);
 		}
 
-		public void updateVertices()
+		public void UpdateVertices()
 		{
 			for (int i = 0; i < Chunks.Length; ++i)
 				UpdateChunkVertices(Chunks[i]);
@@ -150,6 +158,8 @@ namespace Blarg.GameFramework.TileMap
 			if (Lighter != null)
 				Lighter.Light(this);
 		}
+
+		#region Bounds Checks
 
 		public bool GetOverlappedChunks(BoundingBox box, Point3 min, Point3 max)
 		{
@@ -198,6 +208,10 @@ namespace Blarg.GameFramework.TileMap
 			return true;
 		}
 
+		#endregion
+
+		#region Tile Retrieval
+
 		public override Tile Get(int x, int y, int z)
 		{
 			var chunk = GetChunkContaining(x, y, z);
@@ -215,6 +229,10 @@ namespace Blarg.GameFramework.TileMap
 			else
 				return Get(x, y, z);
 		}
+
+		#endregion
+
+		#region Chunk Retrieval
 
 		public TileChunk GetChunk(int chunkX, int chunkY, int chunkZ)
 		{
@@ -263,11 +281,17 @@ namespace Blarg.GameFramework.TileMap
 			return (chunkY * WidthInChunks * DepthInChunks) + (chunkZ * WidthInChunks) + chunkX;
 		}
 
+		#endregion
+
+		#region IDisposable
+
 		public void Dispose()
 		{
 			for (int i = 0; i < Chunks.Length; ++i)
 				Chunks[i].Dispose();
 		}
+
+		#endregion
 	}
 }
 

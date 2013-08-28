@@ -5,6 +5,8 @@ namespace Blarg.GameFramework.TileMap
 {
 	public class TileChunk : TileContainer, TileRawDataContainer, IDisposable
 	{
+		#region Fields
+
 		readonly Tile[] _data;
 		readonly int _x;
 		readonly int _y;
@@ -18,6 +20,10 @@ namespace Blarg.GameFramework.TileMap
 		VertexBuffer _mesh;
 		int _numAlphaMeshVertices;
 		VertexBuffer _alphaMesh;
+
+		#endregion
+
+		#region Properties
 
 		public readonly TileMap TileMap;
 
@@ -101,6 +107,8 @@ namespace Blarg.GameFramework.TileMap
 			get { return _alphaMesh; }
 		}
 
+		#endregion
+
 		public TileChunk(int x, int y, int z, int width, int height, int depth, TileMap tileMap)
 		{
 			if (tileMap == null)
@@ -146,6 +154,8 @@ namespace Blarg.GameFramework.TileMap
 			_numAlphaMeshVertices = numAlphaMeshVertices;
 		}
 
+		#region Tile Retrieval
+
 		public Tile GetWithinSelfOrNeighbour(int x, int y, int z)
 		{
 			int checkX = x + _x;
@@ -184,6 +194,10 @@ namespace Blarg.GameFramework.TileMap
 			return (y * _width * _depth) + (z * _width) + x;
 		}
 
+		#endregion
+
+		#region IDisposable
+
 		public void Dispose()
 		{
 			if (Mesh != null)
@@ -191,6 +205,8 @@ namespace Blarg.GameFramework.TileMap
 			if (AlphaMesh != null)
 				AlphaMesh.Dispose();
 		}
+
+		#endregion
 	}
 }
 

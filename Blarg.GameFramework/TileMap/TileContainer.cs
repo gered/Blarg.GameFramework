@@ -5,6 +5,8 @@ namespace Blarg.GameFramework.TileMap
 {
 	public abstract class TileContainer
 	{
+		#region Properties
+
 		public abstract int Width { get; }
 		public abstract int Height { get; }
 		public abstract int Depth { get; }
@@ -18,8 +20,12 @@ namespace Blarg.GameFramework.TileMap
 		public abstract Vector3 Position { get; }
 		public abstract BoundingBox Bounds { get; }
 
+		#endregion
+
 		public abstract Tile Get(int x, int y, int z);
 		public abstract Tile GetSafe(int x, int y, int z);
+
+		#region Bounds Checks
 
 		public bool IsWithinBounds(int x, int y, int z)
 		{
@@ -94,6 +100,10 @@ namespace Blarg.GameFramework.TileMap
 
 			return true;
 		}
+
+		#endregion
+
+		#region Collision Checks
 
 		public bool CheckForCollision(Ray ray, ref Point3 collisionCoords)
 		{
@@ -306,6 +316,8 @@ namespace Blarg.GameFramework.TileMap
 
 			return collided;
 		}
+
+		#endregion
 	}
 }
 
