@@ -217,6 +217,7 @@
     <Compile Include="TileMap\Meshes\Json\JsonTileDefinition.cs" />
     <Compile Include="TileMap\Meshes\Json\JsonTileMeshCollection.cs" />
     <Compile Include="TileMap\Meshes\Json\JsonTileSubModel.cs" />
+    <Compile Include="TileMap\Meshes\Json\TileMeshCollectionLoader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
