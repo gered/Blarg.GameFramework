@@ -219,6 +219,7 @@
     <Compile Include="Graphics\Atlas\Json\JsonTextureAtlasTile.cs" />
     <Compile Include="Graphics\Atlas\Json\TextureAtlasLoader.cs" />
     <Compile Include="TileMap\TileDataSerializer.cs" />
+    <Compile Include="TileMap\Json\JsonTileMap.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
