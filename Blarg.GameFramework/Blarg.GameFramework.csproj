@@ -218,6 +218,7 @@
     <Compile Include="Graphics\Atlas\Json\JsonTextureAtlasDefinition.cs" />
     <Compile Include="Graphics\Atlas\Json\JsonTextureAtlasTile.cs" />
     <Compile Include="Graphics\Atlas\Json\TextureAtlasLoader.cs" />
+    <Compile Include="TileMap\TileDataSerializer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -248,6 +249,7 @@
     <Folder Include="TileMap\Prefabs\" />
     <Folder Include="TileMap\Meshes\Json\" />
     <Folder Include="Graphics\Atlas\Json\" />
+    <Folder Include="TileMap\Json\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Vera.ttf" />
