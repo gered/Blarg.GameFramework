@@ -213,6 +213,10 @@
     <Compile Include="TileMap\Lighting\LightSpreadingTileMapLighter.cs" />
     <Compile Include="TileMap\Prefabs\TilePrefab.cs" />
     <Compile Include="TileMap\Rotation.cs" />
+    <Compile Include="TileMap\Meshes\Json\JsonCubeTextures.cs" />
+    <Compile Include="TileMap\Meshes\Json\JsonTileDefinition.cs" />
+    <Compile Include="TileMap\Meshes\Json\JsonTileMeshCollection.cs" />
+    <Compile Include="TileMap\Meshes\Json\JsonTileSubModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -241,6 +245,7 @@
     <Folder Include="TileMap\Meshes\" />
     <Folder Include="TileMap\Lighting\" />
     <Folder Include="TileMap\Prefabs\" />
+    <Folder Include="TileMap\Meshes\Json\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Vera.ttf" />
