@@ -5,6 +5,20 @@ namespace Blarg.GameFramework.TileMap
 {
 	public static class TileDataSerializer
 	{
+		public static void Serialize(TileRawDataContainer src, BinaryWriter writer)
+		{
+			var tiles = src.Data;
+			for (int i = 0; i < tiles.Length; ++i)
+				Serialize(tiles[i], writer);
+		}
+
+		public static void Deserialize(BinaryReader reader, TileRawDataContainer dest)
+		{
+			var tiles = dest.Data;
+			for (int i = 0; i < tiles.Length; ++i)
+				Deserialize(reader, tiles[i]);
+		}
+
 		public static void Serialize(Tile src, BinaryWriter writer)
 		{
 			writer.Write(src.TileIndex);
