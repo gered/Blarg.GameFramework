@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 using Blarg.GameFramework.Content;
 using Blarg.GameFramework.IO;
 
-namespace Blarg.GameFramework.Graphics.Atlas
+namespace Blarg.GameFramework.Graphics.Atlas.Json
 {
 	public static class TextureAtlasLoader
 	{

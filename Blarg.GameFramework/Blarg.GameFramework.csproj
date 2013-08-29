@@ -189,9 +189,6 @@
     <Compile Include="Graphics\Atlas\AutoGridTextureAtlas.cs" />
     <Compile Include="Graphics\Atlas\TextureAtlasAnimator.cs" />
     <Compile Include="Graphics\Atlas\TextureAtlasTileAnimation.cs" />
-    <Compile Include="Graphics\Atlas\JsonTextureAtlasDefinition.cs" />
-    <Compile Include="Graphics\Atlas\JsonTextureAtlasTile.cs" />
-    <Compile Include="Graphics\Atlas\TextureAtlasLoader.cs" />
     <Compile Include="ServiceLocatorException.cs" />
     <Compile Include="ConfigFileException.cs" />
     <Compile Include="Content\ContentManagementException.cs" />
@@ -218,6 +215,9 @@
     <Compile Include="TileMap\Meshes\Json\JsonTileMeshCollection.cs" />
     <Compile Include="TileMap\Meshes\Json\JsonTileSubModel.cs" />
     <Compile Include="TileMap\Meshes\Json\TileMeshCollectionLoader.cs" />
+    <Compile Include="Graphics\Atlas\Json\JsonTextureAtlasDefinition.cs" />
+    <Compile Include="Graphics\Atlas\Json\JsonTextureAtlasTile.cs" />
+    <Compile Include="Graphics\Atlas\Json\TextureAtlasLoader.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
@@ -247,6 +247,7 @@
     <Folder Include="TileMap\Lighting\" />
     <Folder Include="TileMap\Prefabs\" />
     <Folder Include="TileMap\Meshes\Json\" />
+    <Folder Include="Graphics\Atlas\Json\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Fonts\Vera.ttf" />

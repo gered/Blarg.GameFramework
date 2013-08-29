@@ -1,6 +1,6 @@
 using System;
 
-namespace Blarg.GameFramework.Graphics.Atlas
+namespace Blarg.GameFramework.Graphics.Atlas.Json
 {
 	public class JsonTextureAtlasTile
 	{

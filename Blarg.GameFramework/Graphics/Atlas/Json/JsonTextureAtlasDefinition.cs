@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Blarg.GameFramework.Graphics.Atlas
+namespace Blarg.GameFramework.Graphics.Atlas.Json
 {
 	public class JsonTextureAtlasDefinition
 	{
