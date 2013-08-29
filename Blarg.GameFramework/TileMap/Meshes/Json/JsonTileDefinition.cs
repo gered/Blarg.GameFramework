@@ -11,7 +11,7 @@ namespace Blarg.GameFramework.TileMap.Meshes.Json
 		public int Texture;
 		public List<string> Faces;
 		public string Model;
-		public List<JsonTileSubModel> JsonTileSubModels;
+		public List<JsonTileSubModel> Models;
 		public string CollisionModel;
 		public string CollisionShape;
 		public List<string> OpaqueSides;
