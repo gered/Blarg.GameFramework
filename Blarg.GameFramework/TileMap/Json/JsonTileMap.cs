@@ -15,4 +15,3 @@ namespace Blarg.GameFramework.TileMap.Json
 		public List<string> Chunks;
 	}
 }
-
