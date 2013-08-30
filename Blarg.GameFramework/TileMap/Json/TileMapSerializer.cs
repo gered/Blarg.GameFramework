@@ -32,6 +32,7 @@ namespace Blarg.GameFramework.TileMap.Json
 
 			var reader = new StreamReader(file);
 			var map = JsonConvert.DeserializeObject<JsonTileMap>(reader.ReadToEnd());
+			reader.Dispose();
 
 			if (map.Chunks == null || map.Chunks.Count == 0)
 				throw new ConfigFileException("Invalid map: no chunks.");

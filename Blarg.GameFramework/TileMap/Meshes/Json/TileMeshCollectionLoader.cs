@@ -11,12 +11,14 @@ namespace Blarg.GameFramework.TileMap.Meshes.Json
 	{
 		public static TileMeshCollection Load(string file, TextureAtlas atlas)
 		{
-			var stream = Framework.FileSystem.Open(file);
-			string path = null;
-			if (file.Contains("/"))
-				path = file.Substring(0, file.LastIndexOf('/') + 1);
-
-			return Load(stream, atlas, path);
+			using (var stream = Framework.FileSystem.Open(file))
+			{
+				string path = null;
+				if (file.Contains("/"))
+					path = file.Substring(0, file.LastIndexOf('/') + 1);
+					
+				return Load(stream, atlas, path);
+			}
 		}
 
 		public static TileMeshCollection Load(Stream file, TextureAtlas atlas, string filePath = null)
@@ -28,6 +30,7 @@ namespace Blarg.GameFramework.TileMap.Meshes.Json
 
 			var reader = new StreamReader(file);
 			var definition = JsonConvert.DeserializeObject<JsonTileMeshCollection>(reader.ReadToEnd());
+			reader.Dispose();
 
 			var collection = new TileMeshCollection(atlas);
 

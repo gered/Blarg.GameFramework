@@ -10,12 +10,14 @@ namespace Blarg.GameFramework.Graphics.Atlas.Json
 	{
 		public static TextureAtlas Load(string file)
 		{
-			var stream = Framework.FileSystem.Open(file);
-			string path = null;
-			if (file.Contains("/"))
-				path = file.Substring(0, file.LastIndexOf('/') + 1);
-
-			return Load(stream, path);
+			using (var stream = Framework.FileSystem.Open(file))
+			{
+				string path = null;
+				if (file.Contains("/"))
+					path = file.Substring(0, file.LastIndexOf('/') + 1);
+					
+				return Load(stream, path);
+			}
 		}
 
 		public static TextureAtlas Load(Stream file, string texturePath = null)
@@ -25,6 +27,7 @@ namespace Blarg.GameFramework.Graphics.Atlas.Json
 
 			var reader = new StreamReader(file);
 			var definition = JsonConvert.DeserializeObject<JsonTextureAtlasDefinition>(reader.ReadToEnd());
+			reader.Dispose();
 
 			if (definition.Texture == null)
 				throw new ConfigFileException("No texture file specified.");
