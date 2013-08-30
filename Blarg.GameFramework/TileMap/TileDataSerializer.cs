@@ -5,6 +5,8 @@ namespace Blarg.GameFramework.TileMap
 {
 	public static class TileDataSerializer
 	{
+		public const int TILE_SIZE_BYTES = 17;   // because sizeof() only works with value types
+
 		public static void Serialize(TileRawDataContainer src, BinaryWriter writer)
 		{
 			var tiles = src.Data;

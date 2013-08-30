@@ -1,22 +1,26 @@
 using System;
-using Blarg.GameFramework.TileMap.Meshes;
-using Blarg.GameFramework.TileMap;
 using System.IO;
 using Newtonsoft.Json;
+using Blarg.GameFramework.IO;
+using Blarg.GameFramework.TileMap;
 using Blarg.GameFramework.TileMap.Lighting;
+using Blarg.GameFramework.TileMap.Meshes;
+using System.Collections.Generic;
 
 namespace Blarg.GameFramework.TileMap.Json
 {
-	public static class TileMapLoader
+	public static class TileMapSerializer
 	{
 		public static TileMap Load(string file, TileMeshCollection tileMeshes)
 		{
-			var stream = Framework.FileSystem.Open(file);
-			string path = null;
-			if (file.Contains("/"))
-				path = file.Substring(0, file.LastIndexOf('/') + 1);
+			using (var stream = Framework.FileSystem.Open(file))
+			{
+				string path = null;
+				if (file.Contains("/"))
+					path = file.Substring(0, file.LastIndexOf('/') + 1);
 
-			return Load(stream, tileMeshes, path);
+				return Load(stream, tileMeshes, path);
+			}
 		}
 
 		public static TileMap Load(Stream file, TileMeshCollection tileMeshes, string path = null)
@@ -67,6 +71,55 @@ namespace Blarg.GameFramework.TileMap.Json
 			}
 
 			return tileMap;
+		}
+
+		public static void Save(TileMap tileMap, string file)
+		{
+			using (var stream = Framework.FileSystem.Open(file, FileOpenMode.Create))
+			{
+				Save(tileMap, stream);
+			}
+		}
+
+		public static void Save(TileMap tileMap, Stream file)
+		{
+			if (tileMap == null)
+				throw new ArgumentNullException("tileMap");
+			if (file == null)
+				throw new ArgumentNullException("file");
+
+			var map = new JsonTileMap();
+			map.ChunkWidth = tileMap.ChunkWidth;
+			map.ChunkHeight = tileMap.ChunkHeight;
+			map.ChunkDepth = tileMap.ChunkDepth;
+			map.WidthInChunks = tileMap.WidthInChunks;
+			map.HeightInChunks = tileMap.HeightInChunks;
+			map.DepthInChunks = tileMap.DepthInChunks;
+
+			// TODO: figure out real lighting mode from the types of vertex generator / lighter objects set
+			map.LightingMode = null;
+
+			// each serialized chunk will be the same size in bytes (same number of tiles in each)
+			int chunkSizeInBytes = tileMap.Chunks[0].Data.Length * TileDataSerializer.TILE_SIZE_BYTES;
+
+			map.Chunks = new List<string>(tileMap.Chunks.Length);
+			for (int i = 0; i < tileMap.Chunks.Length; ++i)
+			{
+				var chunk = tileMap.Chunks[i];
+
+				var buffer = new MemoryStream(chunkSizeInBytes);
+				using (var byteWriter = new BinaryWriter(buffer))
+				{
+					TileDataSerializer.Serialize(chunk, byteWriter);
+				}
+
+				map.Chunks.Add(Convert.ToBase64String(buffer.ToArray()));
+			}
+
+			using (var writer = new StreamWriter(file))
+			{
+				writer.Write(JsonConvert.SerializeObject(map, Formatting.Indented));
+			}
 		}
 	}
 }
