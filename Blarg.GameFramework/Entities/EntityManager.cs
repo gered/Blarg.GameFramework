@@ -104,10 +104,14 @@ namespace Blarg.GameFramework.Entities
 		}
 
 
-		public void GetAllWith<T>(EntityList list) where T : Component
+		public void GetAllWith<T>(EntityList list, bool clearListFirst = true) where T : Component
 		{
 			if (list == null)
 				throw new ArgumentNullException("list", "Must provide a list to store matching Entity's in.");
+
+			if (clearListFirst)
+				list.Clear();
+
 			EntityToComponentMap componentEntities = _components.Get(typeof(T));
 			if (componentEntities == null)
 				return;
