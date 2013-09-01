@@ -97,12 +97,10 @@ namespace Blarg.GameFramework.Entities
 			if (componentEntities == null)
 				return null;
 
-			if (componentEntities.Count > 0)
-				return componentEntities.Keys.GetEnumerator().Current;
-			else
-				return null;
+			var enumerator = componentEntities.Keys.GetEnumerator();
+			enumerator.MoveNext();
+			return enumerator.Current;
 		}
-
 
 		public void GetAllWith<T>(EntityList list, bool clearListFirst = true) where T : Component
 		{
