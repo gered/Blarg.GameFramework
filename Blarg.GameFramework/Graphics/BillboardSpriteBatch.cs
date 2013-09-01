@@ -452,6 +452,12 @@ namespace Blarg.GameFramework.Graphics
 		{
 			if (!_hasBegunRendering)
 				throw new InvalidOperationException();
+
+			if (GetRemainingSpriteSpaces() < 1)
+				AddMoreSpriteSpace(ResizeSpriteIncrement);
+
+			SetSpriteInfo(_currentSpritePointer, type, ref transform, texture, ref offset, width, height, texCoordLeft, texCoordTop, texCoordRight, texCoordBottom, ref color);
+			++_currentSpritePointer;
 		}
 
 		private void SetSpriteInfo(int spriteIndex, BillboardSpriteType type, ref Matrix4x4 transform, Texture texture, ref Vector3 offset, float width, float height, float texCoordLeft, float texCoordTop, float texCoordRight, float texCoordBottom, ref Color color)
