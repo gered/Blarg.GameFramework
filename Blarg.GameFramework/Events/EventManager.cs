@@ -217,6 +217,11 @@ namespace Blarg.GameFramework.Events
 		{
 			ObjectPools.Free<T>(e);
 		}
+
+		public void Free(Event e)
+		{
+			ObjectPools.Free(e.GetType(), e);
+		}
 	}
 }
 
