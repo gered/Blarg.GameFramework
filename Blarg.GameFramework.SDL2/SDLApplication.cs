@@ -125,12 +125,13 @@ namespace Blarg.GameFramework
 			Logger.Info(LOG_TAG, "\tHeight: {0}", sdlConfig.Height);
 			Logger.Info(LOG_TAG, "\tFullscreen: {0}", sdlConfig.Fullscreen);
 			Logger.Info(LOG_TAG, "\tResizeable: {0}", sdlConfig.Resizeable);
-			Logger.Info(LOG_TAG, "GL Doublebuffer: {0}", sdlConfig.glDoubleBuffer);
-			Logger.Info(LOG_TAG, "GL Depth Buffer Size: {0}", sdlConfig.glDepthBufferSize);
-			Logger.Info(LOG_TAG, "GL Red Size: {0}", sdlConfig.glRedSize);
-			Logger.Info(LOG_TAG, "GL Green Size: {0}", sdlConfig.glGreenSize);
-			Logger.Info(LOG_TAG, "GL Blue Size: {0}", sdlConfig.glBlueSize);
-			Logger.Info(LOG_TAG, "GL Alpha Size: {0}", sdlConfig.glAlphaSize);
+			Logger.Info(LOG_TAG, "\tGL Doublebuffer: {0}", sdlConfig.glDoubleBuffer);
+			Logger.Info(LOG_TAG, "\tGL Depth Buffer Size: {0}", sdlConfig.glDepthBufferSize);
+			Logger.Info(LOG_TAG, "\tGL Red Size: {0}", sdlConfig.glRedSize);
+			Logger.Info(LOG_TAG, "\tGL Green Size: {0}", sdlConfig.glGreenSize);
+			Logger.Info(LOG_TAG, "\tGL Blue Size: {0}", sdlConfig.glBlueSize);
+			Logger.Info(LOG_TAG, "\tGL Alpha Size: {0}", sdlConfig.glAlphaSize);
+			Logger.Info(LOG_TAG, "\tTarget Update Frequency: {0}", sdlConfig.TargetUpdateFrequency);
 
 			if (!InitSDL())
 			{
@@ -147,6 +148,8 @@ namespace Blarg.GameFramework
 			Framework.Set(this);
 
 			Logger.Info(LOG_TAG, "Framework initialization complete, beginning game application set up.");
+
+			SetUpdateFrequency(sdlConfig.TargetUpdateFrequency);
 
 			OnInit();
 			OnNewContext();

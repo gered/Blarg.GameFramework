@@ -19,6 +19,8 @@ namespace Blarg.GameFramework
 		public int glBlueSize;
 		public int glAlphaSize;
 
+		public int TargetUpdateFrequency;
+
 		public SDLConfiguration()
 		{
 			Title = "SDL Application";
@@ -34,6 +36,7 @@ namespace Blarg.GameFramework
 			glGreenSize = 8;
 			glBlueSize = 8;
 			glAlphaSize = 8;
+			TargetUpdateFrequency = 25;
 		}
 	}
 }
