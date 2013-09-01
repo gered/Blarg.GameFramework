@@ -13,6 +13,7 @@ namespace Blarg.GameFramework.Entities
 	using ComponentStore = Dictionary<Type, Dictionary<Entity, Component>>;
 	using GlobalComponentStore = Dictionary<Type, Component>;
 	using ComponentSystemList = List<ComponentSystem>;
+	using EntityPresetMap = Dictionary<Type, EntityPreset>;
 
 	public class EntityManager : IDisposable
 	{
@@ -22,6 +23,7 @@ namespace Blarg.GameFramework.Entities
 		ComponentStore _components;
 		GlobalComponentStore _globalComponents;
 		ComponentSystemList _componentSystems;
+		EntityPresetMap _presets;
 
 		EntityPool _entityPool;
 
@@ -37,6 +39,7 @@ namespace Blarg.GameFramework.Entities
 			_components = new ComponentStore();
 			_globalComponents = new GlobalComponentStore();
 			_componentSystems = new ComponentSystemList();
+			_presets = new EntityPresetMap();
 
 			_entityPool = new EntityPool(this);
 
@@ -82,12 +85,52 @@ namespace Blarg.GameFramework.Entities
 
 		#endregion
 
+		#region Preset management
+
+		public void AddPreset<T>() where T : EntityPreset
+		{
+			if (_presets.ContainsKey(typeof(T)))
+			    throw new InvalidOperationException("EntityPreset of that type is already registered.");
+
+			T preset = (T)Activator.CreateInstance(typeof(T), this);
+			_presets.Add(typeof(T), preset);
+		}
+
+		public void RemovePreset<T>() where T : EntityPreset
+		{
+			_presets.Remove(typeof(T));
+		}
+
+		public void RemoveAllPresets()
+		{
+			_presets.Clear();
+		}
+
+		#endregion
+
 		#region Entity management
 
 		public Entity Add()
 		{
 			var entity = _entityPool.Take();
 			_entities.Add(entity);
+			return entity;
+		}
+
+		public Entity AddUsingPreset<T>() where T : EntityPreset
+		{
+			return AddUsingPreset<T>(new EntityPreset.EmptyEntityPresetArgs());
+		}
+
+		public Entity AddUsingPreset<T>(EntityPresetArgs args) where T : EntityPreset
+		{
+			var preset = _presets.Get(typeof(T));
+			if (preset == null)
+				throw new InvalidOperationException("Cannot add entity using a non-existant preset.");
+
+			var entity = preset.Create(args);
+			entity.Add<EntityPresetComponent>().PresetType = typeof(T);
+
 			return entity;
 		}
 
