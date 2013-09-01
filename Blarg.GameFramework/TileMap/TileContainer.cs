@@ -62,7 +62,7 @@ namespace Blarg.GameFramework.TileMap
 			result.Max += Bounds.Min;
 		}
 
-		public bool GetOverlappedTiles(BoundingBox box, Point3 min, Point3 max)
+		public bool GetOverlappedTiles(BoundingBox box, ref Point3 min, ref Point3 max)
 		{
 			// make sure the given box actually intersects with this TileContainer in the first place
 			var bounds = Bounds;
