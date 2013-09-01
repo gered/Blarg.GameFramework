@@ -85,7 +85,7 @@ namespace Blarg.GameFramework.Events
 				return false;
 		}
 
-		public bool Trigger(Event e)
+		public bool Trigger<T>(T e) where T : Event
 		{
 			if (e == null)
 				throw new ArgumentNullException("e");
@@ -121,7 +121,7 @@ namespace Blarg.GameFramework.Events
 			return result;
 		}
 
-		public bool Queue(Event e)
+		public bool Queue<T>(T e) where T : Event
 		{
 			if (e == null)
 				throw new ArgumentNullException("e");
