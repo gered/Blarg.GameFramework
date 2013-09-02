@@ -5,6 +5,8 @@ namespace Blarg.GameFramework
 {
 	public static class MathHelpers
 	{
+		public static Random Random = new Random();
+
 		/// <summary>
 		/// Converts coordinates from spherical to cartesian.
 		/// </summary>
