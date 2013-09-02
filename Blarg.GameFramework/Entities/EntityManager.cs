@@ -119,17 +119,32 @@ namespace Blarg.GameFramework.Entities
 
 		public Entity AddUsingPreset<T>() where T : EntityPreset
 		{
-			return AddUsingPreset<T>(new EntityPreset.EmptyEntityPresetArgs());
+			return AddUsingPreset(typeof(T), new EntityPreset.EmptyEntityPresetArgs());
 		}
 
 		public Entity AddUsingPreset<T>(EntityPresetArgs args) where T : EntityPreset
 		{
-			var preset = _presets.Get(typeof(T));
+			return AddUsingPreset(typeof(T), args);
+		}
+
+		public Entity AddUsingPreset(Type presetType)
+		{
+			return AddUsingPreset(presetType, new EntityPreset.EmptyEntityPresetArgs());
+		}
+
+		public Entity AddUsingPreset(Type presetType, EntityPresetArgs args)
+		{
+			if (presetType == null)
+				throw new ArgumentNullException("presetType");
+			if (!typeof(EntityPreset).IsAssignableFrom(presetType))
+				throw new ArgumentException("Type specified is not an EntityPreset sub type.");
+
+			var preset = _presets.Get(presetType);
 			if (preset == null)
 				throw new InvalidOperationException("Cannot add entity using a non-existant preset.");
 
 			var entity = preset.Create(args);
-			entity.Add<EntityPresetComponent>().PresetType = typeof(T);
+			entity.Add<EntityPresetComponent>().PresetType = presetType;
 
 			return entity;
 		}
