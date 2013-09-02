@@ -40,6 +40,7 @@ namespace Blarg.GameFramework.Graphics
 		}
 
 		public bool DepthTesting;
+		public bool DepthWriting;
 		public DepthFunc DepthFunc;
 		public bool FaceCulling;
 		public CullMode FaceCullingMode;
@@ -76,6 +77,8 @@ namespace Blarg.GameFramework.Graphics
 			else
 				graphicsDevice.GL.glDisable(GL20.GL_DEPTH_TEST);
 
+			graphicsDevice.GL.glDepthMask(DepthWriting);
+
 			if (FaceCulling)
 			{
 				graphicsDevice.GL.glEnable(GL20.GL_CULL_FACE);
@@ -95,6 +98,7 @@ namespace Blarg.GameFramework.Graphics
 		private void Init()
 		{
 			DepthTesting = true;
+			DepthWriting = true;
 			DepthFunc = DepthFunc.Less;
 			FaceCulling = true;
 			FaceCullingMode = CullMode.Back;
@@ -106,6 +110,7 @@ namespace Blarg.GameFramework.Graphics
 			var clone = new RenderState();
 			clone.DepthFunc = DepthFunc;
 			clone.DepthTesting = DepthTesting;
+			clone.DepthWriting = DepthWriting;
 			clone.FaceCulling = FaceCulling;
 			clone.FaceCullingMode = FaceCullingMode;
 			clone.LineWidth = LineWidth;
