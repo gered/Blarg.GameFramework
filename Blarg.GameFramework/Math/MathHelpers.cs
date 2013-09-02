@@ -87,6 +87,19 @@ namespace Blarg.GameFramework
 		}
 
 		/// <summary>
+		/// Returns the angle of rotation around the Y axis between the two
+		/// 3D points. This is calculated by only looking at the X and Z
+		/// components of each point.
+		/// </summary>
+		/// <returns>The angle of rotation (in radians) around the Y axis between the two points</returns>
+		/// <param name="a">The first point</param>
+		/// <param name="b">The second point</param>
+		public static float GetYAngleBetweenPoints(Vector3 a, Vector3 b)
+		{
+			return GetAngleBetweenPoints(a.X, a.Z, b.X, b.Z);
+		}
+
+		/// <summary>
 		/// Solves a quadratic equation and returns the lowest root.
 		/// </summary>
 		/// <returns>true if the quadratic could be solved, false if not</returns>
