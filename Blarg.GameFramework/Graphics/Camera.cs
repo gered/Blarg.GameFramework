@@ -2,100 +2,58 @@ using System;
 
 namespace Blarg.GameFramework.Graphics
 {
-	public class Camera
+	public abstract class Camera
 	{
-		ViewContext _viewContext;
-		float _nearHeight;
-		float _nearWidth;
-
 		public readonly Frustum Frustum;
 		public Matrix4x4 LookAt;
 		public Matrix4x4 Projection;
-		public Vector3 Forward;
-		public Vector3 Up;
-
-		public Vector3 Orientation;
 		public Vector3 Position;
+		public Vector3 Direction;
+		public Vector3 Up;
+		public float Near;
+		public float Far;
 
-		public int ViewportWidth { get; private set; }
-		public int ViewportHeight { get; private set; }
-		public float AspectRatio { get; private set; }
-		public float Near { get; private set; }
-		public float Far { get; private set; }
-		public float FieldOfViewAngle { get; private set; }
+		public int ViewportWidth { get; protected set; }
+		public int ViewportHeight { get; protected set; }
 
-		public Camera(ViewContext viewContext, float near = 1.0f, float far = 50.0f, float fieldOfView = MathConstants.Radians60)
+		protected readonly ViewContext ViewContext;
+		protected float NearWidth;
+		protected float NearHeight;
+
+		public Camera(ViewContext viewContext, float near = 1.0f, float far = 50.0f)
 		{
 			if (viewContext == null)
 				throw new ArgumentNullException("viewContext");
 
-			_viewContext = viewContext;
+			ViewContext = viewContext;
 			Frustum = new Frustum(this);
 			Position = Vector3.Zero;
-			Orientation = Vector3.Zero;
-			Forward = Vector3.Zero;
+			Direction = Vector3.Forward;
 			Up = Vector3.Up;
 			LookAt = Matrix4x4.Identity;
 
-			FieldOfViewAngle = fieldOfView;
 			Near = near;
 			Far = far;
 
-			CalculateDefaultProjection(
-				_viewContext.ViewportLeft, 
-				_viewContext.ViewportTop, 
-				_viewContext.ViewportRight, 
-				_viewContext.ViewportBottom
-				);
+			Update();
 		}
 
-		public virtual void OnUpdate(float delta)
-		{
-		}
-
-		public virtual void OnRender(float delta)
-		{
-			Vector3 movement = Vector3.Zero;
-			UpdateLookAtMatrix(ref movement);
-			_viewContext.ModelViewMatrix = LookAt;
-			Frustum.Calculate();
-		}
-
-		public virtual void OnResize(ref Rect size)
-		{
-			CalculateDefaultProjection(size.Left, size.Top, size.Right, size.Bottom);
-			_viewContext.ProjectionMatrix = Projection;
-		}
-
-		public virtual void UpdateProjectionMatrix()
-		{
-			CalculateDefaultProjection(
-				_viewContext.ViewportLeft,
-				_viewContext.ViewportTop,
-				_viewContext.ViewportRight,
-				_viewContext.ViewportBottom
-				);
-		}
-
-		public virtual void UpdateLookAtMatrix(ref Vector3 movement)
-		{
-			CalculateDefaultLookAt(ref movement);
-		}
+		public abstract void Update();
 
 		public Ray Pick(int screenX, int screenY)
 		{
-			float nx = 2.0f * ((float)(screenX - (_viewContext.ViewportWidth / 2))) / ((float)_viewContext.ViewportWidth);
-			float ny = 2.0f * -((float)(screenY - (_viewContext.ViewportHeight / 2))) / ((float)_viewContext.ViewportHeight);
+			float nx = 2.0f * ((float)(screenX - (ViewContext.ViewportWidth / 2))) / ((float)ViewContext.ViewportWidth);
+			float ny = 2.0f * -((float)(screenY - (ViewContext.ViewportHeight / 2))) / ((float)ViewContext.ViewportHeight);
 
 			// pick ray calculation method copied from http://code.google.com/p/libgdx/
-			Vector3 vz = Vector3.Normalize(Forward * -1.0f);
+			Vector3 vz = Vector3.Normalize(Direction * -1.0f);
 			Vector3 vx = Vector3.Normalize(Vector3.Cross(Vector3.Up, vz));
 			Vector3 vy = Vector3.Normalize(Vector3.Cross(vz, vx));
 
 			Vector3 near_center = Position - (vz * Near);
 
-			Vector3 a = (vx * _nearWidth) * nx;
-			Vector3 b = (vy * _nearHeight) * ny;
+			Vector3 a = (vx * NearWidth) * nx;
+			Vector3 b = (vy * NearHeight) * ny;
 			Vector3 near_point = a + b + near_center;
 
 			Vector3 dir = Vector3.Normalize(near_point - Position);
@@ -105,8 +63,8 @@ namespace Blarg.GameFramework.Graphics
 
 		public Point2 Project(ref Vector3 objectPosition)
 		{
-			Matrix4x4 modelview = _viewContext.ModelViewMatrix;
-			Matrix4x4 projection = _viewContext.ProjectionMatrix;
+			Matrix4x4 modelview = ViewContext.ModelViewMatrix;
+			Matrix4x4 projection = ViewContext.ProjectionMatrix;
 
 			return Project(ref objectPosition, ref modelview, ref projection);
 		}
@@ -137,44 +95,14 @@ namespace Blarg.GameFramework.Graphics
 
 			// map to 2D viewport coordinates (ignoring Z)
 			Point2 result;
-			result.X = (int)(((transformedX * 0.5f) + 0.5f) * (float)_viewContext.PixelScaler.ScaledWidth + (float)_viewContext.PixelScaler.ScaledViewport.Left);
-			result.Y = (int)(((transformedY * 0.5f) + 0.5f) * (float)_viewContext.PixelScaler.ScaledHeight + (float)_viewContext.PixelScaler.ScaledViewport.Top);
+			result.X = (int)(((transformedX * 0.5f) + 0.5f) * (float)ViewContext.PixelScaler.ScaledWidth + (float)ViewContext.PixelScaler.ScaledViewport.Left);
+			result.Y = (int)(((transformedY * 0.5f) + 0.5f) * (float)ViewContext.PixelScaler.ScaledHeight + (float)ViewContext.PixelScaler.ScaledViewport.Top);
 			// float z = (1.0f + transformedZ) * 0.5f;   // would be between 0.0f and 1.0f
 
 			// adjust Y coordinate so that 0 is at the top of the screen instead of the bottom
-			result.Y = (int)_viewContext.PixelScaler.ScaledHeight - result.Y;
+			result.Y = (int)ViewContext.PixelScaler.ScaledHeight - result.Y;
 
 			return result; 
-		}
-
-		protected void CalculateDefaultProjection(int left, int top, int right, int bottom)
-		{
-			ViewportWidth = right - left;
-			ViewportHeight = bottom - top;
-
-			AspectRatio = (float)ViewportWidth / (float)ViewportHeight;
-
-			_nearHeight = Near * (float)Math.Tan(FieldOfViewAngle / 2.0f);
-			_nearWidth = _nearHeight * AspectRatio;
-
-			Projection = Matrix4x4.CreatePerspectiveFieldOfView(FieldOfViewAngle, AspectRatio, Near, Far);
-		}
-
-		protected void CalculateDefaultLookAt(ref Vector3 movement)
-		{
-			// final camera orientation. angles must be negative (or rather, inverted) for the camera matrix. also the matrix concatenation order is important!
-			Matrix4x4 rotation = Matrix4x4.CreateRotationY(-Orientation.Y) * Matrix4x4.CreateRotationX(-Orientation.X);
-
-			// apply orientation to forward, movement and up vectors so they're pointing in the right direction
-			Forward = Matrix4x4.Transform(rotation, Vector3.Forward);
-			Up = Matrix4x4.Transform(rotation, Vector3.Up);
-			Vector3 orientedMovement = Matrix4x4.Transform(rotation, movement);
-
-			// move the camera position
-			Position += orientedMovement;
-
-			Vector3 target = Forward + Position;
-			LookAt = Matrix4x4.CreateLookAt(Position, target, Vector3.Up);
 		}
 	}
 }

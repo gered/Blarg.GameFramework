@@ -135,7 +135,6 @@
     <Compile Include="Graphics\SpriteBatch.cs" />
     <Compile Include="Graphics\BillboardSpriteBatch.cs" />
     <Compile Include="Graphics\Helpers\FlatWireframeGrid.cs" />
-    <Compile Include="Support\FreeMovementCamera.cs" />
     <Compile Include="Support\StringBuilderExtensions.cs" />
     <Compile Include="Graphics\Helpers\GraphicsHelpers.cs" />
     <Compile Include="Support\BitExtensions.cs" />
@@ -225,6 +224,8 @@
     <Compile Include="Entities\EntityPreset.cs" />
     <Compile Include="Entities\EntityPresetArgs.cs" />
     <Compile Include="Entities\SystemComponents\EntityPresetComponent.cs" />
+    <Compile Include="Graphics\PerspectiveCamera.cs" />
+    <Compile Include="Graphics\EulerPerspectiveCamera.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

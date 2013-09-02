@@ -55,7 +55,7 @@ namespace Blarg.GameFramework.Graphics
 				// not using the default camera, and clearing ("nulling") the camera
 				else if (!_isUsingDefaultCamera && value == null)
 				{
-					_camera = new Camera(this);
+					_camera = new PerspectiveCamera(this);
 					_isUsingDefaultCamera = true;
 					cameraWasChanged = true;
 				}
@@ -183,7 +183,7 @@ namespace Blarg.GameFramework.Graphics
 			_viewport = viewport;
 			_viewportIsFixedSize = isFixedSizeViewport;
 			_screenOrientation = ScreenOrientation.Rotation0;
-			_camera = new Camera(this);
+			_camera = new PerspectiveCamera(this);
 			_isUsingDefaultCamera = true;
 			_pixelScaler = new NoScaleOrthoPixelScaler();
 			_isUsingDefaultPixelScaler = true;
@@ -207,18 +207,12 @@ namespace Blarg.GameFramework.Graphics
 		public void OnRender(float delta)
 		{
 			if (_camera != null)
-				_camera.OnRender(delta);
+				_camera.Update();
 		}
 
 		public void OnApply(ref Rect size, ScreenOrientation screenOrientation = ScreenOrientation.Rotation0)
 		{
 			SetupViewport(ref size, screenOrientation);
-
-			// ensures it's set up for rendering immediately when this call returns
-			// NOTE: we assume OnApply() is going to be called in some other class's
-			//       OnRender() event only (like, e.g. if a new framebuffer is bound)
-			if (_camera != null)
-				_camera.OnRender(0.0f);
 		}
 
 		private void SetupViewport(ref Rect size, ScreenOrientation screenOrientation)
@@ -257,7 +251,7 @@ namespace Blarg.GameFramework.Graphics
 
 			// we also **don't** want the camera to work with a rotated viewport
 			if (_camera != null)
-				_camera.OnResize(ref _viewport);
+				_camera.Update();
 		}
 	}
 }

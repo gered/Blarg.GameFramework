@@ -127,7 +127,7 @@ namespace Blarg.GameFramework.Graphics
 				throw new InvalidOperationException();
 
 			_cameraPosition = GraphicsDevice.ViewContext.Camera.Position;
-			_cameraForward = GraphicsDevice.ViewContext.Camera.Forward;
+			_cameraForward = GraphicsDevice.ViewContext.Camera.Direction;
 
 			if (shader == null)
 				_shader = GraphicsDevice.Sprite3DShader;
