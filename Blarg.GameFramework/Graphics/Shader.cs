@@ -617,6 +617,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				cachedUniform.Type = ShaderCachedUniformType.Float1;
 				cachedUniform.Floats[0] = x;
+				cachedUniform.HasNewValue = true;
 			}
 		}
 
@@ -638,6 +639,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				cachedUniform.Type = ShaderCachedUniformType.Int1;
 				cachedUniform.Ints[0] = x;
+				cachedUniform.HasNewValue = true;
 			}
 		}
 
@@ -660,6 +662,7 @@ namespace Blarg.GameFramework.Graphics
 				cachedUniform.Type = ShaderCachedUniformType.Float2;
 				cachedUniform.Floats[0] = x;
 				cachedUniform.Floats[1] = y;
+				cachedUniform.HasNewValue = true;
 			}
 		}
 
@@ -682,6 +685,7 @@ namespace Blarg.GameFramework.Graphics
 				cachedUniform.Type = ShaderCachedUniformType.Int2;
 				cachedUniform.Ints[0] = x;
 				cachedUniform.Ints[1] = y;
+				cachedUniform.HasNewValue = true;
 			}
 		}
 
@@ -709,6 +713,7 @@ namespace Blarg.GameFramework.Graphics
 				cachedUniform.Type = ShaderCachedUniformType.Float2;
 				cachedUniform.Floats[0] = v.X;
 				cachedUniform.Floats[1] = v.Y;
+				cachedUniform.HasNewValue = true;
 			}
 		}
 
@@ -736,6 +741,7 @@ namespace Blarg.GameFramework.Graphics
 				cachedUniform.Type = ShaderCachedUniformType.Int2;
 				cachedUniform.Ints[0] = p.X;
 				cachedUniform.Ints[1] = p.Y;
+				cachedUniform.HasNewValue = true;
 			}
 		}
 
@@ -759,6 +765,7 @@ namespace Blarg.GameFramework.Graphics
 				cachedUniform.Floats[0] = x;
 				cachedUniform.Floats[1] = y;
 				cachedUniform.Floats[2] = z;
+				cachedUniform.HasNewValue = true;
 			}
 		}
 
@@ -782,6 +789,7 @@ namespace Blarg.GameFramework.Graphics
 				cachedUniform.Ints[0] = x;
 				cachedUniform.Ints[1] = y;
 				cachedUniform.Ints[2] = z;
+				cachedUniform.HasNewValue = true;
 			}
 		}
 
@@ -810,6 +818,7 @@ namespace Blarg.GameFramework.Graphics
 				cachedUniform.Floats[0] = v.X;
 				cachedUniform.Floats[1] = v.Y;
 				cachedUniform.Floats[2] = v.Z;
+				cachedUniform.HasNewValue = true;
 			}
 		}
 
@@ -838,6 +847,7 @@ namespace Blarg.GameFramework.Graphics
 				cachedUniform.Ints[0] = p.X;
 				cachedUniform.Ints[1] = p.Y;
 				cachedUniform.Ints[2] = p.Z;
+				cachedUniform.HasNewValue = true;
 			}
 		}
 
@@ -862,6 +872,7 @@ namespace Blarg.GameFramework.Graphics
 				cachedUniform.Floats[1] = y;
 				cachedUniform.Floats[2] = z;
 				cachedUniform.Floats[3] = w;
+				cachedUniform.HasNewValue = true;
 			}
 		}
 
@@ -886,6 +897,7 @@ namespace Blarg.GameFramework.Graphics
 				cachedUniform.Ints[1] = y;
 				cachedUniform.Ints[2] = z;
 				cachedUniform.Ints[3] = w;
+				cachedUniform.HasNewValue = true;
 			}
 		}
 
@@ -915,6 +927,7 @@ namespace Blarg.GameFramework.Graphics
 				cachedUniform.Floats[1] = v.Y;
 				cachedUniform.Floats[2] = v.Z;
 				cachedUniform.Floats[3] = v.W;
+				cachedUniform.HasNewValue = true;
 			}
 		}
 
@@ -944,6 +957,7 @@ namespace Blarg.GameFramework.Graphics
 				cachedUniform.Floats[1] = q.Y;
 				cachedUniform.Floats[2] = q.Z;
 				cachedUniform.Floats[3] = q.W;
+				cachedUniform.HasNewValue = true;
 			}
 		}
 
@@ -973,6 +987,7 @@ namespace Blarg.GameFramework.Graphics
 				cachedUniform.Floats[1] = c.G;
 				cachedUniform.Floats[2] = c.B;
 				cachedUniform.Floats[3] = c.A;
+				cachedUniform.HasNewValue = true;
 			}
 		}
 
@@ -999,6 +1014,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				cachedUniform.Type = ShaderCachedUniformType.Float9;
 				m.ToArray(cachedUniform.Floats);
+				cachedUniform.HasNewValue = true;
 			}
 		}
 
@@ -1025,6 +1041,7 @@ namespace Blarg.GameFramework.Graphics
 					throw new ArgumentException("Invalid uniform.");
 				cachedUniform.Type = ShaderCachedUniformType.Float16;
 				m.ToArray(cachedUniform.Floats);
+				cachedUniform.HasNewValue = true;
 			}
 		}
 
