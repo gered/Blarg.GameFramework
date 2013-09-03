@@ -226,6 +226,7 @@
     <Compile Include="Entities\SystemComponents\EntityPresetComponent.cs" />
     <Compile Include="Graphics\PerspectiveCamera.cs" />
     <Compile Include="Graphics\EulerPerspectiveCamera.cs" />
+    <Compile Include="Graphics\Helpers\SkyBox.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
