@@ -8,7 +8,7 @@ namespace Blarg.GameFramework.Graphics.Atlas.Json
 {
 	public static class TextureAtlasLoader
 	{
-		public static TextureAtlas Load(string file)
+		public static TextureAtlas Load(string file, TextureAtlasAnimator animator = null)
 		{
 			using (var stream = Framework.FileSystem.Open(file))
 			{
@@ -16,11 +16,16 @@ namespace Blarg.GameFramework.Graphics.Atlas.Json
 				if (file.Contains("/"))
 					path = file.Substring(0, file.LastIndexOf('/') + 1);
 					
-				return Load(stream, path);
+				return Load(stream, animator, path);
 			}
 		}
 
 		public static TextureAtlas Load(Stream file, string texturePath = null)
+		{
+			return Load(file, null, texturePath);
+		}
+
+		public static TextureAtlas Load(Stream file, TextureAtlasAnimator animator, string texturePath = null)
 		{
 			if (file == null)
 				throw new ArgumentNullException("file");
@@ -52,6 +57,23 @@ namespace Blarg.GameFramework.Graphics.Atlas.Json
 					atlas.AddGrid(tile.X, tile.Y, tile.TileWidth, tile.TileHeight, tile.NumTilesX, tile.NumTilesY, tile.Border);
 				else
 					atlas.Add(tile.X, tile.Y, tile.Width, tile.Height);
+			}
+
+			if (definition.Animations != null && definition.Animations.Count > 0 && animator != null)
+			{
+				for (int i = 0; i < definition.Animations.Count; ++i)
+				{
+					var animation = definition.Animations[i];
+					// TODO: parameter value error checking
+					animator.AddSequence(animation.Name, 
+					                     atlas, 
+					                     animation.TileIndex,
+					                     animation.StartIndex,
+					                     animation.EndIndex,
+					                     animation.Delay,
+					                     animation.Loop);
+				}
+
 			}
 
 			return atlas;
