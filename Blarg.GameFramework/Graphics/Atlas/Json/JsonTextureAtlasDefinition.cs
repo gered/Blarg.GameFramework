@@ -7,7 +7,7 @@ namespace Blarg.GameFramework.Graphics.Atlas.Json
 	{
 		public string Texture;
 		public List<JsonTextureAtlasTile> Tiles;
-
+		public List<JsonTextureAtlasAnimation> Animations;
 	}
 }
 
