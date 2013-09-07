@@ -228,6 +228,7 @@
     <Compile Include="Graphics\EulerPerspectiveCamera.cs" />
     <Compile Include="Graphics\Helpers\SkyBox.cs" />
     <Compile Include="Graphics\Atlas\Json\JsonTextureAtlasAnimation.cs" />
+    <Compile Include="Math\RandomExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>
