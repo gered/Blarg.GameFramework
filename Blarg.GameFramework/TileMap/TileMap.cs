@@ -222,12 +222,30 @@ namespace Blarg.GameFramework.TileMap
 			return chunk.Get(chunkX, chunkY, chunkZ);
 		}
 
+		public override Tile Get(Point3 p)
+		{
+			var chunk = GetChunkContaining(p.X, p.Y, p.Z);
+			int chunkX = p.X - chunk.MinX;
+			int chunkY = p.Y - chunk.MinY;
+			int chunkZ = p.Z - chunk.MinZ;
+
+			return chunk.Get(chunkX, chunkY, chunkZ);
+		}
+
 		public override Tile GetSafe(int x, int y, int z)
 		{
 			if (!IsWithinBounds(x, y, z))
 				return null;
 			else
 				return Get(x, y, z);
+		}
+
+		public override Tile GetSafe(Point3 p)
+		{
+			if (!IsWithinBounds(p.X, p.Y, p.Z))
+				return null;
+			else
+				return Get(p.X, p.Y, p.Z);
 		}
 
 		#endregion

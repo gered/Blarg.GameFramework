@@ -23,7 +23,9 @@ namespace Blarg.GameFramework.TileMap
 		#endregion
 
 		public abstract Tile Get(int x, int y, int z);
+		public abstract Tile Get(Point3 p);
 		public abstract Tile GetSafe(int x, int y, int z);
+		public abstract Tile GetSafe(Point3 p);
 
 		#region Bounds Checks
 

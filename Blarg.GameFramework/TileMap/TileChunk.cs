@@ -181,12 +181,26 @@ namespace Blarg.GameFramework.TileMap
 			return _data[index];
 		}
 
+		public override Tile Get(Point3 p)
+		{
+			int index = GetIndexOf(p.X, p.Y, p.Z);
+			return _data[index];
+		}
+
 		public override Tile GetSafe(int x, int y, int z)
 		{
 			if (!IsWithinLocalBounds(x, y, z))
 				return null;
 			else
 				return Get(x, y, z);
+		}
+
+		public override Tile GetSafe(Point3 p)
+		{
+			if (!IsWithinLocalBounds(p.X, p.Y, p.Z))
+				return null;
+			else
+				return Get(p.X, p.Y, p.Z);
 		}
 
 		private int GetIndexOf(int x, int y, int z)
