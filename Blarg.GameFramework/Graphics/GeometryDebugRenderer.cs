@@ -156,7 +156,7 @@ namespace Blarg.GameFramework.Graphics
 			for (int j = _vertices.CurrentPosition; j < i; ++j)
 				_vertices.SetColor(j, ref color);
 
-			_vertices.Move(NumVerticesForBox);
+			_vertices.MoveTo(i);
 		}
 
 		public void Render(Point3 boxMin, Point3 boxMax)
@@ -199,7 +199,7 @@ namespace Blarg.GameFramework.Graphics
 
 		public void Render(ref BoundingSphere sphere, ref Color color)
 		{
-			const int NumVerticesForSphere = 615;
+			const int NumVerticesForSphere = 616;
 
 			if (!_hasBegunRendering)
 				throw new InvalidOperationException();
@@ -259,7 +259,7 @@ namespace Blarg.GameFramework.Graphics
 			for (int i = _vertices.CurrentPosition; i < p; ++i)
 				_vertices.SetColor(i, ref color);
 
-			_vertices.Move(NumVerticesForSphere);
+			_vertices.MoveTo(p);
 		}
 
 		public void Render(Ray ray, float length)
