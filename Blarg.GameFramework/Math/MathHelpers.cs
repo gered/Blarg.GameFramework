@@ -256,6 +256,34 @@ namespace Blarg.GameFramework
 		}
 
 		/// <summary>
+		/// Returns the given integer value raised to the given power.
+		/// </summary>
+		/// <returns>The number raised to the given power.</returns>
+		/// <param name="number">The number to raise to a given power.</param>
+		/// <param name="power">The power to raise the given number with.</param>
+		public static long Pow(long number, uint power)
+		{
+			long result = 1;
+			for (var i = 0; i < power; ++i)
+				result *= number;
+			return result;
+		}
+
+		/// <summary>
+		/// Returns the given integer value raised to the given power.
+		/// </summary>
+		/// <returns>The number raised to the given power.</returns>
+		/// <param name="number">The number to raise to a given power.</param>
+		/// <param name="power">The power to raise the given number with.</param>
+		public static int Pow(int number, uint power)
+		{
+			int result = 1;
+			for (var i = 0; i < power; ++i)
+				result *= number;
+			return result;
+		}
+
+		/// <summary>
 		/// Linearly interpolates between two values.
 		/// </summary>
 		/// <param name="a">first value (low end of range)</param>
