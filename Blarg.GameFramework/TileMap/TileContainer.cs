@@ -51,6 +51,11 @@ namespace Blarg.GameFramework.TileMap
 				return true;
 		}
 
+		public void GetBoundingBoxFor(Point3 point, ref BoundingBox result)
+		{
+			GetBoundingBoxFor(point.X, point.Y, point.Z, ref result);
+		}
+
 		public void GetBoundingBoxFor(int x, int y, int z, ref BoundingBox result)
 		{
 			// local "TileContainer space"
