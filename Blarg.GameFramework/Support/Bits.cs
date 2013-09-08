@@ -239,49 +239,49 @@ namespace Blarg.GameFramework.Support
 		{
 			long maxValue = MathHelpers.Pow(2, valueMaxBitLength) - 1;
 			long actualValue = (value > maxValue ? maxValue : value) << shift;
-			return (bitfield | actualValue);
+			return (bitfield.ClearBit(bitmask) | actualValue);
 		}
 
 		public static ulong SetValue(this ulong bitfield, ulong value, ulong bitmask, int shift, uint valueMaxBitLength)
 		{
 			ulong maxValue = (ulong)MathHelpers.Pow((long)2, valueMaxBitLength) - 1;
 			ulong actualValue = (value > maxValue ? maxValue : value) << shift;
-			return (bitfield | actualValue);
+			return (bitfield.ClearBit(bitmask) | actualValue);
 		}
 
 		public static int SetValue(this int bitfield, int value, int bitmask, int shift, uint valueMaxBitLength)
 		{
 			int maxValue = MathHelpers.Pow(2, valueMaxBitLength) - 1;
 			int actualValue = (value > maxValue ? maxValue : value) << shift;
-			return (bitfield | actualValue);
+			return (bitfield.ClearBit(bitmask) | actualValue);
 		}
 
 		public static uint SetValue(this uint bitfield, uint value, uint bitmask, int shift, uint valueMaxBitLength)
 		{
 			uint maxValue = (uint)MathHelpers.Pow(2, valueMaxBitLength) - 1;
 			uint actualValue = (value > maxValue ? maxValue : value) << shift;
-			return (bitfield | actualValue);
+			return (bitfield.ClearBit(bitmask) | actualValue);
 		}
 
 		public static short SetValue(this short bitfield, short value, short bitmask, int shift, uint valueMaxBitLength)
 		{
 			short maxValue = (short)(MathHelpers.Pow(2, valueMaxBitLength) - 1);
 			int actualValue = (value > maxValue ? maxValue : value) << shift;
-			return (short)((int)bitfield | actualValue);
+			return (short)((int)bitfield.ClearBit(bitmask) | actualValue);
 		}
 
 		public static ushort SetValue(this ushort bitfield, ushort value, ushort bitmask, int shift, uint valueMaxBitLength)
 		{
 			ushort maxValue = (ushort)(MathHelpers.Pow(2, valueMaxBitLength) - 1);
 			int actualValue = (value > maxValue ? maxValue : value) << shift;
-			return (ushort)((int)bitfield | actualValue);
+			return (ushort)((int)bitfield.ClearBit(bitmask) | actualValue);
 		}
 
 		public static byte SetValue(this byte bitfield, byte value, byte bitmask, int shift, uint valueMaxBitLength)
 		{
 			byte maxValue = (byte)(MathHelpers.Pow(2, valueMaxBitLength) - 1);
 			int actualValue = (value > maxValue ? maxValue : value) << shift;
-			return (byte)((int)bitfield | actualValue);
+			return (byte)((int)bitfield.ClearBit(bitmask) | actualValue);
 		}
 
 		#endregion
