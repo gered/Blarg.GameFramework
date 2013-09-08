@@ -137,7 +137,6 @@
     <Compile Include="Graphics\Helpers\FlatWireframeGrid.cs" />
     <Compile Include="Support\StringBuilderExtensions.cs" />
     <Compile Include="Graphics\Helpers\GraphicsHelpers.cs" />
-    <Compile Include="Support\BitExtensions.cs" />
     <Compile Include="Support\ObjectPool.cs" />
     <Compile Include="Support\IPoolable.cs" />
     <Compile Include="Support\BasicObjectPool.cs" />
@@ -229,6 +228,7 @@
     <Compile Include="Graphics\Helpers\SkyBox.cs" />
     <Compile Include="Graphics\Atlas\Json\JsonTextureAtlasAnimation.cs" />
     <Compile Include="Math\RandomExtensions.cs" />
+    <Compile Include="Support\Bits.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <ItemGroup>

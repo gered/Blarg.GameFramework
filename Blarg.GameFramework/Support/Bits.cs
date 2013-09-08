@@ -7,9 +7,9 @@ namespace Blarg.GameFramework.Support
 	//
 	// ... and of course, you can't use generics with bitwise operations :(
 
-	public static class BitExtensions
+	public static class Bits
 	{
-		public static int GetBitmaskFor(uint startBit, uint numBits)
+		public static int GetMaskFor(uint startBit, uint numBits)
 		{
 			int temp = MathHelpers.Pow(2, startBit);
 			return (temp * (MathHelpers.Pow(2, numBits))) - temp;
