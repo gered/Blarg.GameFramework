@@ -153,6 +153,23 @@ namespace Blarg.GameFramework.TileMap
 			return this;
 		}
 
+		public Tile Clear()
+		{
+			TileIndex = NO_TILE;
+			Flags = 0;
+			TileLight = 0;
+			SkyLight = 0;
+			Rotation = 0;
+			ParentTileOffsetX = 0;
+			ParentTileOffsetY = 0;
+			ParentTileOffsetZ = 0;
+			ParentTileWidth = 0;
+			ParentTileHeight = 0;
+			ParentTileDepth = 0;
+			Color = 0;
+			return this;
+		}
+
 		public Tile SetCustomColor(Color color)
 		{
 			return SetCustomColor(color.RGBA);
